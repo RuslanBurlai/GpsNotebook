@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace GpsNotebook.ViewModel
 {
@@ -13,7 +14,7 @@ namespace GpsNotebook.ViewModel
         public SignInViewModel(INavigationService navigationService) :
             base(navigationService)
         {
-
+            Title = "Sing in";
         }
 
         #region -- Public properties --

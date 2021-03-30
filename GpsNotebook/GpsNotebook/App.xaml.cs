@@ -27,7 +27,7 @@ namespace GpsNotebook
         {
             InitializeComponent();
 
-            NavigationService.NavigateAsync($"{nameof(SignIn)}");
+            NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(SignIn)}");
         }
 
         protected override void OnStart()

@@ -10,7 +10,7 @@ namespace GpsNotebook.ViewModel
         public MapViewModel(INavigationService navigationService) :
             base(navigationService)
         {
-
+            Title = "Map";
         }
     }
 }
