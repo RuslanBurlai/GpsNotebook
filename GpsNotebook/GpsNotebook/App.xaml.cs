@@ -1,5 +1,6 @@
 ﻿using GpsNotebook.View;
 using GpsNotebook.ViewModel;
+using Prism;
 using Prism.Ioc;
 using Prism.Unity;
 using Xamarin.Forms;
@@ -8,7 +9,7 @@ namespace GpsNotebook
 {
     public partial class App : PrismApplication
     {
-        public App()
+        public App(IPlatformInitializer initializer = null) : base (initializer)
         {
         }
 
@@ -18,14 +19,15 @@ namespace GpsNotebook
         {
             //Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
-            containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
+            containerRegistry.RegisterForNavigation<SignIn, SignInViewModel>();
+            containerRegistry.RegisterForNavigation<Map, MapViewModel>();
         }
 
         protected override void OnInitialized()
         {
             InitializeComponent();
 
-            NavigationService.NavigateAsync($"{nameof(MainPage)}");
+            NavigationService.NavigateAsync($"{nameof(SignIn)}");
         }
 
         protected override void OnStart()
