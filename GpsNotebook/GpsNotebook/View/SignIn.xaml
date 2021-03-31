@@ -7,10 +7,9 @@
              Title="{Binding Title}">
         <Grid RowDefinitions="*, 0.3*">
         <StackLayout Grid.Row="0" VerticalOptions="Center" Padding="25">
-            <Entry Placeholder="User name"/>
             <Entry Placeholder="Email"/>
             <Entry Placeholder="Password" IsPassword="True"/>
         </StackLayout>
-        <Button Text="Sign In" Command="{Binding NavigateToMainListCommand}" Grid.Row="1" VerticalOptions="Center" Margin="25"/>
+        <Button Text="Sign In" Command="{Binding NavigateToMapTabbedPageCommand}" Grid.Row="1" VerticalOptions="Center" Margin="25"/>
     </Grid>
 </ContentPage>

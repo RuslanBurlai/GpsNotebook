@@ -1,9 +1,6 @@
 ﻿using GpsNotebook.View;
 using Prism.Commands;
 using Prism.Navigation;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -19,17 +16,17 @@ namespace GpsNotebook.ViewModel
 
         #region -- Public properties --
 
-        private ICommand _navigateToSignInCommand;
-        public ICommand NavigateToMainListCommand =>
-            _navigateToSignInCommand ?? (_navigateToSignInCommand = new DelegateCommand(OnNavigateToSignIn));
+        private ICommand _navigateToMapTabbedPageCommand;
+        public ICommand NavigateToMapTabbedPageCommand =>
+            _navigateToMapTabbedPageCommand ?? (_navigateToMapTabbedPageCommand = new DelegateCommand(OnNavigateToMapTabbedPage));
 
         #endregion
 
 
         #region -- Private Helpers --
-        private void OnNavigateToSignIn()
+        private void OnNavigateToMapTabbedPage()
         {
-            NavigationService.NavigateAsync($"{nameof(Map)}");
+            NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MapTabbedPage)}");
         }
 
         #endregion

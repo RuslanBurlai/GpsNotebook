@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GpsNotebook.View.Pin">
+    
+    <Grid RowDefinitions="0.1*, *, 0.2*">
+
+        <SearchBar Grid.Row="0"/>
+        <StackLayout>
+
+            <ListView>
+                
+                
+                
+            </ListView>
+            
+        </StackLayout>
+        <Button
+            Margin="0,0,20,22"
+            BackgroundColor="DodgerBlue"
+            BorderColor="Black"
+            BorderWidth="4"
+            Command="{Binding NavigateToAddPin}"
+            CornerRadius="30"
+            FontSize="Title"
+            HeightRequest="60"
+            HorizontalOptions="End"
+            Text="+"
+            TextColor="White"
+            VerticalOptions="End"
+            WidthRequest="60" 
+            Grid.Row="2"/>
+
+    </Grid>
+</ContentPage>

@@ -20,7 +20,9 @@ namespace GpsNotebook
             //Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<SignIn, SignInViewModel>();
-            containerRegistry.RegisterForNavigation<Map, MapViewModel>();
+            containerRegistry.RegisterForNavigation<SignUp, SignUpViewModel>();
+            containerRegistry.RegisterForNavigation<MapTabbedPage, MapTabbedPageViewModel>();
+            containerRegistry.RegisterForNavigation<AddPin, AddPinViewModel>();
         }
 
         protected override void OnInitialized()
