@@ -1,4 +1,8 @@
-﻿using Prism.Navigation;
+﻿using GpsNotebook.View;
+using Prism.Commands;
+using Prism.Navigation;
+using System;
+using System.Windows.Input;
 
 namespace GpsNotebook.ViewModel
 {
@@ -10,5 +14,17 @@ namespace GpsNotebook.ViewModel
             Title = "Add new pin";
         }
 
+        #region --  Public properties --
+
+        private ICommand _savePin;
+        public ICommand SavePin =>
+            _savePin ?? (_savePin = new DelegateCommand(ExecuteSavePin));
+
+        private async void ExecuteSavePin()
+        {
+            await NavigationService.GoBackAsync();
+        }
+
+        #endregion
     }
 }

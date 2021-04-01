@@ -2,10 +2,18 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
-             x:Class="GpsNotebook.View.AddPin"
+             x:Class="GpsNotebook.View.AddPinView"
              Title="{Binding Title}">
-    
-    <Grid RowDefinitions="0.4*, *, 0.1*">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Text="Save"
+            Command="{Binding SavePin}"
+            Order="Primary" />
+    </ContentPage.ToolbarItems>
+
+
+    <Grid RowDefinitions="0.36*, *">
         
         <StackLayout Grid.Row="0" Padding="25">
 
@@ -20,8 +28,6 @@
             <maps:Map/>
 
         </StackLayout>
-        
-        <Button Grid.Row="2" Text="Create Pin" Margin="25,0,25,0"/>
 
     </Grid>
     

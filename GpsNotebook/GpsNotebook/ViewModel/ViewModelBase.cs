@@ -8,8 +8,12 @@ namespace GpsNotebook.ViewModel
 {
     public class ViewModelBase : BindableBase, INavigationAware, IDestructible, IInitialize
     {
+        public ViewModelBase(INavigationService navigationService)
+        {
+            NavigationService = navigationService;
+        }
 
-        #region -- Public Properties --
+        #region -- Public properties --
 
         private string _title;
         public string Title
@@ -19,11 +23,6 @@ namespace GpsNotebook.ViewModel
         }
 
         #endregion
-
-        public ViewModelBase(INavigationService navigationService)
-        {
-            NavigationService = navigationService;
-        }
 
         #region -- Public Properties --
         protected INavigationService NavigationService { get; private set; }

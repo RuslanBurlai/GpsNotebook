@@ -1,12 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="GpsNotebook.View.Map"
-             xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps">
+             x:Class="GpsNotebook.View.MapView"
+             xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
+             xmlns:prism="http://prismlibrary.com"
+             Title="{Binding Title}">
+    
     <Grid RowDefinitions="0.1*, *, 0.1*">
 
         <SearchBar Grid.Row="0"/>
-        <Button Grid.Row="2" Margin="20, 0, 20, 0"/>
+        <Button Text="My Location"  Grid.Row="2" Margin="20, 0, 20, 0" Command="{Binding MyLocation}"/>
         <maps:Map x:Name="map" Grid.Row="1"/>
         <!--My location enabled = false-->
 

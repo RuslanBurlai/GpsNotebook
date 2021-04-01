@@ -1,4 +1,5 @@
-﻿using GpsNotebook.View;
+﻿using GpsNotebook.Services.Validators;
+using GpsNotebook.View;
 using GpsNotebook.ViewModel;
 using Prism;
 using Prism.Ioc;
@@ -19,17 +20,24 @@ namespace GpsNotebook
         {
             //Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
-            containerRegistry.RegisterForNavigation<SignIn, SignInViewModel>();
-            containerRegistry.RegisterForNavigation<SignUp, SignUpViewModel>();
-            containerRegistry.RegisterForNavigation<MapTabbedPage, MapTabbedPageViewModel>();
-            containerRegistry.RegisterForNavigation<AddPin, AddPinViewModel>();
+            containerRegistry.RegisterForNavigation<SignInView, SignInViewModel>();
+            containerRegistry.RegisterForNavigation<SignUpView, SignUpViewModel>();
+
+            containerRegistry.RegisterForNavigation<MapTabbedPage>();
+            containerRegistry.RegisterForNavigation<MapView, MapViewModel>();
+            containerRegistry.RegisterForNavigation<PinView, PinViewModel>();
+
+            containerRegistry.RegisterForNavigation<AddPinView, AddPinViewModel>();
+
+            //Services
+
         }
 
         protected override void OnInitialized()
         {
             InitializeComponent();
 
-            NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(SignIn)}");
+            NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(SignInView)}");
         }
 
         protected override void OnStart()

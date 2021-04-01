@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace GpsNotebook.View
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class SignIn : ContentPage
+    public partial class SignInView : ContentPage
     {
-        public SignIn()
+        public SignInView()
         {
             InitializeComponent();
         }
