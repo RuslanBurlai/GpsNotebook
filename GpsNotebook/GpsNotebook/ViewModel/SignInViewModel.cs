@@ -18,6 +18,20 @@ namespace GpsNotebook.ViewModel
 
         #region -- Public properties --
 
+        private string _userEmail;
+        public string UserEmail
+        {
+            get { return _userEmail; }
+            set { SetProperty(ref _userEmail, value); }
+        }
+
+        private string _userPassword;
+        public string UserPassword
+        {
+            get { return _userPassword; }
+            set { SetProperty(ref _userPassword, value); }
+        }
+
         private ICommand _navigateToMapTabbedPageCommand;
         public ICommand NavigateToMapTabbedPageCommand =>
             _navigateToMapTabbedPageCommand ?? (_navigateToMapTabbedPageCommand = new DelegateCommand(OnNavigateToMapTabbedPage, CanExecuteNavigateToMapTabbedPage)
@@ -26,7 +40,7 @@ namespace GpsNotebook.ViewModel
 
         private async void OnNavigateToMapTabbedPage()
         {
-            await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MapTabbedPage)}");
+            await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MapTabbedView)}");
         }
 
         private bool CanExecuteNavigateToMapTabbedPage()
@@ -34,18 +48,13 @@ namespace GpsNotebook.ViewModel
             return EntryChecker.EntryIsNullOrEmpty(UserPassword, UserEmail);
         }
 
-        private string _userEmail;
-        public string UserEmail 
-        { 
-            get { return _userEmail; }
-            set { SetProperty( ref _userEmail, value); } 
-        }
+        private ICommand _navigateToSignUpCommand;
+        public ICommand NavigateToSignUpCommand =>
+            _navigateToSignUpCommand ?? (_navigateToSignUpCommand = new DelegateCommand(OnNavigateToSignUp));
 
-        private string _userPassword;
-        public string UserPassword
+        private async void OnNavigateToSignUp()
         {
-            get { return _userPassword; }
-            set { SetProperty(ref _userPassword, value); }
+            await NavigationService.NavigateAsync($"{nameof(SignUpView)}");
         }
 
         #endregion

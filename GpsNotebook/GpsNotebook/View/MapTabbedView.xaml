@@ -2,7 +2,7 @@
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:pages="clr-namespace:GpsNotebook.View;assembly=GpsNotebook"
-             x:Class="GpsNotebook.View.MapTabbedPage"
+             x:Class="GpsNotebook.View.MapTabbedView"
             Title="{Binding Title}">
   <!--Pages can be added as references or inline-->
     <TabbedPage.Children>

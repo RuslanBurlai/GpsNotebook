@@ -23,7 +23,7 @@ namespace GpsNotebook
             containerRegistry.RegisterForNavigation<SignInView, SignInViewModel>();
             containerRegistry.RegisterForNavigation<SignUpView, SignUpViewModel>();
 
-            containerRegistry.RegisterForNavigation<MapTabbedPage>();
+            containerRegistry.RegisterForNavigation<MapTabbedView>();
             containerRegistry.RegisterForNavigation<MapView, MapViewModel>();
             containerRegistry.RegisterForNavigation<PinView, PinViewModel>();
 
@@ -37,7 +37,7 @@ namespace GpsNotebook
         {
             InitializeComponent();
 
-            NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(SignInView)}");
+            NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(MapTabbedView)}");
         }
 
         protected override void OnStart()

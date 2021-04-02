@@ -22,6 +22,9 @@
     <Compile Update="View\AddPinView.xaml.cs">
       <DependentUpon>AddPinView.xaml</DependentUpon>
     </Compile>
+    <Compile Update="View\MapTabbedView.xaml.cs">
+      <DependentUpon>MapTabbedView.xaml</DependentUpon>
+    </Compile>
     <Compile Update="View\MapView.xaml.cs">
       <DependentUpon>MapView.xaml</DependentUpon>
     </Compile>

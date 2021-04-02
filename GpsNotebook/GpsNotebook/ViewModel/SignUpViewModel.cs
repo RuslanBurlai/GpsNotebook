@@ -1,4 +1,5 @@
 ﻿using GpsNotebook.Helpers;
+using GpsNotebook.View;
 using Prism.Commands;
 using Prism.Navigation;
 using System;
@@ -59,12 +60,10 @@ namespace GpsNotebook.ViewModel
             return EntryChecker.EntryIsNullOrEmpty(UserName, UserEmail, UserPassword, ConfirmPassword);
         }
 
-        private void OnNavigateToSignIn()
+        private async void OnNavigateToSignIn()
         {
-            throw new NotImplementedException();
+            await NavigationService.NavigateAsync($"{nameof(SignInView)}");
         }
-
-
 
         #endregion 
     }

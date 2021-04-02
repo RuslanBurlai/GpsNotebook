@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace GpsNotebook.View
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MapTabbedPage : TabbedPage
+    public partial class MapTabbedView : TabbedPage
     {
-        public MapTabbedPage()
+        public MapTabbedView()
         {
             InitializeComponent();
         }

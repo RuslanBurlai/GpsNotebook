@@ -24,12 +24,23 @@
             </Entry>
             
         </StackLayout>
-        <Button
+
+        <StackLayout 
             Grid.Row="1"
+            VerticalOptions="Center">
+
+            <Button
             Text="Sign In"
-            Command="{Binding NavigateToMapTabbedPageCommand}"
-            VerticalOptions="Center" 
-            Margin="25">
-        </Button>
+                Command="{Binding NavigateToMapTabbedPageCommand}"
+                Margin="25,0,25,0">
+            </Button>
+
+            <Button
+                Text="Sign up"
+                Command="{Binding NavigateToSignUpCommand}"
+                Margin="25,0,25,0">
+            </Button>
+
+        </StackLayout>
     </Grid>
 </ContentPage>

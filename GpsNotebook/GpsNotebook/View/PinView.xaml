@@ -2,13 +2,38 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GpsNotebook.View.PinView"
-             xmlns:prism="http://prismlibrary.com"
+             xmlns:prism="http://prismlibrary.com" 
+             xmlns:c="clr-namespace:GpsNotebook.ViewModel"
              Title="{Binding Title}">
     
     <Grid RowDefinitions="0.1*, *, 0.2*">
 
         <SearchBar Grid.Row="0"/>
-        
+
+        <StackLayout Grid.Row="1">
+
+            <ListView HasUnevenRows="True"
+                      ItemsSource="{Binding Pins}">
+                
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+
+                            <StackLayout>
+
+                                <Label Text="123456"/>
+                                <Label Text="qwert"/>
+                                <Label Text="sdfghjk"/>
+
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+
+        </StackLayout>
+
         <Button
             Margin="0,0,20,22"
             BackgroundColor="DodgerBlue"
@@ -24,6 +49,8 @@
             VerticalOptions="End"
             WidthRequest="60" 
             Grid.Row="2"/>
+
+        
 
     </Grid>
 </ContentPage>

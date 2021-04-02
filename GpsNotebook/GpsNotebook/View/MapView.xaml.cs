@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
+using Xamarin.Forms.Maps;
 using Xamarin.Forms.Xaml;
 
 namespace GpsNotebook.View
@@ -15,6 +16,10 @@ namespace GpsNotebook.View
         public MapView()
         {
             InitializeComponent();
+        }
+
+        private void map_MapClicked(object sender, Xamarin.Forms.Maps.MapClickedEventArgs e)
+        {
         }
     }
 }
