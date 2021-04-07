@@ -13,13 +13,14 @@ namespace GpsNotebook.Repository
             _repository = repository;
         }
 
-        public void AddUser<User>(User user)
+        public void AddUser(User user)
         {
-            _repository.AddItem<User>(user);
+            _repository.AddItem(user);
         }
 
-        public List<User> GetAllUser<User>()
+        public IEnumerable<User> GetAllUser()
         {
+            return _repository.GetAllItems<User>();
         }
     }
 }

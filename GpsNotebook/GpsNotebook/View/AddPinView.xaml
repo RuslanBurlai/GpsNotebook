@@ -13,13 +13,14 @@
     </ContentPage.ToolbarItems>
 
 
-    <Grid RowDefinitions="0.36*, *">
+    <Grid RowDefinitions="0.55*, *">
         
         <StackLayout Grid.Row="0" Padding="25">
 
-            <Entry Placeholder="Pin name"/>
-            <Entry Placeholder="Description"/>
-            <Entry Placeholder="Coordinates"/>
+            <Entry Placeholder="Pin name" Text="{Binding PinName}"/>
+            <Entry Placeholder="Pin latitude" Text="{Binding PinLatitude}"/>
+            <Entry Placeholder="Pin longitude" Text="{Binding PinLongitude}"/>
+            <Entry Placeholder="Description" Text="{Binding PinDescription}"/>
 
         </StackLayout>
 
