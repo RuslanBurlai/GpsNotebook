@@ -7,9 +7,9 @@
   <!--Pages can be added as references or inline-->
     <TabbedPage.Children>
 
-        <pages:MapView />
+        <pages:MapTabView />
 
-        <pages:PinView />
+        <pages:PinTabView />
 
     </TabbedPage.Children>
 </TabbedPage>

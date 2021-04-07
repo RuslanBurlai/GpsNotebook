@@ -6,15 +6,15 @@ using Xamarin.Forms.GoogleMaps;
 
 namespace GpsNotebook.ViewModel
 {
-    public class MapViewModel : ViewModelBase
+    public class MapTabViewModel : ViewModelBase
     {
-        public MapViewModel(INavigationService navigationService) :
+        public MapTabViewModel(INavigationService navigationService) :
             base(navigationService)
         {
             Title = "Map with pins";
 
             AllPins = new ObservableCollection<Pin>();
-            AllPins.Add(new Pin {Position = new Position(50.47289, 30.51358), Label = "sdg" });
+            AllPins.Add(new Pin {Position = new Position(50.47289, 30.51358), Label = "sdg"});
             AllPins.Add(new Pin {Position = new Position(48.55292, 35.42757), Label = "sdfgh"});
         }
 

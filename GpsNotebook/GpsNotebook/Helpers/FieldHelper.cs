@@ -4,15 +4,15 @@ using System.Text;
 
 namespace GpsNotebook.Helpers
 {
-    public static class EntryChecker
+    public static class FieldHelper
     {
-        public static bool EntryIsNullOrEmpty(params string[] entryInputs)
+        public static bool IsAllFieldsIsNullOrEmpty(params string[] entryInputs)
         {
             var countFilledEntrys = 0;
 
             foreach (var item in entryInputs)
             {
-                if (!String.IsNullOrEmpty(item))
+                if (!String.IsNullOrWhiteSpace(item))
                 {
                     countFilledEntrys++;
                 }

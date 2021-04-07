@@ -8,9 +8,9 @@ using System.Windows.Input;
 
 namespace GpsNotebook.ViewModel
 {
-    public class PinViewModel : ViewModelBase
+    public class PinTabViewModel : ViewModelBase
     {
-        public PinViewModel(INavigationService navigationPage) :
+        public PinTabViewModel(INavigationService navigationPage) :
             base(navigationPage)
         {
             Title = "List pins";

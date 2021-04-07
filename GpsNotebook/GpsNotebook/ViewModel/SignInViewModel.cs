@@ -45,7 +45,7 @@ namespace GpsNotebook.ViewModel
 
         private bool CanExecuteNavigateToMapTabbedPage()
         {
-            return EntryChecker.EntryIsNullOrEmpty(UserPassword, UserEmail);
+            return FieldHelper.IsAllFieldsIsNullOrEmpty(UserPassword, UserEmail);
         }
 
         private ICommand _navigateToSignUpCommand;

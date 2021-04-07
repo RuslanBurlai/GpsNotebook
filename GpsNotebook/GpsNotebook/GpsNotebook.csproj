@@ -25,11 +25,11 @@
     <Compile Update="View\MapTabbedView.xaml.cs">
       <DependentUpon>MapTabbedView.xaml</DependentUpon>
     </Compile>
-    <Compile Update="View\MapView.xaml.cs">
-      <DependentUpon>MapView.xaml</DependentUpon>
+    <Compile Update="View\MapTabView.xaml.cs">
+      <DependentUpon>MapTabView.xaml</DependentUpon>
     </Compile>
-    <Compile Update="View\PinView.xaml.cs">
-      <DependentUpon>PinView.xaml</DependentUpon>
+    <Compile Update="View\PinTabView.xaml.cs">
+      <DependentUpon>PinTabView.xaml</DependentUpon>
     </Compile>
     <Compile Update="View\SignInView.xaml.cs">
       <DependentUpon>SignInView.xaml</DependentUpon>

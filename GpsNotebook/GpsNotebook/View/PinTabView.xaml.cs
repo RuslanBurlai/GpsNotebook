@@ -9,10 +9,9 @@ using Xamarin.Forms.Xaml;
 
 namespace GpsNotebook.View
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PinView : ContentPage
+    public partial class PinTabView : ContentPage
     {
-        public PinView()
+        public PinTabView()
         {
             InitializeComponent();
         }

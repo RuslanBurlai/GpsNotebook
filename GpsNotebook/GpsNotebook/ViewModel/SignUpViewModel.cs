@@ -57,7 +57,7 @@ namespace GpsNotebook.ViewModel
 
         private bool CanExecuteNavigateToSignIn()
         {
-            return EntryChecker.EntryIsNullOrEmpty(UserName, UserEmail, UserPassword, ConfirmPassword);
+            return FieldHelper.IsAllFieldsIsNullOrEmpty(UserName, UserEmail, UserPassword, ConfirmPassword);
         }
 
         private async void OnNavigateToSignIn()

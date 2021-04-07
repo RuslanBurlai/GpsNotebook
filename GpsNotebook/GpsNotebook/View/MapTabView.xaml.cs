@@ -3,9 +3,9 @@ using Xamarin.Forms;
 
 namespace GpsNotebook.View
 {
-    public partial class MapView : ContentPage
+    public partial class MapTabView : ContentPage
     {
-        public MapView()
+        public MapTabView()
         {
             InitializeComponent();
         }

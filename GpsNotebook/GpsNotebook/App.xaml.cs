@@ -23,8 +23,8 @@ namespace GpsNotebook
             containerRegistry.RegisterForNavigation<SignUpView, SignUpViewModel>();
 
             containerRegistry.RegisterForNavigation<MapTabbedView>();
-            containerRegistry.RegisterForNavigation<MapView, MapViewModel>();
-            containerRegistry.RegisterForNavigation<PinView, PinViewModel>();
+            containerRegistry.RegisterForNavigation<MapTabView, MapTabViewModel>();
+            containerRegistry.RegisterForNavigation<PinTabView, PinTabViewModel>();
 
             containerRegistry.RegisterForNavigation<AddPinView, AddPinViewModel>();
 
