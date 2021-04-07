@@ -21,9 +21,9 @@
 
                             <StackLayout>
 
-                                <Label Text="123456"/>
-                                <Label Text="qwert"/>
-                                <Label Text="sdfghjk"/>
+                                <Label Text="{Binding PinName}"/>
+                                <Label Text="{Binding Latitude}"/>
+                                <Label Text="{Binding Longitude}"/>
 
                             </StackLayout>
                         </ViewCell>

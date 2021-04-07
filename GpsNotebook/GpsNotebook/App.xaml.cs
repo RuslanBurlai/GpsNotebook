@@ -1,5 +1,4 @@
-﻿using GpsNotebook.Services.Validators;
-using GpsNotebook.View;
+﻿using GpsNotebook.View;
 using GpsNotebook.ViewModel;
 using Prism;
 using Prism.Ioc;

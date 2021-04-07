@@ -17,18 +17,12 @@ namespace GpsNotebook.ViewModel
 
             Pins = new ObservableCollection<PinLocation>()
             {
-                new PinLocation()
+                new PinLocation() {Id = 1, UserId = 1, Description = "pin", Latitude = 50.47289, Longitude = 30.51358, PinName = "pin"}
+
             };
         }
 
         #region -- Public properties --
-
-        private CustomPin _pin;
-        public CustomPin Pin
-        {
-            get { return _pin; }
-            set { SetProperty(ref _pin, value); }
-        }
 
         private ObservableCollection<PinLocation> _pins;
         public ObservableCollection<PinLocation> Pins
