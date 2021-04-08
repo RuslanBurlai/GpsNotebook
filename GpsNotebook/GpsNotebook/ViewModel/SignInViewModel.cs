@@ -1,8 +1,10 @@
 ﻿using GpsNotebook.Helpers;
+using GpsNotebook.Model;
+using GpsNotebook.Services.Authentication;
 using GpsNotebook.View;
 using Prism.Commands;
 using Prism.Navigation;
-using System;
+using Prism.Services;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -10,10 +12,18 @@ namespace GpsNotebook.ViewModel
 {
     public class SignInViewModel : ViewModelBase
     {
-        public SignInViewModel(INavigationService navigationService) :
+        private IAuthentication _authentication;
+        private IPageDialogService _pageDialogService;
+        public SignInViewModel(
+            INavigationService navigationService,
+            IAuthentication authentication,
+            IPageDialogService pageDialogService) :
             base(navigationService)
         {
             Title = "Sing in";
+
+            _authentication = authentication;
+            _pageDialogService = pageDialogService;
         }
 
         #region -- Public properties --
@@ -38,19 +48,30 @@ namespace GpsNotebook.ViewModel
             .ObservesProperty<string>(() => UserEmail)
             .ObservesProperty<string>(() => UserPassword));
 
-        private async void OnNavigateToMapTabbedPage()
-        {
-            await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MapTabbedView)}");
-        }
-
         private bool CanExecuteNavigateToMapTabbedPage()
         {
             return FieldHelper.IsAllFieldsIsNullOrEmpty(UserPassword, UserEmail);
         }
 
+        private async void OnNavigateToMapTabbedPage()
+        {
+            User u = new User { Email = UserEmail, Password = UserPassword };
+
+
+            if (_authentication.IsRegisteredUser(u))
+            {
+                await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MapTabbedView)}");
+            }
+            else
+            {
+                await _pageDialogService.DisplayAlertAsync("SingIn error", "Your not registered", "Ok");
+            }
+        }
+
         private ICommand _navigateToSignUpCommand;
         public ICommand NavigateToSignUpCommand =>
             _navigateToSignUpCommand ?? (_navigateToSignUpCommand = new DelegateCommand(OnNavigateToSignUp));
+
 
         private async void OnNavigateToSignUp()
         {

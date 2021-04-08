@@ -1,9 +1,10 @@
 ﻿using GpsNotebook.Model;
+using GpsNotebook.Repository;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace GpsNotebook.Repository
+namespace GpsNotebook.Services.PinLocationRepository
 {
     public class PinLocationRepository : IPinLocationRepository
     {

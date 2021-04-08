@@ -21,6 +21,7 @@
         <googleMap:CustomMap 
             Grid.Row="1"
             ListOfPins = "{Binding AllPins}">
+            
         </googleMap:CustomMap>
 
         <!--My location enabled = false-->

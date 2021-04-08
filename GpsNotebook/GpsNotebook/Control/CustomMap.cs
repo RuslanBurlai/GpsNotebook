@@ -8,6 +8,12 @@ namespace GpsNotebook.Control
 {
     public class CustomMap : Map
     {
+        public CustomMap()
+        {
+            MyLocationEnabled = true;
+            this.MapClicked += CustomMap_MapClicked;
+        }
+
         public static readonly BindableProperty ListOfPinsProperty = BindableProperty.Create(
             propertyName: nameof(ListOfPins),
             returnType: typeof(IEnumerable<Pin>),
@@ -32,6 +38,24 @@ namespace GpsNotebook.Control
                 {
                     Pins.Add(item);
                 }
+            }
+        }
+
+        private void CustomMap_MapClicked(object sender, MapClickedEventArgs e)
+        {
+            if(Pins.Count >= 1)
+            {
+                Pins.Clear();
+            }
+            else
+            {
+                var pin = new Pin()
+                {
+                    Position = new Position(e.Point.Latitude, e.Point.Longitude),
+                    Label = "qwedfgh"
+                };
+
+                this.Pins.Add(pin);
             }
         }
     }

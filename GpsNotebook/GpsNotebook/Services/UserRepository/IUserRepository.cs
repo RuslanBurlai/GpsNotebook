@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace GpsNotebook.Repository
+namespace GpsNotebook.Services.UserRepository
 {
     public interface IUserRepository
     {

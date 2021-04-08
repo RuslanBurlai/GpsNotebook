@@ -1,14 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="GpsNotebook.View.SignUpView">
+             x:Class="GpsNotebook.View.SignUpView"
+             Title="{Binding Title}">
+    
     <Grid RowDefinitions="*, 0.3*">
         <StackLayout Grid.Row="0" VerticalOptions="Center" Padding="25">
-            <Entry Placeholder="Name"/>
-            <Entry Placeholder="Email"/>
-            <Entry Placeholder="Password"/>
-            <Entry Placeholder="Confirm password"/>
+            <Entry Placeholder="Name" Text="{Binding UserName}"/>
+            <Entry Placeholder="Email" Text="{Binding UserEmail}"/>
+            <Entry Placeholder="Password" Text="{Binding UserPassword}"/>
+            <Entry Placeholder="Confirm password" Text="{Binding ConfirmPassword}"/>
         </StackLayout>
-        <Button Text="Sign In" Command="{Binding NavigateToSignInCommand}"  Grid.Row="1" VerticalOptions="Center" Margin="25"/>
+        
+        <Button 
+            Text="Sign In" 
+            Command="{Binding NavigateToSignInCommand}"  
+            Grid.Row="1" VerticalOptions="Center" 
+            Margin="25"/>
     </Grid>
 </ContentPage>

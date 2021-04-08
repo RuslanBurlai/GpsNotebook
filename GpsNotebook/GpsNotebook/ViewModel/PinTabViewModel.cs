@@ -14,7 +14,6 @@ namespace GpsNotebook.ViewModel
             base(navigationPage)
         {
             Title = "List pins";
-
             Pins = new ObservableCollection<PinLocation>()
             {
                 new PinLocation() {Id = 1, UserId = 1, Description = "pin", Latitude = 50.47289, Longitude = 30.51358, PinName = "pin"}

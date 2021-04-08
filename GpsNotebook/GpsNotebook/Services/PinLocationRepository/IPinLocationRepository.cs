@@ -3,8 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace GpsNotebook.Repository
-{
+namespace GpsNotebook.Services.PinLocationRepository
+{ 
     public interface IPinLocationRepository
     {
         void AddPinLocation(PinLocation pinLocation);

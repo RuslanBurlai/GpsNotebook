@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:map="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
+             xmlns:googleMap="clr-namespace:GpsNotebook.Control"
              x:Class="GpsNotebook.View.AddPinView"
              Title="{Binding Title}">
 
@@ -13,21 +13,34 @@
     </ContentPage.ToolbarItems>
 
 
-    <Grid RowDefinitions="0.55*, *">
+    <Grid RowDefinitions="0.40*, *">
         
-        <StackLayout Grid.Row="0" Padding="25">
+        <StackLayout 
+            Grid.Row="0" 
+            Padding="25">
 
-            <Entry Placeholder="Pin name" Text="{Binding PinName}"/>
-            <Entry Placeholder="Pin latitude" Text="{Binding PinLatitude}"/>
-            <Entry Placeholder="Pin longitude" Text="{Binding PinLongitude}"/>
-            <Entry Placeholder="Description" Text="{Binding PinDescription}"/>
+            <Entry 
+                Placeholder="Pin name" 
+                Text="{Binding PinName}"/>
 
+            <Entry 
+                Placeholder="Description" 
+                Text="{Binding PinDescription}"/>
+            
+            <Grid ColumnDefinitions="0.8*, *, 0.8*, *">
+
+                <Label Grid.Column="0" Text="Longitude:"/>
+                <Label Grid.Column="1" Text="{Binding PinLongtitude}" />
+                <Label Grid.Column="2" Text="Latitude:"/>
+                <Label Grid.Column="3" Text="{Binding PinLatitude}"/>
+
+            </Grid>
         </StackLayout>
 
-        <StackLayout Margin="10" Grid.Row="1">
-
-            <map:Map/>
-
+        <StackLayout 
+            Margin="10" 
+            Grid.Row="1">
+            <googleMap:CustomMap SelectedPin="{Binding }"/>
         </StackLayout>
 
     </Grid>

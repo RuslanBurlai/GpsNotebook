@@ -1,4 +1,6 @@
-﻿using GpsNotebook.View;
+﻿using GpsNotebook.Model;
+using GpsNotebook.Services.PinLocationRepository;
+using GpsNotebook.View;
 using Prism.Commands;
 using Prism.Navigation;
 using System;
@@ -8,10 +10,15 @@ namespace GpsNotebook.ViewModel
 {
     public class AddPinViewModel : ViewModelBase
     {
-        public AddPinViewModel(INavigationService navigationService) :
+        private IPinLocationRepository _pinLocationRepository;
+        public AddPinViewModel(
+            INavigationService navigationService,
+            IPinLocationRepository pinLocationRepository) :
             base(navigationService)
         {
             Title = "Add new pin";
+
+            _pinLocationRepository = pinLocationRepository;
         }
 
         #region --  Public properties --
@@ -22,6 +29,17 @@ namespace GpsNotebook.ViewModel
 
         private async void ExecuteSavePin()
         {
+            var pinLocation = new PinLocation
+            {
+                Description = PinDescription,
+                Latitude = double.Parse(PinLatitude),
+                Longitude = double.Parse(PinLongitude),
+                PinName = PinName,
+                UserId = 1
+            };
+
+            _pinLocationRepository.AddPinLocation(pinLocation);
+
             await NavigationService.GoBackAsync();
         }
 

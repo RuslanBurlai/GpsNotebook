@@ -12,7 +12,7 @@ namespace GpsNotebook.Helpers
 
             foreach (var item in entryInputs)
             {
-                if (!String.IsNullOrWhiteSpace(item))
+                if (!string.IsNullOrWhiteSpace(item))
                 {
                     countFilledEntrys++;
                 }

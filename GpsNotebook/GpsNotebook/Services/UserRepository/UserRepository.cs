@@ -1,9 +1,8 @@
 ﻿using GpsNotebook.Model;
-using System;
+using GpsNotebook.Repository;
 using System.Collections.Generic;
-using System.Text;
 
-namespace GpsNotebook.Repository
+namespace GpsNotebook.Services.UserRepository
 {
     public class UserRepository : IUserRepository
     {
