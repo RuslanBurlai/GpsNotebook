@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Prism.Commands;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
 
@@ -10,7 +12,7 @@ namespace GpsNotebook.Control
     {
         public CustomMap()
         {
-            MyLocationEnabled = true;
+            UiSettings.MyLocationButtonEnabled = true;
             this.MapClicked += CustomMap_MapClicked;
         }
 
@@ -28,6 +30,17 @@ namespace GpsNotebook.Control
 
         private static void OnListOfPinsChanged(BindableObject bindable, object oldValue, object newValue)
         {
+        }
+
+        public static readonly BindableProperty GetPinPositionProperty = BindableProperty.Create(
+            propertyName: nameof(GetPinPosition),
+            returnType: typeof(Command),
+            declaringType: typeof(CustomMap));
+
+        public ICommand GetPinPosition
+        {
+            get { return (ICommand)GetValue(GetPinPositionProperty); }
+            set { SetValue(GetPinPositionProperty, value); }
         }
 
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -49,14 +62,18 @@ namespace GpsNotebook.Control
             }
             else
             {
+                GetPinPosition?.Execute(e.Point);
                 var pin = new Pin()
                 {
                     Position = new Position(e.Point.Latitude, e.Point.Longitude),
-                    Label = "qwedfgh"
+                    Label = ""
                 };
-
                 this.Pins.Add(pin);
             }
+        }
+
+        private void Pin_Clicked(object sender, System.EventArgs e)
+        {
         }
     }
 }

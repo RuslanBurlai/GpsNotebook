@@ -1,24 +1,27 @@
 ﻿using GpsNotebook.Model;
+using GpsNotebook.Services.PinLocationRepository;
 using GpsNotebook.View;
 using Prism.Commands;
 using Prism.Navigation;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 
 namespace GpsNotebook.ViewModel
 {
     public class PinTabViewModel : ViewModelBase
     {
-        public PinTabViewModel(INavigationService navigationPage) :
+        private IPinLocationRepository _pinLocationRepository;
+
+        public PinTabViewModel(
+            INavigationService navigationPage,
+            IPinLocationRepository pinLocationRepository) :
             base(navigationPage)
         {
             Title = "List pins";
-            Pins = new ObservableCollection<PinLocation>()
-            {
-                new PinLocation() {Id = 1, UserId = 1, Description = "pin", Latitude = 50.47289, Longitude = 30.51358, PinName = "pin"}
 
-            };
+            _pinLocationRepository = pinLocationRepository;
         }
 
         #region -- Public properties --
@@ -39,7 +42,11 @@ namespace GpsNotebook.ViewModel
             await NavigationService.NavigateAsync($"{nameof(AddPinView)}");
         }
 
-
         #endregion
+
+        public override void Initialize(INavigationParameters parameters)
+        {
+            Pins = _pinLocationRepository.GetPinsLocation() as ObservableCollection<PinLocation>;
+        }
     }
 }
