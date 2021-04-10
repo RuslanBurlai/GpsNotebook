@@ -20,7 +20,8 @@
 
         <googleMap:CustomMap 
             Grid.Row="1"
-            ListOfPins = "{Binding AllPins}">
+            ListOfPins = "{Binding AllPins}"
+            MyLocationEnabled="True">
             
         </googleMap:CustomMap>
 
