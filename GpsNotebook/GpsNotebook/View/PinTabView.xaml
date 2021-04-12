@@ -1,29 +1,44 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="GpsNotebook.View.PinTabView"
-             xmlns:prism="http://prismlibrary.com" 
-             xmlns:c="clr-namespace:GpsNotebook.ViewModel"
-             Title="{Binding Title}">
-    
-    <Grid RowDefinitions="0.1*, *, 0.2*">
+<ContentPage
+    x:Class="GpsNotebook.View.PinTabView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:c="clr-namespace:GpsNotebook.ViewModel"
+    xmlns:prism="http://prismlibrary.com"
+    x:Name="this"
+    Title="{Binding Title}">
 
-        <SearchBar Grid.Row="0"/>
+    <Grid RowDefinitions="0.1*, *">
+
+        <SearchBar Grid.Row="0" />
 
         <StackLayout Grid.Row="1">
 
-            <ListView HasUnevenRows="True"
-                      ItemsSource="{Binding Pins}">
-                
+            <ListView
+                x:Name="ListPinLocations"
+                HasUnevenRows="True"
+                ItemsSource="{Binding Pins}"
+                SelectedItem="{Binding SelectedItem}">
+
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
+                            <ViewCell.ContextActions>
+                                <MenuItem
+                                    Command="{Binding Source={x:Reference this}, Path=BindingContext.EditPinLocation}"
+                                    CommandParameter="{Binding .}"
+                                    Text="Edit" />
+                                <MenuItem
+                                    Command="{Binding Source={x:Reference this}, Path=BindingContext.DeletePinLocation}"
+                                    CommandParameter="{Binding .}"
+                                    Text="Delete" />
+                            </ViewCell.ContextActions>
 
                             <StackLayout>
 
-                                <Label Text="{Binding PinName}"/>
-                                <Label Text="{Binding Latitude}"/>
-                                <Label Text="{Binding Longitude}"/>
+                                <Label Text="{Binding PinName}" />
+                                <Label Text="{Binding Latitude}" />
+                                <Label Text="{Binding Longitude}" />
 
                             </StackLayout>
                         </ViewCell>
@@ -34,23 +49,28 @@
 
         </StackLayout>
 
-        <Button
-            Margin="0,0,20,22"
+        <Frame
+            Grid.Row="1"
+            Margin="15"
             BackgroundColor="DodgerBlue"
-            BorderColor="Black"
-            BorderWidth="4"
-            Command="{Binding NavigateToAddPin}"
-            CornerRadius="30"
-            FontSize="Title"
-            HeightRequest="60"
+            CornerRadius="45"
+            HeightRequest="30"
             HorizontalOptions="End"
-            Text="+"
-            TextColor="White"
             VerticalOptions="End"
-            WidthRequest="60" 
-            Grid.Row="2"/>
+            WidthRequest="30">
 
-        
+            <Label
+                FontAttributes="Bold"
+                FontSize="Title"
+                HorizontalOptions="Center"
+                Text="+"
+                VerticalOptions="Center" />
+
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding NavigateToAddPin}" />
+            </Frame.GestureRecognizers>
+
+        </Frame>
 
     </Grid>
 </ContentPage>

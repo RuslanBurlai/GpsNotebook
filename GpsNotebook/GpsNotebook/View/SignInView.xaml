@@ -1,46 +1,48 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="GpsNotebook.View.SignInView"
-             xmlns:prism="http://prismlibrary.com"
-             prism:ViewModelLocator.AutowireViewModel="True"
-             Title="{Binding Title}">
-        <Grid RowDefinitions="*, 0.3*">
-            
-        <StackLayout 
-            Grid.Row="0" 
-            VerticalOptions="Center" 
-            Padding="25">
-            
-            <Entry 
-                Placeholder="Email" 
-                Text="{Binding UserEmail}">
-            </Entry>
+<ContentPage
+    x:Class="GpsNotebook.View.SignInView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:prism="http://prismlibrary.com"
+    Title="{Binding Title}"
+    prism:ViewModelLocator.AutowireViewModel="True">
+    <Grid RowDefinitions="*, 0.3*">
 
-            <Entry 
-                Placeholder="Password" 
-                IsPassword="True" 
-                Text="{Binding UserPassword}">
-            </Entry>
-            
-        </StackLayout>
-
-        <StackLayout 
-            Grid.Row="1"
+        <StackLayout
+            Grid.Row="0"
+            Padding="25"
             VerticalOptions="Center">
 
+            <Entry Placeholder="Email" Text="{Binding UserEmail}" />
+
+            <Entry
+                IsPassword="True"
+                Placeholder="Password"
+                Text="{Binding UserPassword}" />
+
+        </StackLayout>
+
+        <StackLayout Grid.Row="1" VerticalOptions="Center">
+
             <Button
-            Text="Sign In"
+                Margin="25,0,25,0"
                 Command="{Binding NavigateToMapTabbedPageCommand}"
-                Margin="25,0,25,0">
-            </Button>
+                Text="Sign In" />
 
-            <Button
-                Text="Sign up"
-                Command="{Binding NavigateToSignUpCommand}"
-                Margin="25,0,25,0">
-            </Button>
-
+            <Label HorizontalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span
+                            Text="Sign up"
+                            TextColor="Blue"
+                            TextDecorations="Underline">
+                            <Span.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding NavigateToSignUpCommand}" />
+                            </Span.GestureRecognizers>
+                        </Span>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
         </StackLayout>
     </Grid>
 </ContentPage>

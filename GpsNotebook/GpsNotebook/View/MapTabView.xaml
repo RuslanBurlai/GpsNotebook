@@ -1,31 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="GpsNotebook.View.MapTabView"
-             xmlns:prism="http://prismlibrary.com" 
-             xmlns:c="clr-namespace:GpsNotebook.ViewModel"
-             xmlns:googleMap="clr-namespace:GpsNotebook.Control"
-             Title="{Binding Title}">
-    
-    <Grid RowDefinitions="0.1*, *, 0.1*">
+<ContentPage
+    x:Class="GpsNotebook.View.MapTabView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:c="clr-namespace:GpsNotebook.ViewModel"
+    xmlns:googleMap="clr-namespace:GpsNotebook.Control"
+    xmlns:prism="http://prismlibrary.com"
+    Title="{Binding Title}">
 
-        <SearchBar Grid.Row="0"/>
+    <Grid RowDefinitions="0.1*, *">
 
-        <Button Text="My Location" 
-                Grid.Row="2" 
-                Margin="20, 0, 20, 0" 
-                Command="{Binding MyLocation}"/>
+        <SearchBar Grid.Row="0" />
 
-
-
-        <googleMap:CustomMap 
+        <googleMap:CustomMapForMapTabViewModel
             Grid.Row="1"
-            ListOfPins = "{Binding AllPins}"
-            MyLocationEnabled="True">
-            
-        </googleMap:CustomMap>
+            ListOfPins="{Binding AllPins}"
+            MyLocationEnabled="True"
+            SelectedPin="{Binding SelectedPin}" />
 
-        <!--My location enabled = false-->
+        <!--  My location enabled = false  -->
 
     </Grid>
 </ContentPage>

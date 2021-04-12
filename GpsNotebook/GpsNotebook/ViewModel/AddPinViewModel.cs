@@ -1,10 +1,10 @@
-﻿using GpsNotebook.Model;
+﻿using GpsNotebook.Helpers;
+using GpsNotebook.Model;
 using GpsNotebook.Services.Authorization;
 using GpsNotebook.Services.PinLocationRepository;
-using GpsNotebook.View;
 using Prism.Commands;
 using Prism.Navigation;
-using System;
+using Prism.Services;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
@@ -15,49 +15,22 @@ namespace GpsNotebook.ViewModel
     {
         private IPinLocationRepository _pinLocationRepository;
         private IAuthorization _authorization;
+        private IPageDialogService _pageDialogService;
         public AddPinViewModel(
             INavigationService navigationService,
             IPinLocationRepository pinLocationRepository,
-            IAuthorization authorization) :
+            IAuthorization authorization,
+            IPageDialogService pageDialogService) :
             base(navigationService)
         {
             Title = "Add new pin";
 
             _pinLocationRepository = pinLocationRepository;
             _authorization = authorization;
+            _pageDialogService = pageDialogService;
         }
 
         #region --  Public properties --
-
-        private ICommand _savePin;
-        public ICommand SavePin =>
-            _savePin ?? (_savePin = new DelegateCommand(ExecuteSavePin));
-
-
-        public ICommand GetPosition => new Command<Position>(ExecuteGetPosition);
-
-        private void ExecuteGetPosition(Position obj)
-        {
-            PinLatitude = obj.Latitude.ToString();
-            PinLongitude = obj.Longitude.ToString();
-        }
-
-
-        private async void ExecuteSavePin()
-        {
-            var pinLocation = new PinLocation
-            {
-                Description = PinDescription,
-                Latitude = double.Parse(PinLatitude),
-                Longitude = double.Parse(PinLongitude),
-                PinName = PinName,
-                UserId = _authorization.GetUserId()
-            };
-
-            _pinLocationRepository.AddPinLocation(pinLocation);
-
-            await NavigationService.GoBackAsync();
-        }
 
         private string _pinName;
         public string PinName
@@ -85,6 +58,45 @@ namespace GpsNotebook.ViewModel
         {
             get { return _pinLongitude; }
             set { SetProperty(ref _pinLongitude, value); }
+        }
+
+        private ICommand _savePin;
+        public ICommand SavePin =>
+            _savePin ?? (_savePin = new DelegateCommand(ExecuteSavePin, CanExecuteSavePin)
+            .ObservesProperty<string>(() => PinName)
+            .ObservesProperty<string>(() => PinDescription)
+            .ObservesProperty<string>(() => PinLatitude)
+            .ObservesProperty<string>(() => PinLongitude));
+
+        private async void ExecuteSavePin()
+        {
+            var pinLocation = new PinLocation
+            {
+                Description = PinDescription,
+                Latitude = double.Parse(PinLatitude),
+                Longitude = double.Parse(PinLongitude),
+                PinName = PinName,
+                UserId = _authorization.GetUserId()
+            };
+
+            _pinLocationRepository.AddPinLocation(pinLocation);
+
+            //List<PinLocation> l = _pinLocationRepository.GetPinsLocation().ToList();
+
+            await NavigationService.GoBackAsync();
+        }
+
+        private bool CanExecuteSavePin()
+        {
+            return FieldHelper.IsAllFieldsIsNullOrEmpty(PinName, PinDescription, PinLatitude, PinLongitude);
+        }
+
+        public ICommand GetPosition => new Command<Position>(ExecuteGetPosition);
+
+        private void ExecuteGetPosition(Position obj)
+        {
+            PinLatitude = obj.Latitude.ToString();
+            PinLongitude = obj.Longitude.ToString();
         }
 
         #endregion

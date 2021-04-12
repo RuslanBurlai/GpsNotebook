@@ -1,4 +1,5 @@
-﻿using GpsNotebook.Repository;
+﻿using GpsNotebook.Dialogs;
+using GpsNotebook.Repository;
 using GpsNotebook.Services.Authentication;
 using GpsNotebook.Services.Authorization;
 using GpsNotebook.Services.PinLocationRepository;
@@ -42,6 +43,8 @@ namespace GpsNotebook
             containerRegistry.RegisterInstance<IAuthorization>(Container.Resolve<Authorization>());
             containerRegistry.RegisterInstance<IPinLocationRepository>(Container.Resolve<PinLocationRepository>());
 
+            //Dialog
+            containerRegistry.RegisterDialog<TapOnPin, TapOnPinViewModel>();
         }
 
         protected async override void OnInitialized()
