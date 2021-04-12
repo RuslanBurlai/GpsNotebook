@@ -7,6 +7,10 @@ using GpsNotebook.Model;
 using System.ComponentModel;
 using Prism.Services.Dialogs;
 using GpsNotebook.Dialogs;
+using System.Windows.Input;
+using Xamarin.Forms;
+using System;
+using System.Linq;
 
 namespace GpsNotebook.ViewModel
 {
@@ -14,6 +18,7 @@ namespace GpsNotebook.ViewModel
     {
         private IPinLocationRepository _pinLocationRepository;
         private IDialogService _dialogService;
+
         public MapTabViewModel(
             INavigationService navigationService,
             IPinLocationRepository pinLocationRepository,
@@ -25,8 +30,8 @@ namespace GpsNotebook.ViewModel
             _pinLocationRepository = pinLocationRepository;
             _dialogService = dialogService;
 
-            var p = new PinLocation();
-            AllPins = p.PinToMapTabView(_pinLocationRepository.GetPinsLocation());
+            var pins = _pinLocationRepository.GetPinsLocation().Select(x => x.ToPinModel());
+            AllPins = new ObservableCollection<Pin>(pins);
         }
 
         #region -- Public properties --
@@ -45,6 +50,30 @@ namespace GpsNotebook.ViewModel
             set { SetProperty(ref _selectedPin, value); }
         }
 
+        private ICommand _getSearchText;
+        public ICommand SearchText =>
+            _getSearchText ?? (_getSearchText = new Command<string>(ExecuteGetSearchText));
+
+        private void ExecuteGetSearchText(string sesarchQuery)
+        {
+            if (!string.IsNullOrWhiteSpace(sesarchQuery))
+            {
+                //to PinService
+                var list = AllPins.Where((x) => 
+                x.Label.ToLower().Contains(sesarchQuery.ToLower()));
+
+                var myObservableCollection = new ObservableCollection<Pin>(list);
+                AllPins = myObservableCollection;
+            }
+            else
+            {
+                //remake
+                var p = new PinLocation();
+                AllPins = p.PinToMapTabView(_pinLocationRepository.GetPinsLocation());
+            }
+
+        }
+
         #endregion
 
         #region -- Overrides --
@@ -52,22 +81,35 @@ namespace GpsNotebook.ViewModel
         public override void OnNavigatedFrom(INavigationParameters parameters)
         {
             base.OnNavigatedFrom(parameters);
-            var p = new PinLocation();
-            AllPins = p.PinToMapTabView(_pinLocationRepository.GetPinsLocation());
+
+            //remake
+            AllPins = new PinLocation().PinToMapTabView(_pinLocationRepository.GetPinsLocation());
         }
 
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
+            //var pin = new PinLocation();
+            //if (parameters.TryGetValue<PinLocation>("SelectedItemFromPinTab", out pin)) ;
+            //{
+            //    AllPins.Add(new Pin
+            //    {
+            //        Label = pin.PinName,
+            //        Position = new Position(pin.Latitude, pin.Longitude)
+            //    });
+            //}
         }
 
-        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+        protected async override void OnPropertyChanged(PropertyChangedEventArgs args)
         {
             base.OnPropertyChanged(args);
 
-            if(args.PropertyName == nameof(SelectedPin))
+            if (args.PropertyName == nameof(SelectedPin) &&
+                SelectedPin != null)
             {
-                _dialogService.ShowDialog(nameof(TapOnPin));
+                var selectedPin = new DialogParameters();
+                selectedPin.Add(nameof(SelectedPin), SelectedPin);
+                await _dialogService.ShowDialogAsync(nameof(TapOnPin), selectedPin);
             }
         }
         #endregion

@@ -3,6 +3,7 @@
     x:Class="GpsNotebook.View.PinTabView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customSearch="clr-namespace:GpsNotebook.Behavior"
     xmlns:c="clr-namespace:GpsNotebook.ViewModel"
     xmlns:prism="http://prismlibrary.com"
     x:Name="this"
@@ -10,7 +11,20 @@
 
     <Grid RowDefinitions="0.1*, *">
 
-        <SearchBar Grid.Row="0" />
+        <!--<SearchBar Grid.Row="0">
+            <SearchBar.Behaviors>
+                <customSearch:SearchBarBeahevior/>
+            </SearchBar.Behaviors>
+        </SearchBar>-->
+
+        <customSearch:CustomSearchBar 
+            Grid.Row="0"
+            GetSearchRequest="{Binding SearchText}">
+            <!--<customSearch:CustomSearchBar.Behaviors>
+                <prism:EventToCommandBehavior EventName="TextChanged"
+                                              Command="{Binding }}"/>
+            </customSearch:CustomSearchBar.Behaviors>-->
+        </customSearch:CustomSearchBar>
 
         <StackLayout Grid.Row="1">
 
@@ -39,6 +53,7 @@
                                 <Label Text="{Binding PinName}" />
                                 <Label Text="{Binding Latitude}" />
                                 <Label Text="{Binding Longitude}" />
+
 
                             </StackLayout>
                         </ViewCell>

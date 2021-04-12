@@ -7,6 +7,7 @@ namespace GpsNotebook.Extensions
 {
     public static class Extension
     {
+        //remove
         public static ObservableCollection<Pin> PinToMapTabView(this PinLocation pinLocation, IEnumerable<PinLocation> pinLocations)
         {
             var pins = new ObservableCollection<Pin>();
@@ -21,6 +22,15 @@ namespace GpsNotebook.Extensions
                 pins.Add(pin);
             }
             return pins;
+        }
+
+        public static Pin ToPinModel(this PinLocation pinLocation)
+        {
+            return new Pin
+            {
+                Label = pinLocation.PinName,
+                Position = new Position(pinLocation.Latitude, pinLocation.Longitude)
+            };
         }
     }
 }

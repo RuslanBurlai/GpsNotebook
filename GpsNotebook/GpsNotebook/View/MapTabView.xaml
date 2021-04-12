@@ -5,12 +5,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:c="clr-namespace:GpsNotebook.ViewModel"
     xmlns:googleMap="clr-namespace:GpsNotebook.Control"
+    xmlns:searchText="clr-namespace:GpsNotebook.Behavior"
     xmlns:prism="http://prismlibrary.com"
     Title="{Binding Title}">
 
     <Grid RowDefinitions="0.1*, *">
 
-        <SearchBar Grid.Row="0" />
+        <searchText:CustomSearchBar 
+            Grid.Row="0"
+            GetSearchRequest="{Binding SearchText}">
+        </searchText:CustomSearchBar>
 
         <googleMap:CustomMapForMapTabViewModel
             Grid.Row="1"

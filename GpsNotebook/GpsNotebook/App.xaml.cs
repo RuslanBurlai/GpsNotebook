@@ -20,7 +20,7 @@ namespace GpsNotebook
         {
         }
 
-        #region -- Ovverides --
+        #region -- Overrides --
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
@@ -51,6 +51,7 @@ namespace GpsNotebook
         {
             InitializeComponent();
 
+            //add IsAuthorized property to AuthService
             await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(SignInView)}");
         }
 

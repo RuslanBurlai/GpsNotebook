@@ -7,6 +7,7 @@ using SQLite;
 
 namespace GpsNotebook.Repository
 {
+    //rename to RepositoryService
     public class Repository : IRepository
     {
         public Repository()
@@ -32,7 +33,9 @@ namespace GpsNotebook.Repository
                 _dataBase.Value.Update(item);
             }
             else
+            {
                 _dataBase.Value.Insert(item);
+            }
         }
 
         public void DeleteItem<T>(T item) where T : IEntityBaseForModel, new()

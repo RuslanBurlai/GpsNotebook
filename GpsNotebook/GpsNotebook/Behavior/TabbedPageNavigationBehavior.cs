@@ -10,6 +10,7 @@ namespace GpsNotebook.Behavior
 {
     public class TabbedPageNavigationBehavior : BehaviorBase<TabbedPage>
     {
+        //regions
         private Page CurrentPage;
         private void OnCurrentPageChanged(object sender, EventArgs e)
         {

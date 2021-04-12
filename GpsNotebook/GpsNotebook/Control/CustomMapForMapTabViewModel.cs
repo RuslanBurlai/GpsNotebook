@@ -5,6 +5,7 @@ using Xamarin.Forms.GoogleMaps;
 
 namespace GpsNotebook.Control
 {
+    //try to do one control
     public class CustomMapForMapTabViewModel : Map
     {
         public CustomMapForMapTabViewModel()
@@ -34,6 +35,7 @@ namespace GpsNotebook.Control
             //    map.ListOfPins = (IList<Pin>)newValue;
         }
 
+        //use OnListOfPinsChanged and remove OnPropertyChanged
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             if (propertyName == nameof(ListOfPins))

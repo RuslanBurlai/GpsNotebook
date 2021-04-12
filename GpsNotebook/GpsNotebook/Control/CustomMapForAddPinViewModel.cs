@@ -4,6 +4,7 @@ using Xamarin.Forms.GoogleMaps;
 
 namespace GpsNotebook.Control
 {
+    //try to do one control
     public class CustomMapForAddPinViewModel : Map
     {
         public CustomMapForAddPinViewModel()

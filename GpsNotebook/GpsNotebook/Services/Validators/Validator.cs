@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace GpsNotebook.Services.Validators
 {
+    //move this folder to core
     public static class Validator
     {
         public static void useRegex(String input)

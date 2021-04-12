@@ -13,11 +13,18 @@ namespace GpsNotebook.Services.Authorization
             _settingManager = settingManager;
         }
 
+        //public int UserId
+        //{
+        //    get => _settingManager.Id;
+        //}
+
+        //add property for this
         public int GetUserId()
         {
             return _settingManager.Id;
         }
 
+        //add property for this
         public bool IsAuthorized()
         {
             return _settingManager.Id != 0;

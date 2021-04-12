@@ -68,6 +68,8 @@ namespace GpsNotebook.ViewModel
             .ObservesProperty<string>(() => PinLatitude)
             .ObservesProperty<string>(() => PinLongitude));
 
+        public ICommand GetPosition => new Command<Position>(ExecuteGetPosition);
+
         private async void ExecuteSavePin()
         {
             var pinLocation = new PinLocation
@@ -91,7 +93,6 @@ namespace GpsNotebook.ViewModel
             return FieldHelper.IsAllFieldsIsNullOrEmpty(PinName, PinDescription, PinLatitude, PinLongitude);
         }
 
-        public ICommand GetPosition => new Command<Position>(ExecuteGetPosition);
 
         private void ExecuteGetPosition(Position obj)
         {

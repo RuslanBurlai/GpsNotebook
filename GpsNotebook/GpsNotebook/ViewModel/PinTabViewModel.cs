@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace GpsNotebook.ViewModel
 {
@@ -20,6 +21,7 @@ namespace GpsNotebook.ViewModel
             IPinLocationRepository pinLocationRepository) :
             base(navigationPage)
         {
+            //to resources
             Title = "List pins";
 
             _pinLocationRepository = pinLocationRepository;
@@ -52,24 +54,58 @@ namespace GpsNotebook.ViewModel
 
         private ICommand _editPinLocation;
         public ICommand EditPinLocation =>
-            _editPinLocation ?? (_editPinLocation = new DelegateCommand(ExecuteEditPinLocation));
+            _editPinLocation ?? (_editPinLocation = new DelegateCommand<PinLocation>(ExecuteEditPinLocation));
 
-        private void ExecuteEditPinLocation()
+        private void ExecuteEditPinLocation(PinLocation obj)
         {
-            throw new NotImplementedException();
         }
 
         private ICommand _deletePinLocation;
         public ICommand DeletePinLocation =>
-            _deletePinLocation ?? (_deletePinLocation = new DelegateCommand<PinLocation>(ExecuteDeletePinLocation));
+            _deletePinLocation ?? (_deletePinLocation = new DelegateCommand<PinLocation>(OnDeletePin));
 
-        private void ExecuteDeletePinLocation(PinLocation obj)
+        private void OnDeletePin(PinLocation obj)
         {
             _pinLocationRepository.DeletePinLocation(obj);
             var myObservableCollection = new ObservableCollection<PinLocation>(_pinLocationRepository.GetPinsLocation());
             Pins = myObservableCollection;
         }
+
+        //rename to SearchPinsCommand
+        private ICommand _searchText;
+        public ICommand SearchText =>
+            _searchText ?? (_searchText = new Command(ExecuteSearchText));
+        
+        private void ExecuteSearchText(object obj)
+        {
+            var searchQuery = obj as string;
+
+            if(!string.IsNullOrWhiteSpace(searchQuery))
+            {
+                //to PinService
+                var list = Pins.Where((x) => 
+                x.PinName.ToLower().Contains(searchQuery.ToLower()) || 
+                x.Description.ToLower().Contains(searchQuery.ToLower()));
+
+                //remove myObservableCollection
+                var myObservableCollection = new ObservableCollection<PinLocation>(list);
+                Pins = myObservableCollection;
+            }
+            else
+            {
+                var myObservableCollection = new ObservableCollection<PinLocation>(_pinLocationRepository.GetPinsLocation());
+                Pins = myObservableCollection;
+            }
+        }
+
+        public ICommand PinTappedCommand => new Command<PinLocationListViewModel>(OnPinTapped);
+        private void OnPinTapped(PinLocationListViewModel obj)
+        {
+            
+        }
         #endregion
+
+        #region -- Overrides --
 
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
@@ -88,8 +124,21 @@ namespace GpsNotebook.ViewModel
 
         public override void Initialize(INavigationParameters parameters)
         {
-            var myObservableCollection = new ObservableCollection<PinLocation>(_pinLocationRepository.GetPinsLocation());
-            Pins = myObservableCollection;
+            Pins = new ObservableCollection<PinLocation>(_pinLocationRepository.GetPinsLocation());
         }
+
+        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+        {
+            base.OnPropertyChanged(args);
+
+            if(args.PropertyName == nameof(SelectedItem))
+            {
+                NavigationParameters p = new NavigationParameters();
+                p.Add("SelectedItemFromPinTab", SelectedItem);
+                NavigationService.NavigateAsync(nameof(MapTabbedView), p);
+            }
+        }
+
+        #endregion
     }
 }

@@ -18,19 +18,24 @@
     <Grid RowDefinitions="0.27*, *">
 
         <StackLayout Grid.Row="0">
+            <!--to resources-->
+            <Entry Placeholder="Pin name"
+                   Text="{Binding PinName}" />
 
-            <Entry Placeholder="Pin name" Text="{Binding PinName}" />
-
-            <Entry Placeholder="Description" Text="{Binding PinDescription}" />
+            <Entry Placeholder="Description" T
+                   ext="{Binding PinDescription}" />
 
             <Grid ColumnDefinitions="*, *">
 
-                <StackLayout Grid.Column="0" Orientation="Horizontal">
+                <StackLayout Grid.Column="0"
+                             Orientation="Horizontal">
+                    
                     <Label Text="Longitude:" />
                     <Label Text="{Binding PinLongitude}" />
                 </StackLayout>
 
-                <StackLayout Grid.Column="1" Orientation="Horizontal">
+                <StackLayout Grid.Column="1"
+                             Orientation="Horizontal">
                     <Label Text="Latitude:" />
                     <Label Text="{Binding PinLatitude}" />
                 </StackLayout>

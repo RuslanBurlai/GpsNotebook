@@ -4,8 +4,10 @@ using System.Text;
 
 namespace GpsNotebook.Helpers
 {
+    //rename
     public static class FieldHelper
     {
+        //rename with verb
         public static bool IsAllFieldsIsNullOrEmpty(params string[] entryInputs)
         {
             var countFilledEntrys = 0;

@@ -5,6 +5,7 @@ using System.Text;
 
 namespace GpsNotebook.Services.PinLocationRepository
 { 
+    //rename to IPinService
     public interface IPinLocationRepository
     {
         void AddPinLocation(PinLocation pinLocation);

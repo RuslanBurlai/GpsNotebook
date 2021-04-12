@@ -10,10 +10,9 @@
     CornerRadius="20">
 
     <StackLayout>
-        <Label
-            HorizontalOptions="CenterAndExpand"
-            Text="Welcome to Xamarin.Forms!"
-            VerticalOptions="CenterAndExpand" />
+        <Label Text="{Binding PinName}"/>
+        <Label Text="{Binding PinLatitude}"/>
+        <Label Text="{Binding PinLongitude}"/>
     </StackLayout>
 
 </Frame>

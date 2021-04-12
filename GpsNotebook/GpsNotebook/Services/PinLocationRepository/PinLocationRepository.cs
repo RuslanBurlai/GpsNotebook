@@ -17,6 +17,7 @@ namespace GpsNotebook.Services.PinLocationRepository
             _repository = repository;
             _authorization = authorization;
         }
+
         public void AddPinLocation(PinLocation pinLocation)
         {
             _repository.AddItem<PinLocation>(pinLocation);
