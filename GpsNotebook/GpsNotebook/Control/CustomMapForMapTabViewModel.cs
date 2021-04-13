@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
@@ -16,10 +17,8 @@ namespace GpsNotebook.Control
         public static readonly BindableProperty ListOfPinsProperty = BindableProperty.Create(
             propertyName: nameof(ListOfPins),
             returnType: typeof(IEnumerable<Pin>),
-            declaringType: typeof(CustomMapForAddPinViewModel));
-            //propertyChanged: OnListOfPinsChanged);
-
-
+            declaringType: typeof(CustomMapForAddPinViewModel),
+            propertyChanged: OnListOfPinsChanged);
 
         public IEnumerable<Pin> ListOfPins
         {
@@ -27,12 +26,41 @@ namespace GpsNotebook.Control
             set { SetValue(ListOfPinsProperty, value); }
         }
 
+        public static readonly BindableProperty CameraOnSelectedPinProperty = BindableProperty.Create(
+            propertyName: nameof(CameraOnSelectedPin),
+            returnType: typeof(MapSpan),
+            declaringType: typeof(CustomMapForMapTabViewModel),
+            propertyChanged: OnCameraOnSelectedPinChanged);
+
+        private static void OnCameraOnSelectedPinChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            var cameraOnPin = bindable as CustomMapForMapTabViewModel;
+            var mapSpan = newValue as MapSpan;
+
+            if(newValue != null)
+            {
+                cameraOnPin.MoveToRegion(mapSpan);
+            }
+        }
+
+        public MapSpan CameraOnSelectedPin
+        {
+            get { return (MapSpan)GetValue(CameraOnSelectedPinProperty); }
+            set { SetValue(CameraOnSelectedPinProperty, value); }
+        }
+
         private static void OnListOfPinsChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            var map = bindable as CustomMapForMapTabViewModel;
+            //var map = bindable as CustomMapForMapTabViewModel;
 
             //if (newValue != null)
+            //{
             //    map.ListOfPins = (IList<Pin>)newValue;
+            //}
+            //else
+            //{
+            //    map.ListOfPins = (IList<Pin>)oldValue;
+            //}
         }
 
         //use OnListOfPinsChanged and remove OnPropertyChanged

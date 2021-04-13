@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace GpsNotebook.Repository
+﻿namespace GpsNotebook.Models
 {
     //to the folder Models
     public interface IEntityBaseForModel

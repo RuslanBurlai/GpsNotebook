@@ -1,13 +1,9 @@
-﻿using GpsNotebook.Repository;
-using SQLite;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using SQLite;
 
-namespace GpsNotebook.Model
+namespace GpsNotebook.Models
 {
     [Table("AllUsers")]
-    public class User : IEntityBaseForModel
+    public class UserModel : IEntityBaseForModel
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }

@@ -2,6 +2,6 @@
 {
     public interface ISettingsManager
     {
-        int Id { get; set; }
+        int UserId { get; set; }
     }
 }

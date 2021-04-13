@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using GpsNotebook.Model;
+using GpsNotebook.Models;
 using SQLite;
 
-namespace GpsNotebook.Repository
+namespace GpsNotebook.Services.RepositoryService
 {
-    //rename to RepositoryService
-    public class Repository : IRepository
+    //rename to RepositoryService change to the Async repository
+    public class RepositoryService : IRepositoryService
     {
-        public Repository()
+        public RepositoryService()
         {
             _dataBase = new Lazy<SQLiteConnection>(() =>
             {
@@ -18,8 +17,8 @@ namespace GpsNotebook.Repository
                 var dataBasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), dataBaseName);
                 var dataBase = new SQLiteConnection(dataBasePath);
 
-                dataBase.CreateTable<User>();
-                dataBase.CreateTable<PinLocation>();
+                dataBase.CreateTable<UserModel>();
+                dataBase.CreateTable<PinModel>();
 
                 return dataBase;
             });

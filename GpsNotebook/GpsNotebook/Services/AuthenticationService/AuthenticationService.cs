@@ -1,30 +1,30 @@
-﻿using GpsNotebook.Model;
+﻿using GpsNotebook.Models;
 using System.Linq;
-using GpsNotebook.Services.UserRepository;
+using GpsNotebook.Services.UserModelService;
 using GpsNotebook.Services.SettingsManager;
 
 namespace GpsNotebook.Services.Authentication
 {
-    public class Authentication : IAuthentication
+    public class AuthenticationService : IAuthenticationService
     {
-        private IUserRepository _userRepository;
+        private IUserModelService _userRepository;
         private ISettingsManager _settingsManager;
 
-        public Authentication(
-            IUserRepository repository,
+        public AuthenticationService(
+            IUserModelService repository,
             ISettingsManager settingsManager)
         {
             _userRepository = repository;
             _settingsManager = settingsManager;
         }
-        public bool IsRegisteredUser(User user)
+        public bool IsRegisteredUser(UserModel user)
         {
-            User registeredUser = _userRepository.GetAllUser()
+            UserModel registeredUser = _userRepository.GetAllUser()
                 .FirstOrDefault((x) => x.Email == user.Email && x.Password == user.Password);
 
-            if(registeredUser != null)
+            if (registeredUser != null)
             {
-                _settingsManager.Id = registeredUser.Id;
+                _settingsManager.UserId = registeredUser.Id;
             }
 
             return registeredUser != null;

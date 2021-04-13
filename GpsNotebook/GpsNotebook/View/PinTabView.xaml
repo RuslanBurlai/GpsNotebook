@@ -1,30 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
-    x:Class="GpsNotebook.View.PinTabView"
-    xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:customSearch="clr-namespace:GpsNotebook.Behavior"
-    xmlns:c="clr-namespace:GpsNotebook.ViewModel"
-    xmlns:prism="http://prismlibrary.com"
-    x:Name="this"
-    Title="{Binding Title}">
+<ContentPage x:Class="GpsNotebook.View.PinTabView"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:customSearch="clr-namespace:GpsNotebook.Behavior"
+             xmlns:c="clr-namespace:GpsNotebook.ViewModel"
+             xmlns:prism="http://prismlibrary.com"
+             x:Name="this"
+             Title="{Binding Title}">
 
     <Grid RowDefinitions="0.1*, *">
 
-        <!--<SearchBar Grid.Row="0">
-            <SearchBar.Behaviors>
-                <customSearch:SearchBarBeahevior/>
-            </SearchBar.Behaviors>
-        </SearchBar>-->
-
         <customSearch:CustomSearchBar 
             Grid.Row="0"
-            GetSearchRequest="{Binding SearchText}">
+            GetSearchRequest="{Binding SearchPinsCommand}">
             <!--<customSearch:CustomSearchBar.Behaviors>
-                <prism:EventToCommandBehavior EventName="TextChanged"
+            <prism:EventToCommandBehavior EventName="TextChanged"
                                               Command="{Binding }}"/>
             </customSearch:CustomSearchBar.Behaviors>-->
         </customSearch:CustomSearchBar>
+
+        <!--<SearchBar>
+            <SearchBar.Behaviors>
+                <prism:EventToCommandBehavior 
+                    EventName="SearchPinsCommand" 
+                    Command="{Binding OnSearchPinsCommand}" />
+
+            </SearchBar.Behaviors>
+        </SearchBar>-->
 
         <StackLayout Grid.Row="1">
 
@@ -32,7 +34,7 @@
                 x:Name="ListPinLocations"
                 HasUnevenRows="True"
                 ItemsSource="{Binding Pins}"
-                SelectedItem="{Binding SelectedItem}">
+                SelectedItem="{Binding SelectedItemInListView}">
 
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -87,5 +89,26 @@
 
         </Frame>
 
+        <Frame
+            IsVisible="true"
+            Grid.Row="1"
+            VerticalOptions="Start"
+            HeightRequest="170">
+            <StackLayout >
+                <ListView
+                    ItemsSource="{Binding Pins}"
+                    SeparatorVisibility="None">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout>
+                                    <Label Text="{Binding PinName}"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </Frame>
     </Grid>
 </ContentPage>

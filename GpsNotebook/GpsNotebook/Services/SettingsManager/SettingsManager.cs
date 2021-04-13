@@ -4,10 +4,10 @@ namespace GpsNotebook.Services.SettingsManager
 {
     public class SettingsManager : ISettingsManager
     {
-        public int Id 
+        public int UserId 
         {
-            get => Preferences.Get(nameof(Id), 0);
-            set => Preferences.Set(nameof(Id), value);
+            get => Preferences.Get(nameof(UserId), 0);
+            set => Preferences.Set(nameof(UserId), value);
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿using GpsNotebook.Helpers;
-using GpsNotebook.Model;
+﻿using GpsNotebook.Models;
 using GpsNotebook.Services.Authorization;
 using GpsNotebook.Services.PinLocationRepository;
+using GpsNotebook.Validators;
 using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services;
@@ -13,13 +13,13 @@ namespace GpsNotebook.ViewModel
 {
     public class AddPinViewModel : ViewModelBase
     {
-        private IPinLocationRepository _pinLocationRepository;
-        private IAuthorization _authorization;
+        private IPinModelService _pinLocationRepository;
+        private IAuthorizationService _authorization;
         private IPageDialogService _pageDialogService;
         public AddPinViewModel(
             INavigationService navigationService,
-            IPinLocationRepository pinLocationRepository,
-            IAuthorization authorization,
+            IPinModelService pinLocationRepository,
+            IAuthorizationService authorization,
             IPageDialogService pageDialogService) :
             base(navigationService)
         {
@@ -72,13 +72,13 @@ namespace GpsNotebook.ViewModel
 
         private async void ExecuteSavePin()
         {
-            var pinLocation = new PinLocation
+            var pinLocation = new PinModel
             {
                 Description = PinDescription,
                 Latitude = double.Parse(PinLatitude),
                 Longitude = double.Parse(PinLongitude),
                 PinName = PinName,
-                UserId = _authorization.GetUserId()
+                UserId = _authorization.GetUserId
             };
 
             _pinLocationRepository.AddPinLocation(pinLocation);
@@ -92,7 +92,6 @@ namespace GpsNotebook.ViewModel
         {
             return FieldHelper.IsAllFieldsIsNullOrEmpty(PinName, PinDescription, PinLatitude, PinLongitude);
         }
-
 
         private void ExecuteGetPosition(Position obj)
         {

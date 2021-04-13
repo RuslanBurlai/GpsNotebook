@@ -1,0 +1,44 @@
+﻿using GpsNotebook.Models;
+using GpsNotebook.Services.RepositoryService;
+using GpsNotebook.Services.Authorization;
+using System.Collections.Generic;
+using System.Linq;
+using System.Collections.ObjectModel;
+
+namespace GpsNotebook.Services.PinLocationRepository
+{
+    public class PinModelService : IPinModelService
+    {
+        private IRepositoryService _repository;
+        private IAuthorizationService _authorization;
+        public PinModelService(
+            IRepositoryService repository,
+            IAuthorizationService authorization)
+        {
+            _repository = repository;
+            _authorization = authorization;
+        }
+
+        public void AddPinLocation(PinModel pinLocation)
+        {
+            _repository.AddItem<PinModel>(pinLocation);
+        }
+
+        public IEnumerable<PinModel> GetAllPins()
+        {
+            return _repository.GetAllItems<PinModel>().Where((id) => id.UserId == _authorization.GetUserId);
+        }
+
+        public void DeletePinLocation(PinModel pinLocation)
+        {
+            _repository.DeleteItem<PinModel>(pinLocation);
+        }
+
+        public IEnumerable<PinModel> SearchPins(string searchQuery)
+        {
+            //to PinService
+            return GetAllPins().Where((x) =>
+            x.PinName.ToLower().Contains(searchQuery.ToLower()));
+        }
+    }
+}

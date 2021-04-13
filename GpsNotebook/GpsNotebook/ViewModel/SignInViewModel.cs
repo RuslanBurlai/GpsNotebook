@@ -1,6 +1,6 @@
-﻿using GpsNotebook.Helpers;
-using GpsNotebook.Model;
+﻿using GpsNotebook.Models;
 using GpsNotebook.Services.Authentication;
+using GpsNotebook.Validators;
 using GpsNotebook.View;
 using Prism.Commands;
 using Prism.Navigation;
@@ -12,11 +12,11 @@ namespace GpsNotebook.ViewModel
 {
     public class SignInViewModel : ViewModelBase
     {
-        private IAuthentication _authentication;
+        private IAuthenticationService _authentication;
         private IPageDialogService _pageDialogService;
         public SignInViewModel(
             INavigationService navigationService,
-            IAuthentication authentication,
+            IAuthenticationService authentication,
             IPageDialogService pageDialogService) :
             base(navigationService)
         {
@@ -55,7 +55,7 @@ namespace GpsNotebook.ViewModel
 
         private async void OnNavigateToMapTabbedPage()
         {
-            User u = new User { Email = UserEmail, Password = UserPassword };
+            UserModel u = new UserModel { Email = UserEmail, Password = UserPassword };
 
 
             if (_authentication.IsRegisteredUser(u))

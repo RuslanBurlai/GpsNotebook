@@ -1,11 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
-    x:Class="GpsNotebook.View.AddPinView"
-    xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:googleMap="clr-namespace:GpsNotebook.Control"
-    xmlns:prism="http://prismlibrary.com"
-    Title="{Binding Title}">
+<ContentPage x:Class="GpsNotebook.View.AddPinView"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:googleMap="clr-namespace:GpsNotebook.Control"
+             xmlns:prism="http://prismlibrary.com"
+             Title="{Binding Title}">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem
@@ -22,8 +21,8 @@
             <Entry Placeholder="Pin name"
                    Text="{Binding PinName}" />
 
-            <Entry Placeholder="Description" T
-                   ext="{Binding PinDescription}" />
+            <Entry Placeholder="Description"
+                   Text="{Binding PinDescription}" />
 
             <Grid ColumnDefinitions="*, *">
 

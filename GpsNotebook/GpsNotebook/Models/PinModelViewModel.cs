@@ -1,26 +1,27 @@
-﻿using GpsNotebook.Model;
+﻿using Prism.Commands;
 using Prism.Mvvm;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 
-namespace GpsNotebook.Model
+namespace GpsNotebook.Models
 {
-    public class PinLocationViewModel : BindableBase
+    public class PinModelViewModel : BindableBase
     {
-        public PinLocationViewModel()
-        {
-            PinLocation = new PinLocation();
-        }
-
         private ICommand _tapOnListView;
-        public ICommand TapOnPinView
+        public ICommand TapOnListView =>
+            _tapOnListView ?? (_tapOnListView = new DelegateCommand<PinModelViewModel>(OnTapOnListViewCommand));
+
+        private void OnTapOnListViewCommand(PinModelViewModel obj)
         {
         }
 
-        public PinLocation PinLocation { get; private set; }
+        private int _pinID;
+        public int PinId
+        {
+            get { return _pinID; }
+            set { SetProperty(ref _pinID, value); }
+        }
 
         private string _pinName;
         public string PinName
@@ -36,19 +37,18 @@ namespace GpsNotebook.Model
             set { SetProperty(ref _pinDescription, value); }
         }
 
-        private string _pinLatitude;
-        public string PinLatitude
+        private double _pinLatitude;
+        public double PinLatitude
         {
             get { return _pinLatitude; }
             set { SetProperty(ref _pinLatitude, value); }
         }
 
-        private string _pinLongitude;
-        public string PinLongitude
+        private double _pinLongitude;
+        public double PinLongitude
         {
             get { return _pinLongitude; }
             set { SetProperty(ref _pinLongitude, value); }
         }
-
     }
 }

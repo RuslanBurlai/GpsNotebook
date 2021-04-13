@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
 
-namespace GpsNotebook.Services.Validators
+namespace GpsNotebook.Validators
 {
     //move this folder to core
     public static class Validator

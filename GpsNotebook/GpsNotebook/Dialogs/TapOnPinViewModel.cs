@@ -41,10 +41,10 @@ namespace GpsNotebook.Dialogs
         public void OnDialogOpened(IDialogParameters parameters)
         {
             //to constants
-            if (parameters.ContainsKey("SelectedPin"))
+            if (parameters.ContainsKey("TapOnPin"))
             {
                 var pin = new Pin();
-                pin = parameters.GetValue<Pin>("SelectedPin");
+                pin = parameters.GetValue<Pin>("TapOnPin");
                 PinName = pin.Label;
                 PinLatitude = pin.Position.Latitude.ToString();
                 PinLongitude = pin.Position.Longitude.ToString();

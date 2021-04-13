@@ -1,14 +1,14 @@
-﻿using GpsNotebook.Model;
+﻿using GpsNotebook.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Xamarin.Forms.GoogleMaps;
 
 namespace GpsNotebook.Extensions
 {
-    public static class Extension
+    public static class PinModelExtension
     {
         //remove
-        public static ObservableCollection<Pin> PinToMapTabView(this PinLocation pinLocation, IEnumerable<PinLocation> pinLocations)
+        public static ObservableCollection<Pin> PinToMapTabView(this PinModel pinLocation, IEnumerable<PinModel> pinLocations)
         {
             var pins = new ObservableCollection<Pin>();
 
@@ -24,7 +24,7 @@ namespace GpsNotebook.Extensions
             return pins;
         }
 
-        public static Pin ToPinModel(this PinLocation pinLocation)
+        public static Pin ToPinModel(this PinModel pinLocation)
         {
             return new Pin
             {

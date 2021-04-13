@@ -1,6 +1,6 @@
-﻿using GpsNotebook.Helpers;
-using GpsNotebook.Model;
-using GpsNotebook.Services.UserRepository;
+﻿using GpsNotebook.Models;
+using GpsNotebook.Services.UserModelService;
+using GpsNotebook.Validators;
 using GpsNotebook.View;
 using Prism.Commands;
 using Prism.Navigation;
@@ -13,10 +13,10 @@ namespace GpsNotebook.ViewModel
 
     public class SignUpViewModel : ViewModelBase
     {
-        private IUserRepository _userRepository;
+        private IUserModelService _userRepository;
         public SignUpViewModel(
             INavigationService navigationService,
-            IUserRepository userRepository) :
+            IUserModelService userRepository) :
             base (navigationService)  
         {
             Title = "Sign Up";
@@ -69,9 +69,9 @@ namespace GpsNotebook.ViewModel
 
         private async void OnNavigateToSignIn()
         {
-            User user = new User { Email = UserEmail, Name = UserName, Password = UserPassword };
+            UserModel user = new UserModel { Email = UserEmail, Name = UserName, Password = UserPassword };
             _userRepository.AddUser(user);
-            List<User> auf = _userRepository.GetAllUser().ToList();
+            List<UserModel> auf = _userRepository.GetAllUser().ToList();
             await NavigationService.NavigateAsync($"{nameof(SignInView)}");
         }
 

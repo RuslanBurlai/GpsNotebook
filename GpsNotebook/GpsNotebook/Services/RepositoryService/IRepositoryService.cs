@@ -1,10 +1,10 @@
-﻿using System;
+﻿using GpsNotebook.Models;
 using System.Collections.Generic;
-using System.Text;
 
-namespace GpsNotebook.Repository
+//to the folder Services
+namespace GpsNotebook.Services.RepositoryService
 {
-    public interface IRepository
+    public interface IRepositoryService
     {
         IEnumerable<T> GetAllItems<T>() where T : IEntityBaseForModel, new();
         void AddItem<T>(T item) where T : IEntityBaseForModel, new();

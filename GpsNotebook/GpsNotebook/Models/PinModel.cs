@@ -1,10 +1,10 @@
-﻿using GpsNotebook.Repository;
-using SQLite;
+﻿using SQLite;
 
-namespace GpsNotebook.Model
+namespace GpsNotebook.Models
 {
+    //rename to PinModel
     [Table("Pins")]
-    public class PinLocation : IEntityBaseForModel
+    public class PinModel : IEntityBaseForModel
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }

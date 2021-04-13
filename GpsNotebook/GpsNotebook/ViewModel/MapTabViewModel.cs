@@ -3,7 +3,7 @@ using Prism.Navigation;
 using System.Collections.ObjectModel;
 using Xamarin.Forms.GoogleMaps;
 using GpsNotebook.Extensions;
-using GpsNotebook.Model;
+using GpsNotebook.Models;
 using System.ComponentModel;
 using Prism.Services.Dialogs;
 using GpsNotebook.Dialogs;
@@ -16,12 +16,12 @@ namespace GpsNotebook.ViewModel
 {
     public class MapTabViewModel : ViewModelBase
     {
-        private IPinLocationRepository _pinLocationRepository;
+        private IPinModelService _pinLocationRepository;
         private IDialogService _dialogService;
 
         public MapTabViewModel(
             INavigationService navigationService,
-            IPinLocationRepository pinLocationRepository,
+            IPinModelService pinLocationRepository,
             IDialogService dialogService) :
             base(navigationService)
         {
@@ -30,8 +30,8 @@ namespace GpsNotebook.ViewModel
             _pinLocationRepository = pinLocationRepository;
             _dialogService = dialogService;
 
-            var pins = _pinLocationRepository.GetPinsLocation().Select(x => x.ToPinModel());
-            AllPins = new ObservableCollection<Pin>(pins);
+            //var pins = _pinLocationRepository.GetAllPins().Select(x => x.ToPinModel());
+            //AllPins = new ObservableCollection<Pin>(pins);
         }
 
         #region -- Public properties --
@@ -43,11 +43,12 @@ namespace GpsNotebook.ViewModel
             set { SetProperty(ref _allPins, value); }
         }
 
-        private Pin _selectedPin;
-        public Pin SelectedPin
+        private ObservableCollection<Pin> Search
+        private Pin _tapOnPin;
+        public Pin TapOnPin
         {
-            get { return _selectedPin; }
-            set { SetProperty(ref _selectedPin, value); }
+            get { return _tapOnPin; }
+            set { SetProperty(ref _tapOnPin, value); }
         }
 
         private ICommand _getSearchText;
@@ -68,10 +69,16 @@ namespace GpsNotebook.ViewModel
             else
             {
                 //remake
-                var p = new PinLocation();
-                AllPins = p.PinToMapTabView(_pinLocationRepository.GetPinsLocation());
+                var pins = _pinLocationRepository.GetAllPins().Select(x => x.ToPinModel());
+                AllPins = new ObservableCollection<Pin>(pins);
             }
+        }
 
+        private MapSpan _moveCameraToPin;
+        public MapSpan MoveCameraToPin
+        {
+            get { return _moveCameraToPin; }
+            set { SetProperty(ref _moveCameraToPin, value); }
         }
 
         #endregion
@@ -83,34 +90,41 @@ namespace GpsNotebook.ViewModel
             base.OnNavigatedFrom(parameters);
 
             //remake
-            AllPins = new PinLocation().PinToMapTabView(_pinLocationRepository.GetPinsLocation());
+            AllPins = new PinModel().PinToMapTabView(_pinLocationRepository.GetAllPins());
         }
 
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
-            //var pin = new PinLocation();
-            //if (parameters.TryGetValue<PinLocation>("SelectedItemFromPinTab", out pin)) ;
-            //{
-            //    AllPins.Add(new Pin
-            //    {
-            //        Label = pin.PinName,
-            //        Position = new Position(pin.Latitude, pin.Longitude)
-            //    });
-            //}
+
+            var p = new PinModel();
+            if (parameters.TryGetValue<PinModel>("SelectedItemFromPinTab", out p))
+            {
+                Position position = new Position(p.Latitude, p.Longitude);
+                MoveCameraToPin = MapSpan.FromCenterAndRadius(position, new Distance(100000));
+            }
         }
 
         protected async override void OnPropertyChanged(PropertyChangedEventArgs args)
         {
             base.OnPropertyChanged(args);
 
-            if (args.PropertyName == nameof(SelectedPin) &&
-                SelectedPin != null)
+            if (args.PropertyName == nameof(TapOnPin) &&
+                TapOnPin != null)
             {
                 var selectedPin = new DialogParameters();
-                selectedPin.Add(nameof(SelectedPin), SelectedPin);
-                await _dialogService.ShowDialogAsync(nameof(TapOnPin), selectedPin);
+                selectedPin.Add(nameof(TapOnPin), TapOnPin);
+                await _dialogService.ShowDialogAsync(nameof(Dialogs.TapOnPin), selectedPin);
             }
+        }
+
+        public override void Initialize(INavigationParameters parameters)
+        {
+            base.Initialize(parameters);
+
+            var pins = _pinLocationRepository.GetAllPins().Select(x => x.ToPinModel());
+            AllPins = new ObservableCollection<Pin>(pins);
+
         }
         #endregion
     }

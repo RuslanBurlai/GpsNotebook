@@ -13,7 +13,14 @@ namespace GpsNotebook.Behavior
 
         private void CustomSearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
-            GetSearchRequest?.Execute(e.NewTextValue);
+            if(e.NewTextValue != null)
+            {
+                GetSearchRequest?.Execute(e.NewTextValue);
+            }
+            else
+            {
+                GetSearchRequest.Execute(e.OldTextValue);
+            }
         }
 
         public static readonly BindableProperty GetSearchRequestProperty = BindableProperty.Create(
