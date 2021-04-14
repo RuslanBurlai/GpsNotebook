@@ -1,5 +1,5 @@
 ﻿using GpsNotebook.Models;
-using GpsNotebook.Services.Authentication;
+using GpsNotebook.Services.Authorization;
 using GpsNotebook.Validators;
 using GpsNotebook.View;
 using Prism.Commands;
@@ -12,17 +12,16 @@ namespace GpsNotebook.ViewModel
 {
     public class SignInViewModel : ViewModelBase
     {
-        private IAuthenticationService _authentication;
+        private IAuthorizationService _authorizationService;
         private IPageDialogService _pageDialogService;
         public SignInViewModel(
+            IAuthorizationService authorizationService,
             INavigationService navigationService,
-            IAuthenticationService authentication,
             IPageDialogService pageDialogService) :
             base(navigationService)
         {
             Title = "Sing in";
-
-            _authentication = authentication;
+            _authorizationService = authorizationService;
             _pageDialogService = pageDialogService;
         }
 
@@ -48,17 +47,24 @@ namespace GpsNotebook.ViewModel
             .ObservesProperty<string>(() => UserEmail)
             .ObservesProperty<string>(() => UserPassword));
 
-        private bool CanExecuteNavigateToMapTabbedPage()
+        private ICommand _navigateToSignUpCommand;
+        public ICommand NavigateToSignUpCommand =>
+            _navigateToSignUpCommand ?? (_navigateToSignUpCommand = new DelegateCommand(OnNavigateToSignUp));
+
+        #endregion
+
+
+        #region -- Private Helpers --
+
+        private async void OnNavigateToSignUp()
         {
-            return FieldHelper.IsAllFieldsIsNullOrEmpty(UserPassword, UserEmail);
+            await NavigationService.NavigateAsync($"{nameof(SignUpView)}");
         }
 
         private async void OnNavigateToMapTabbedPage()
         {
-            UserModel u = new UserModel { Email = UserEmail, Password = UserPassword };
-
-
-            if (_authentication.IsRegisteredUser(u))
+            UserModel user = new UserModel { Email = UserEmail, Password = UserPassword };
+            if (_authorizationService.CheckRegistrationForUser(user))
             {
                 await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MapTabbedView)}");
             }
@@ -68,20 +74,10 @@ namespace GpsNotebook.ViewModel
             }
         }
 
-        private ICommand _navigateToSignUpCommand;
-        public ICommand NavigateToSignUpCommand =>
-            _navigateToSignUpCommand ?? (_navigateToSignUpCommand = new DelegateCommand(OnNavigateToSignUp));
-
-
-        private async void OnNavigateToSignUp()
+        private bool CanExecuteNavigateToMapTabbedPage()
         {
-            await NavigationService.NavigateAsync($"{nameof(SignUpView)}");
+            return Validator.AllFieldsIsNullOrEmpty(UserPassword, UserEmail);
         }
-
-        #endregion
-
-
-        #region -- Private Helpers --
 
         #endregion
     }

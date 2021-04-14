@@ -1,5 +1,4 @@
 ﻿using GpsNotebook.Dialogs;
-using GpsNotebook.Services.Authentication;
 using GpsNotebook.Services.Authorization;
 using GpsNotebook.Services.PinLocationRepository;
 using GpsNotebook.Services.RepositoryService;
@@ -40,7 +39,6 @@ namespace GpsNotebook
             containerRegistry.RegisterInstance<ISettingsManager>(Container.Resolve<SettingsManager>());
             containerRegistry.RegisterInstance<IRepositoryService>(Container.Resolve<RepositoryService>());
             containerRegistry.RegisterInstance<IUserModelService>(Container.Resolve<UserModelService>());
-            containerRegistry.RegisterInstance<IAuthenticationService>(Container.Resolve<AuthenticationService>());
             containerRegistry.RegisterInstance<IAuthorizationService>(Container.Resolve<AuthorizationService>());
             containerRegistry.RegisterInstance<IPinModelService>(Container.Resolve<PinModelService>());
 

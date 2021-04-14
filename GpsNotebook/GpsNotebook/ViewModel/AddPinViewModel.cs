@@ -90,7 +90,7 @@ namespace GpsNotebook.ViewModel
 
         private bool CanExecuteSavePin()
         {
-            return FieldHelper.IsAllFieldsIsNullOrEmpty(PinName, PinDescription, PinLatitude, PinLongitude);
+            return Validator.AllFieldsIsNullOrEmpty(PinName, PinDescription, PinLatitude, PinLongitude);
         }
 
         private void ExecuteGetPosition(Position obj)

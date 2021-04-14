@@ -62,19 +62,23 @@ namespace GpsNotebook.ViewModel
             .ObservesProperty<string>(() => UserPassword)
             .ObservesProperty<string>(() => ConfirmPassword));
 
+        #endregion
+
+        #region -- Private Helpers --
+
         private bool CanExecuteNavigateToSignIn()
         {
-            return FieldHelper.IsAllFieldsIsNullOrEmpty(UserName, UserEmail, UserPassword, ConfirmPassword);
+            return Validator.AllFieldsIsNullOrEmpty(UserName, UserEmail, UserPassword, ConfirmPassword);
         }
 
         private async void OnNavigateToSignIn()
         {
             UserModel user = new UserModel { Email = UserEmail, Name = UserName, Password = UserPassword };
             _userRepository.AddUser(user);
-            List<UserModel> auf = _userRepository.GetAllUser().ToList();
+
             await NavigationService.NavigateAsync($"{nameof(SignInView)}");
         }
 
-        #endregion 
+        #endregion
     }
 }
