@@ -4,6 +4,7 @@ using GpsNotebook.Services.PinLocationRepository;
 using GpsNotebook.View;
 using Prism.Commands;
 using Prism.Navigation;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -18,13 +19,13 @@ namespace GpsNotebook.ViewModel
 
         public PinTabViewModel(
             INavigationService navigationPage,
-            IPinModelService pinLocationRepository) :
+            IPinModelService pinModelService) :
             base(navigationPage)
         {
             //to resources
             Title = "List pins";
 
-            _pinModelService = pinLocationRepository;
+            _pinModelService = pinModelService;
         }
 
         #region -- Public properties --
@@ -64,6 +65,24 @@ namespace GpsNotebook.ViewModel
         {
             get { return _visibleDropDown; }
             set { SetProperty(ref _visibleDropDown, value); }
+        }
+
+        private ICommand _selectCategoryCommand;
+        public ICommand SelectCategoryCommand =>
+            _selectCategoryCommand ?? (_selectCategoryCommand = new DelegateCommand(OnSelectCategoryCommand));
+
+        private bool _isVisibleCategorySelector;
+        public bool IsVisibleCategorySelector
+        {
+            get { return _isVisibleCategorySelector; }
+            set { SetProperty(ref _isVisibleCategorySelector, value); }
+        }
+
+        private object _sotrValue;
+        public object SotrValue
+        {
+            get { return _sotrValue; }
+            set { SetProperty(ref _sotrValue, value); }
         }
 
         #endregion
@@ -125,11 +144,36 @@ namespace GpsNotebook.ViewModel
         {
             base.OnPropertyChanged(args);
 
-            if (args.PropertyName == nameof(SelectedItemInListView))
+            switch (args.PropertyName)
             {
-                NavigationParameters p = new NavigationParameters();
-                p.Add("SelectedItemFromPinTab", SelectedItemInListView);
-                NavigationService.NavigateAsync(nameof(MapTabbedView), p);
+                case nameof(SelectedItemInListView):
+                    {
+                        NavigationParameters p = new NavigationParameters();
+                        p.Add("SelectedItemFromPinTab", SelectedItemInListView);
+                        NavigationService.NavigateAsync(nameof(MapTabbedView), p);
+                        break;
+                    }
+
+                case nameof(SotrValue):
+                    {
+                        var sortMethod = SotrValue as string;
+                        var sortedPins = _pinModelService.GetAllPins().Where((pin) => pin.Categories == sortMethod);
+                        Pins = new ObservableCollection<PinModel>(sortedPins);
+                        //IsVisibleCategorySelector = false;
+                        break;
+                    }
+            }
+        }
+
+        private void OnSelectCategoryCommand()
+        {
+            if (IsVisibleCategorySelector == true)
+            {
+                IsVisibleCategorySelector = false;
+            }
+            else
+            {
+                IsVisibleCategorySelector = true;
             }
         }
 

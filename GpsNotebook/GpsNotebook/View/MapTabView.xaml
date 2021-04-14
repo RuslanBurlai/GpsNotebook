@@ -9,7 +9,7 @@
     xmlns:searchText="clr-namespace:GpsNotebook.Behavior"
     Title="{Binding Title}">
 
-    <Grid RowDefinitions="0.1*, *">
+    <Grid RowDefinitions="0.07*, *">
 
         <searchText:CustomSearchBar Grid.Row="0" SearchRequest="{Binding SearchPins}" />
 

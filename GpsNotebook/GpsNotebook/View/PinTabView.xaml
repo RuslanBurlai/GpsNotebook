@@ -9,14 +9,29 @@
     x:Name="this"
     Title="{Binding Title}">
 
-    <Grid RowDefinitions="0.1*, *">
+    <Grid RowDefinitions="0.07*, *" ColumnDefinitions="0.3*, 0.7*">
 
-        <customSearch:CustomSearchBar Grid.Row="0" SearchRequest="{Binding SearchPinsCommand}">
-            <!--<customSearch:CustomSearchBar.Behaviors>
-            <prism:EventToCommandBehavior EventName="TextChanged"
-                                              Command="{Binding }}"/>
-            </customSearch:CustomSearchBar.Behaviors>-->
-        </customSearch:CustomSearchBar>
+        <Grid Grid.Row="0" 
+              Grid.Column="0"
+              Grid.ColumnSpan="2"
+              ColumnDefinitions="0.9*, 0.1*">
+
+            <customSearch:CustomSearchBar
+                
+                SearchRequest="{Binding SearchPinsCommand}"
+                Grid.Column="0">
+                
+            </customSearch:CustomSearchBar>
+
+            <Image 
+                Grid.Column="1"
+                Source = "list.png" >
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SelectCategoryCommand}"/>
+                </Image.GestureRecognizers>
+            </Image>
+
+        </Grid>
 
         <!--<SearchBar>
             <SearchBar.Behaviors>
@@ -27,7 +42,7 @@
             </SearchBar.Behaviors>
         </SearchBar>-->
 
-        <StackLayout Grid.Row="1">
+        <StackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
 
             <ListView
                 x:Name="ListPinLocations"
@@ -67,6 +82,7 @@
 
         <Frame
             Grid.Row="1"
+            Grid.Column="1"
             Margin="15"
             BackgroundColor="DodgerBlue"
             CornerRadius="45"
@@ -90,15 +106,18 @@
 
         <Frame
             Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
             CornerRadius="20"
-            HeightRequest="150"
+            HeightRequest="120"
             IsVisible="{Binding VisibleDropDown}"
-            VerticalOptions="Start">
+            VerticalOptions="Start" >
             <StackLayout>
                 <ListView
                     ItemsSource="{Binding Pins}"
                     SelectedItem="{Binding SelectedItemInListView}"
-                    SeparatorVisibility="None">
+                    SeparatorVisibility="None"
+                    RowHeight="25">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
@@ -109,6 +128,25 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+            </StackLayout>
+        </Frame>
+
+        <Frame 
+            Grid.Row="1" 
+            Grid.Column="1"
+            IsVisible="{Binding IsVisibleCategorySelector}"
+            HeightRequest="300">
+            <StackLayout 
+                RadioButtonGroup.GroupName="Categories" 
+                RadioButtonGroup.SelectedValue="{Binding SotrValue}">
+                <RadioButton Value="Gyms" Content="Gyms"/>
+                <RadioButton Value="Restaurants" Content="Restaurants"/>
+                <RadioButton Value="Hotels" Content="Hotels"/>
+                <RadioButton Value="Supermarkets" Content="Supermarkets"/>
+                <RadioButton Value="Schools" Content="Schools"/>
+                <RadioButton Value="Place to rest" Content="Place to rest"/>
+                <RadioButton Value="Work" Content="Work"/>
+                <RadioButton Value="Home" Content="Home" />
             </StackLayout>
         </Frame>
     </Grid>

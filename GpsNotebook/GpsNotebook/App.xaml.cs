@@ -51,7 +51,7 @@ namespace GpsNotebook
             InitializeComponent();
 
             //add IsAuthorized property to AuthService
-            await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(SignInView)}");
+            await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(MapTabbedView)}");
         }
 
         protected override void OnStart()

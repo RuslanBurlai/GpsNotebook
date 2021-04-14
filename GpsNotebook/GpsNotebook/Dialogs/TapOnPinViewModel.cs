@@ -28,6 +28,13 @@ namespace GpsNotebook.Dialogs
             set { SetProperty(ref _pinLongitude, value); }
         }
 
+        private string _pinDescription;
+        public string PinDescription
+        {
+            get { return _pinDescription; }
+            set { SetProperty(ref _pinDescription, value); }
+        }
+
         #region -- IDialogAware implementation --
 
         public event Action<IDialogParameters> RequestClose;

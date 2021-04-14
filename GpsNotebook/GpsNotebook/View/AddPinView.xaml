@@ -5,16 +5,14 @@
              xmlns:googleMap="clr-namespace:GpsNotebook.Control"
              xmlns:prism="http://prismlibrary.com"
              Title="{Binding Title}">
-
     <ContentPage.ToolbarItems>
         <ToolbarItem
-            Command="{Binding SavePin}"
+            Command="{Binding SavePinCommand}"
             Order="Primary"
             Text="Save" />
     </ContentPage.ToolbarItems>
 
-
-    <Grid RowDefinitions="0.27*, *">
+    <Grid RowDefinitions="0.4*, *">
 
         <StackLayout Grid.Row="0">
             <!--to resources-->
@@ -24,11 +22,16 @@
             <Entry Placeholder="Description"
                    Text="{Binding PinDescription}" />
 
-            <Grid ColumnDefinitions="*, *">
+            <Picker 
+                Title="Categories"
+                VerticalOptions="Center"
+                ItemsSource="{Binding Categories}"
+                ItemDisplayBinding="{Binding Name}" 
+                SelectedItem="{Binding SelectedCategories, Mode=TwoWay}"/>
 
+            <Grid ColumnDefinitions="*, *">
                 <StackLayout Grid.Column="0"
                              Orientation="Horizontal">
-                    
                     <Label Text="Longitude:" />
                     <Label Text="{Binding PinLongitude}" />
                 </StackLayout>
@@ -38,7 +41,6 @@
                     <Label Text="Latitude:" />
                     <Label Text="{Binding PinLatitude}" />
                 </StackLayout>
-
             </Grid>
 
         </StackLayout>
