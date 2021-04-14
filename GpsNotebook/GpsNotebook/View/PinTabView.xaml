@@ -135,7 +135,8 @@
             Grid.Row="1" 
             Grid.Column="1"
             IsVisible="{Binding IsVisibleCategorySelector}"
-            VerticalOptions="Start">
+            VerticalOptions="Start"
+            CornerRadius="25">
             <StackLayout 
                 RadioButtonGroup.GroupName="Categories" 
                 RadioButtonGroup.SelectedValue="{Binding SotrValue}">
