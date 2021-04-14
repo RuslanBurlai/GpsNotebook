@@ -8,19 +8,11 @@ namespace GpsNotebook.Models
 {
     public class PinModelViewModel : BindableBase
     {
-        private ICommand _tapOnListView;
-        public ICommand TapOnListView =>
-            _tapOnListView ?? (_tapOnListView = new DelegateCommand<PinModelViewModel>(OnTapOnListViewCommand));
-
-        private void OnTapOnListViewCommand(PinModelViewModel obj)
-        {
-        }
-
-        private int _pinID;
+        private int _pinId;
         public int PinId
         {
-            get { return _pinID; }
-            set { SetProperty(ref _pinID, value); }
+            get { return _pinId; }
+            set { SetProperty(ref _pinId, value); }
         }
 
         private string _pinName;

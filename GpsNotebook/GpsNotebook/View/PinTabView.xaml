@@ -1,18 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage x:Class="GpsNotebook.View.PinTabView"
-             xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:customSearch="clr-namespace:GpsNotebook.Behavior"
-             xmlns:c="clr-namespace:GpsNotebook.ViewModel"
-             xmlns:prism="http://prismlibrary.com"
-             x:Name="this"
-             Title="{Binding Title}">
+<ContentPage
+    x:Class="GpsNotebook.View.PinTabView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:c="clr-namespace:GpsNotebook.ViewModel"
+    xmlns:customSearch="clr-namespace:GpsNotebook.Behavior"
+    xmlns:prism="http://prismlibrary.com"
+    x:Name="this"
+    Title="{Binding Title}">
 
     <Grid RowDefinitions="0.1*, *">
 
-        <customSearch:CustomSearchBar 
-            Grid.Row="0"
-            GetSearchRequest="{Binding SearchPinsCommand}">
+        <customSearch:CustomSearchBar Grid.Row="0" SearchRequest="{Binding SearchPinsCommand}">
             <!--<customSearch:CustomSearchBar.Behaviors>
             <prism:EventToCommandBehavior EventName="TextChanged"
                                               Command="{Binding }}"/>
@@ -21,8 +20,8 @@
 
         <!--<SearchBar>
             <SearchBar.Behaviors>
-                <prism:EventToCommandBehavior 
-                    EventName="SearchPinsCommand" 
+                <prism:EventToCommandBehavior
+                    EventName="SearchPinsCommand"
                     Command="{Binding OnSearchPinsCommand}" />
 
             </SearchBar.Behaviors>
@@ -90,19 +89,17 @@
         </Frame>
 
         <Frame
-            IsVisible="true"
             Grid.Row="1"
-            VerticalOptions="Start"
-            HeightRequest="170">
-            <StackLayout >
-                <ListView
-                    ItemsSource="{Binding Pins}"
-                    SeparatorVisibility="None">
+            HeightRequest="170"
+            IsVisible="false"
+            VerticalOptions="Start">
+            <StackLayout>
+                <ListView ItemsSource="{Binding Pins}" SeparatorVisibility="None">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
                                 <StackLayout>
-                                    <Label Text="{Binding PinName}"/>
+                                    <Label Text="{Binding PinName}" />
                                 </StackLayout>
                             </ViewCell>
                         </DataTemplate>

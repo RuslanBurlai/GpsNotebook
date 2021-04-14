@@ -16,22 +16,19 @@ namespace GpsNotebook.ViewModel
 {
     public class MapTabViewModel : ViewModelBase
     {
-        private IPinModelService _pinLocationRepository;
+        private IPinModelService _pinModelService;
         private IDialogService _dialogService;
 
         public MapTabViewModel(
             INavigationService navigationService,
-            IPinModelService pinLocationRepository,
+            IPinModelService pinModelService,
             IDialogService dialogService) :
             base(navigationService)
         {
             Title = "Map with pins";
 
-            _pinLocationRepository = pinLocationRepository;
+            _pinModelService = pinModelService;
             _dialogService = dialogService;
-
-            //var pins = _pinLocationRepository.GetAllPins().Select(x => x.ToPinModel());
-            //AllPins = new ObservableCollection<Pin>(pins);
         }
 
         #region -- Public properties --
@@ -43,7 +40,6 @@ namespace GpsNotebook.ViewModel
             set { SetProperty(ref _allPins, value); }
         }
 
-        private ObservableCollection<Pin> Search
         private Pin _tapOnPin;
         public Pin TapOnPin
         {
@@ -51,25 +47,23 @@ namespace GpsNotebook.ViewModel
             set { SetProperty(ref _tapOnPin, value); }
         }
 
-        private ICommand _getSearchText;
-        public ICommand SearchText =>
-            _getSearchText ?? (_getSearchText = new Command<string>(ExecuteGetSearchText));
+        private ICommand searchPins;
+        public ICommand SearchPins =>
+            searchPins ?? (searchPins = new Command<string>(OnGetSearchPins));
 
-        private void ExecuteGetSearchText(string sesarchQuery)
+        private void OnGetSearchPins(string sesarchQuery)
         {
             if (!string.IsNullOrWhiteSpace(sesarchQuery))
             {
-                //to PinService
-                var list = AllPins.Where((x) => 
-                x.Label.ToLower().Contains(sesarchQuery.ToLower()));
+                var list = _pinModelService.SearchPins(sesarchQuery)
+                    .Select(x => x.ToPin());
 
-                var myObservableCollection = new ObservableCollection<Pin>(list);
-                AllPins = myObservableCollection;
+                var searchResponce = new ObservableCollection<Pin>(list);
+                AllPins = searchResponce;
             }
             else
             {
-                //remake
-                var pins = _pinLocationRepository.GetAllPins().Select(x => x.ToPinModel());
+                var pins = _pinModelService.GetAllPins().Select(x => x.ToPin());
                 AllPins = new ObservableCollection<Pin>(pins);
             }
         }
@@ -89,8 +83,10 @@ namespace GpsNotebook.ViewModel
         {
             base.OnNavigatedFrom(parameters);
 
-            //remake
-            AllPins = new PinModel().PinToMapTabView(_pinLocationRepository.GetAllPins());
+            var pins = _pinModelService.GetAllPins()
+                .Select(pinModel => pinModel.ToPin());
+
+            AllPins = new ObservableCollection<Pin>(pins);
         }
 
         public override void OnNavigatedTo(INavigationParameters parameters)
@@ -122,10 +118,12 @@ namespace GpsNotebook.ViewModel
         {
             base.Initialize(parameters);
 
-            var pins = _pinLocationRepository.GetAllPins().Select(x => x.ToPinModel());
-            AllPins = new ObservableCollection<Pin>(pins);
+            var pins = _pinModelService.GetAllPins()
+                .Select(pinModel => pinModel.ToPin());
 
+            AllPins = new ObservableCollection<Pin>(pins);
         }
+
         #endregion
     }
 }

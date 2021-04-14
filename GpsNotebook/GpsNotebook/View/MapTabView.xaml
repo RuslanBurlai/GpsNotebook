@@ -1,28 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage x:Class="GpsNotebook.View.MapTabView"
-             xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:c="clr-namespace:GpsNotebook.ViewModel"
-             xmlns:googleMap="clr-namespace:GpsNotebook.Control"
-             xmlns:searchText="clr-namespace:GpsNotebook.Behavior"
-             xmlns:prism="http://prismlibrary.com"
-             Title="{Binding Title}">
+<ContentPage
+    x:Class="GpsNotebook.View.MapTabView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:c="clr-namespace:GpsNotebook.ViewModel"
+    xmlns:googleMap="clr-namespace:GpsNotebook.Control"
+    xmlns:prism="http://prismlibrary.com"
+    xmlns:searchText="clr-namespace:GpsNotebook.Behavior"
+    Title="{Binding Title}">
 
     <Grid RowDefinitions="0.1*, *">
 
-        <searchText:CustomSearchBar 
-            Grid.Row="0"
-            GetSearchRequest="{Binding SearchText}">
-        </searchText:CustomSearchBar>
+        <searchText:CustomSearchBar Grid.Row="0" SearchRequest="{Binding SearchPins}" />
 
         <googleMap:CustomMapForMapTabViewModel
             Grid.Row="1"
+            CameraOnSelectedPin="{Binding MoveCameraToPin}"
             ListOfPins="{Binding AllPins}"
             MyLocationEnabled="True"
-            SelectedPin="{Binding TapOnPin}" 
-            CameraOnSelectedPin="{Binding MoveCameraToPin}"/>
-
-        <!--  My location enabled = false  -->
+            SelectedPin="{Binding TapOnPin}" />
 
     </Grid>
 </ContentPage>

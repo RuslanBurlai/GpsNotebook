@@ -15,23 +15,19 @@ namespace GpsNotebook.Behavior
         {
             if(e.NewTextValue != null)
             {
-                GetSearchRequest?.Execute(e.NewTextValue);
-            }
-            else
-            {
-                GetSearchRequest.Execute(e.OldTextValue);
+                SearchRequest?.Execute(e.NewTextValue);
             }
         }
 
-        public static readonly BindableProperty GetSearchRequestProperty = BindableProperty.Create(
-            propertyName: nameof(GetSearchRequest),
+        public static readonly BindableProperty SearchRequestProperty = BindableProperty.Create(
+            propertyName: nameof(SearchRequest),
             returnType: typeof(Command),
             declaringType: typeof(CustomSearchBar));
 
-        public ICommand GetSearchRequest
+        public ICommand SearchRequest
         {
-            get { return(ICommand)GetValue(GetSearchRequestProperty); }
-            set { SetValue(GetSearchRequestProperty, value); }
+            get { return(ICommand)GetValue(SearchRequestProperty); }
+            set { SetValue(SearchRequestProperty, value); }
         }
     }
 }

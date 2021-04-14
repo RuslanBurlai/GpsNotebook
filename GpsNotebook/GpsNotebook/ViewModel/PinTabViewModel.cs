@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace GpsNotebook.ViewModel
 {
@@ -73,18 +74,16 @@ namespace GpsNotebook.ViewModel
         //rename to SearchPinsCommand
         private ICommand _searchPinsCommand;
         public ICommand SearchPinsCommand =>
-            _searchPinsCommand ?? (_searchPinsCommand = new DelegateCommand<object>(OnSearchPinsCommand));
+            _searchPinsCommand ?? (_searchPinsCommand = new Command<string>(OnSearchPinsCommand));
 
-        private void OnSearchPinsCommand(object obj)
+        private void OnSearchPinsCommand(string searchQuery)
         {
-            var searchQuery = obj as string;
-
             if (!string.IsNullOrWhiteSpace(searchQuery))
             {
                 //to PinService
-                var list = Pins.Where((x) =>
-                x.PinName.ToLower().Contains(searchQuery.ToLower()) ||
-                x.Description.ToLower().Contains(searchQuery.ToLower()));
+                var list = _pinLocationRepository.SearchPins(searchQuery)
+                    .Where((x) => x.PinName.ToLower().Contains(searchQuery.ToLower()) ||
+                    x.Description.ToLower().Contains(searchQuery.ToLower()));
 
                 //remove myObservableCollection
                 var myObservableCollection = new ObservableCollection<PinModel>(list);
