@@ -125,9 +125,13 @@ namespace GpsNotebook.ViewModel
 
         #region -- Overrides --
 
-        public override void OnNavigatedTo(INavigationParameters parameters)
+        public async override void OnNavigatedTo(INavigationParameters parameters)
         {
-            Pins = new ObservableCollection<PinModel>(_pinModelService.GetAllPins());
+
+            if(parameters.TryGetValue(nameof(PinModel),out PinModel newPin))
+            {
+                Pins = new ObservableCollection<PinModel>(_pinModelService.GetAllPins());
+            }
         }
 
         public override void OnNavigatedFrom(INavigationParameters parameters)
@@ -140,7 +144,7 @@ namespace GpsNotebook.ViewModel
             Pins = new ObservableCollection<PinModel>(_pinModelService.GetAllPins());
         }
 
-        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+        protected async override void OnPropertyChanged(PropertyChangedEventArgs args)
         {
             base.OnPropertyChanged(args);
 
@@ -150,7 +154,7 @@ namespace GpsNotebook.ViewModel
                     {
                         NavigationParameters p = new NavigationParameters();
                         p.Add("SelectedItemFromPinTab", SelectedItemInListView);
-                        NavigationService.NavigateAsync(nameof(MapTabbedView), p);
+                        await NavigationService.NavigateAsync(nameof(MapTabbedView), p);
                         break;
                     }
 

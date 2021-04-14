@@ -104,7 +104,7 @@ namespace GpsNotebook.ViewModel
 
         private async void OnSavePinCommand()
         {
-            var pinLocation = new PinModel
+            var newPin = new PinModel
             {
                 Description = PinDescription,
                 Latitude = double.Parse(PinLatitude),
@@ -116,9 +116,11 @@ namespace GpsNotebook.ViewModel
 
             //List<PinModel> l = _pinLocationRepository.GetAllPins().ToList();
 
-            _pinLocationRepository.AddPinLocation(pinLocation);
+            _pinLocationRepository.AddPinLocation(newPin);
+            var parametrs = new NavigationParameters();
+            parametrs.Add(nameof(PinModel), newPin);
 
-            await NavigationService.GoBackAsync();
+            await NavigationService.GoBackAsync(parametrs);
         }
 
         private bool CanExecuteSavePinCommand()

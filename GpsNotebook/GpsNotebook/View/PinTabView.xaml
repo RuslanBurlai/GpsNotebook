@@ -108,10 +108,10 @@
             Grid.Row="1"
             Grid.Column="0"
             Grid.ColumnSpan="2"
-            CornerRadius="20"
-            HeightRequest="120"
+            HeightRequest="100"
             IsVisible="{Binding VisibleDropDown}"
-            VerticalOptions="Start">
+            VerticalOptions="Start"
+            Margin="5, 0, 5, 0">
             <StackLayout>
                 <ListView
                     ItemsSource="{Binding Pins}"
