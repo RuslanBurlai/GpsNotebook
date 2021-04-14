@@ -14,7 +14,7 @@ namespace GpsNotebook.ViewModel
 {
     public class PinTabViewModel : ViewModelBase
     {
-        private IPinModelService _pinLocationRepository;
+        private IPinModelService _pinModelService;
 
         public PinTabViewModel(
             INavigationService navigationPage,
@@ -24,7 +24,7 @@ namespace GpsNotebook.ViewModel
             //to resources
             Title = "List pins";
 
-            _pinLocationRepository = pinLocationRepository;
+            _pinModelService = pinLocationRepository;
         }
 
         #region -- Public properties --
@@ -40,11 +40,6 @@ namespace GpsNotebook.ViewModel
         public ICommand NavigateToAddPin =>
             _navigateToAddPin ?? (_navigateToAddPin = new DelegateCommand(OnNavigateToAddPin));
 
-        private async void OnNavigateToAddPin()
-        {
-            await NavigationService.NavigateAsync($"{nameof(AddPinView)}");
-        }
-
         private PinModel _selectedItemInListView;
         public PinModel SelectedItemInListView
         {
@@ -52,47 +47,58 @@ namespace GpsNotebook.ViewModel
             set { SetProperty(ref _selectedItemInListView, value); }
         }
 
-        private ICommand _editPinLocation;
-        public ICommand EditPinLocation =>
-            _editPinLocation ?? (_editPinLocation = new DelegateCommand<PinModel>(ExecuteEditPinLocation));
+        private ICommand _editPinInListCommand;
+        public ICommand EditPinInListCommand =>
+            _editPinInListCommand ?? (_editPinInListCommand = new DelegateCommand<PinModel>(OnEditPinInListCommand));
 
-        private void ExecuteEditPinLocation(PinModel obj)
-        {
-        }
+        private ICommand _deletePinFromListCommand;
+        public ICommand DeletePinFromListCommand =>
+            _deletePinFromListCommand ?? (_deletePinFromListCommand = new DelegateCommand<PinModel>(OnDeletePinFromListCommand));
 
-        private ICommand _deletePinLocation;
-        public ICommand DeletePinLocation =>
-            _deletePinLocation ?? (_deletePinLocation = new DelegateCommand<PinModel>(OnDeletePin));
-
-        private void OnDeletePin(PinModel obj)
-        {
-            _pinLocationRepository.DeletePinLocation(obj);
-            var myObservableCollection = new ObservableCollection<PinModel>(_pinLocationRepository.GetAllPins());
-            Pins = myObservableCollection;
-        }
-
-        //rename to SearchPinsCommand
         private ICommand _searchPinsCommand;
         public ICommand SearchPinsCommand =>
             _searchPinsCommand ?? (_searchPinsCommand = new Command<string>(OnSearchPinsCommand));
+
+        private bool _visibleDropDown;
+        public bool VisibleDropDown
+        {
+            get { return _visibleDropDown; }
+            set { SetProperty(ref _visibleDropDown, value); }
+        }
+
+        #endregion
+
+        #region -- Private Helpers --
+
+        private async void OnNavigateToAddPin()
+        {
+            await NavigationService.NavigateAsync($"{nameof(AddPinView)}");
+        }
+
+        private void OnEditPinInListCommand(PinModel pin)
+        {
+        }
+
+        private void OnDeletePinFromListCommand(PinModel pin)
+        {
+            _pinModelService.DeletePinLocation(pin);
+            var myObservableCollection = new ObservableCollection<PinModel>(_pinModelService.GetAllPins());
+            Pins = myObservableCollection;
+        }
 
         private void OnSearchPinsCommand(string searchQuery)
         {
             if (!string.IsNullOrWhiteSpace(searchQuery))
             {
-                //to PinService
-                var list = _pinLocationRepository.SearchPins(searchQuery)
-                    .Where((x) => x.PinName.ToLower().Contains(searchQuery.ToLower()) ||
-                    x.Description.ToLower().Contains(searchQuery.ToLower()));
-
-                //remove myObservableCollection
-                var myObservableCollection = new ObservableCollection<PinModel>(list);
-                Pins = myObservableCollection;
+                VisibleDropDown = true;
+                var searchPins = _pinModelService.SearchPins(searchQuery);
+                Pins = new ObservableCollection<PinModel>(searchPins);
             }
             else
             {
-                var myObservableCollection = new ObservableCollection<PinModel>(_pinLocationRepository.GetAllPins());
-                Pins = myObservableCollection;
+                VisibleDropDown = false;
+                var pins = _pinModelService.GetAllPins();
+                Pins = new ObservableCollection<PinModel>(pins);
             }
         }
 
@@ -102,18 +108,17 @@ namespace GpsNotebook.ViewModel
 
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
-            var myObservableCollection = new ObservableCollection<PinModel>(_pinLocationRepository.GetAllPins());
-            Pins = myObservableCollection;
+            Pins = new ObservableCollection<PinModel>(_pinModelService.GetAllPins());
         }
 
         public override void OnNavigatedFrom(INavigationParameters parameters)
         {
+            parameters.Add(nameof(Pins), this.Pins);
         }
 
         public override void Initialize(INavigationParameters parameters)
         {
-            var myObservableCollection = new ObservableCollection<PinModel>(_pinLocationRepository.GetAllPins());
-            Pins = myObservableCollection;
+            Pins = new ObservableCollection<PinModel>(_pinModelService.GetAllPins());
         }
 
         protected override void OnPropertyChanged(PropertyChangedEventArgs args)

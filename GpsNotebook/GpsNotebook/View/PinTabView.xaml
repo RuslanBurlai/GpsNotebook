@@ -90,11 +90,15 @@
 
         <Frame
             Grid.Row="1"
-            HeightRequest="170"
-            IsVisible="false"
+            CornerRadius="20"
+            HeightRequest="150"
+            IsVisible="{Binding VisibleDropDown}"
             VerticalOptions="Start">
             <StackLayout>
-                <ListView ItemsSource="{Binding Pins}" SeparatorVisibility="None">
+                <ListView
+                    ItemsSource="{Binding Pins}"
+                    SelectedItem="{Binding SelectedItemInListView}"
+                    SeparatorVisibility="None">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>

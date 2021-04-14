@@ -57,13 +57,11 @@ namespace GpsNotebook.ViewModel
             {
                 var list = _pinModelService.SearchPins(sesarchQuery)
                     .Select(x => x.ToPin());
-
-                var searchResponce = new ObservableCollection<Pin>(list);
-                AllPins = searchResponce;
+                AllPins = new ObservableCollection<Pin>(list);
             }
             else
             {
-                var pins = _pinModelService.GetAllPins().Select(x => x.ToPin());
+                var pins = _pinModelService.GetAllPins().Select(pinModel => pinModel.ToPin());
                 AllPins = new ObservableCollection<Pin>(pins);
             }
         }
@@ -82,22 +80,24 @@ namespace GpsNotebook.ViewModel
         public override void OnNavigatedFrom(INavigationParameters parameters)
         {
             base.OnNavigatedFrom(parameters);
-
-            var pins = _pinModelService.GetAllPins()
-                .Select(pinModel => pinModel.ToPin());
-
-            AllPins = new ObservableCollection<Pin>(pins);
         }
 
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
 
+            if (parameters.ContainsKey("Pins"))
+            {
+                var list = new ObservableCollection<PinModel>();
+                list = parameters.GetValue<ObservableCollection<PinModel>>("Pins");
+                AllPins = new ObservableCollection<Pin>(list.Select(x => x.ToPin()));
+            }
+
             var p = new PinModel();
             if (parameters.TryGetValue<PinModel>("SelectedItemFromPinTab", out p))
             {
                 Position position = new Position(p.Latitude, p.Longitude);
-                MoveCameraToPin = MapSpan.FromCenterAndRadius(position, new Distance(100000));
+                MoveCameraToPin = MapSpan.FromCenterAndRadius(position, new Distance(10000));
             }
         }
 

@@ -36,9 +36,9 @@ namespace GpsNotebook.Services.PinLocationRepository
 
         public IEnumerable<PinModel> SearchPins(string searchQuery)
         {
-            //to PinService
-            return GetAllPins().Where((x) =>
-            x.PinName.ToLower().Contains(searchQuery.ToLower()));
+            return GetAllPins().Where((pin) =>
+            pin.PinName.ToLower().Contains(searchQuery.ToLower()) ||
+            pin.Description.ToLower().Contains(searchQuery.ToLower()));
         }
     }
 }
