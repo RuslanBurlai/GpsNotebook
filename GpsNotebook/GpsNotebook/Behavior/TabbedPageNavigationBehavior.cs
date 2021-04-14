@@ -10,6 +10,8 @@ namespace GpsNotebook.Behavior
 {
     public class TabbedPageNavigationBehavior : BehaviorBase<TabbedPage>
     {
+        #region -- Private Helpers --
+
         //regions
         private Page CurrentPage;
         private void OnCurrentPageChanged(object sender, EventArgs e)
@@ -26,6 +28,10 @@ namespace GpsNotebook.Behavior
             this.CurrentPage = newPage;
         }
 
+        #endregion
+
+        #region -- Ovverides --
+
         protected override void OnAttachedTo(TabbedPage bindable)
         {
             bindable.CurrentPageChanged += this.OnCurrentPageChanged;
@@ -37,5 +43,7 @@ namespace GpsNotebook.Behavior
             bindable.CurrentPageChanged -= this.OnCurrentPageChanged;
             base.OnDetachingFrom(bindable);
         }
+
+        #endregion
     }
 }

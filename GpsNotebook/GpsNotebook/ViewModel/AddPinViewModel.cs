@@ -40,8 +40,8 @@ namespace GpsNotebook.ViewModel
             Categories.Add(new CategoriesForPin { Name = "Place to rest" });
             Categories.Add(new CategoriesForPin { Name = "Work" });
             Categories.Add(new CategoriesForPin { Name = "Home" });
-            Categories.Add(new CategoriesForPin { Name = "" });
-            Categories.Add(new CategoriesForPin { Name = "" });
+            Categories.Add(new CategoriesForPin { Name = "Airports" });
+            Categories.Add(new CategoriesForPin { Name = "Football stadium" });
         }
 
         #region --  Public properties --
@@ -117,8 +117,6 @@ namespace GpsNotebook.ViewModel
             //List<PinModel> l = _pinLocationRepository.GetAllPins().ToList();
 
             _pinLocationRepository.AddPinLocation(pinLocation);
-
-            
 
             await NavigationService.GoBackAsync();
         }

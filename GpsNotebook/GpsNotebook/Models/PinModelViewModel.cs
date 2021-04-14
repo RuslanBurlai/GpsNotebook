@@ -8,6 +8,8 @@ namespace GpsNotebook.Models
 {
     public class PinModelViewModel : BindableBase
     {
+        #region -- Public Property --
+
         private int _pinId;
         public int PinId
         {
@@ -42,5 +44,7 @@ namespace GpsNotebook.Models
             get { return _pinLongitude; }
             set { SetProperty(ref _pinLongitude, value); }
         }
+
+        #endregion
     }
 }

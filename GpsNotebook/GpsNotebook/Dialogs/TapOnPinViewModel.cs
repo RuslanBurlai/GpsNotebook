@@ -7,6 +7,8 @@ namespace GpsNotebook.Dialogs
 {
     public class TapOnPinViewModel : BindableBase, IDialogAware
     {
+        #region -- Public Property --
+
         private string _pinName;
         public string PinName
         {
@@ -34,6 +36,8 @@ namespace GpsNotebook.Dialogs
             get { return _pinDescription; }
             set { SetProperty(ref _pinDescription, value); }
         }
+
+        #endregion
 
         #region -- IDialogAware implementation --
 

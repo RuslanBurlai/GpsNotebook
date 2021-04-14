@@ -25,7 +25,7 @@
 
             <Image 
                 Grid.Column="1"
-                Source = "list.png" >
+                Source = "category.png" >
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding SelectCategoryCommand}"/>
                 </Image.GestureRecognizers>
@@ -111,7 +111,7 @@
             CornerRadius="20"
             HeightRequest="120"
             IsVisible="{Binding VisibleDropDown}"
-            VerticalOptions="Start" >
+            VerticalOptions="Start">
             <StackLayout>
                 <ListView
                     ItemsSource="{Binding Pins}"
@@ -135,7 +135,7 @@
             Grid.Row="1" 
             Grid.Column="1"
             IsVisible="{Binding IsVisibleCategorySelector}"
-            HeightRequest="300">
+            VerticalOptions="Start">
             <StackLayout 
                 RadioButtonGroup.GroupName="Categories" 
                 RadioButtonGroup.SelectedValue="{Binding SotrValue}">
@@ -147,6 +147,8 @@
                 <RadioButton Value="Place to rest" Content="Place to rest"/>
                 <RadioButton Value="Work" Content="Work"/>
                 <RadioButton Value="Home" Content="Home" />
+                <RadioButton Value="Airports" Content="Airports" />
+                <RadioButton Value="Football stadium" Content="Football stadium" />
             </StackLayout>
         </Frame>
     </Grid>
