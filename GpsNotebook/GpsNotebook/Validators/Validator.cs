@@ -8,14 +8,14 @@ namespace GpsNotebook.Validators
     {
         public static bool EmailValidator(String input)
         {
-            Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+            Regex regex = new Regex(@"^[a-zA-Z]+\.@\d$");
 
             return regex.IsMatch(input);
         }
 
         public static bool PasswordValidator(String input)
         {
-            Regex regex = new Regex(@"^(.{0,7}|[^0-9]*|[^A-Z])$");
+            Regex regex = new Regex(@"^(.{0,7}|[^0-9]*|[^a-zA-Z])$");
 
             return regex.IsMatch(input);
         }

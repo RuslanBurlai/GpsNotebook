@@ -1,10 +1,9 @@
-﻿using GpsNotebook.Extensions;
-using GpsNotebook.Models;
+﻿using GpsNotebook.Models;
+using GpsNotebook.Services.Authorization;
 using GpsNotebook.Services.PinLocationRepository;
 using GpsNotebook.View;
 using Prism.Commands;
 using Prism.Navigation;
-using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -16,16 +15,19 @@ namespace GpsNotebook.ViewModel
     public class PinTabViewModel : ViewModelBase
     {
         private IPinModelService _pinModelService;
+        private IAuthorizationService _authorizationService;
 
         public PinTabViewModel(
             INavigationService navigationPage,
-            IPinModelService pinModelService) :
+            IPinModelService pinModelService,
+            IAuthorizationService authorizationService) :
             base(navigationPage)
         {
             //to resources
             Title = "List pins";
 
             _pinModelService = pinModelService;
+            _authorizationService = authorizationService;
         }
 
         #region -- Public properties --
@@ -59,6 +61,10 @@ namespace GpsNotebook.ViewModel
         private ICommand _searchPinsCommand;
         public ICommand SearchPinsCommand =>
             _searchPinsCommand ?? (_searchPinsCommand = new Command<string>(OnSearchPinsCommand));
+
+        private ICommand _logOut;
+        public ICommand LogOut =>
+            _logOut ?? (_logOut = new DelegateCommand(OnLogOutCommand));
 
         private bool _visibleDropDown;
         public bool VisibleDropDown
@@ -94,6 +100,12 @@ namespace GpsNotebook.ViewModel
             await NavigationService.NavigateAsync($"{nameof(AddPinView)}");
         }
 
+        private async void OnLogOutCommand()
+        {
+            _authorizationService.LogOut();
+            await NavigationService.NavigateAsync($"/{ nameof(NavigationPage)}/{ nameof(SignInView)}");
+        }
+
         private void OnEditPinInListCommand(PinModel pin)
         {
         }
@@ -125,7 +137,7 @@ namespace GpsNotebook.ViewModel
 
         #region -- Overrides --
 
-        public async override void OnNavigatedTo(INavigationParameters parameters)
+        public override void OnNavigatedTo(INavigationParameters parameters)
         {
 
             if(parameters.TryGetValue(nameof(PinModel),out PinModel newPin))

@@ -4,8 +4,7 @@ using GpsNotebook.Validators;
 using GpsNotebook.View;
 using Prism.Commands;
 using Prism.Navigation;
-using System.Collections.Generic;
-using System.Linq;
+using Prism.Services;
 using System.Windows.Input;
 
 namespace GpsNotebook.ViewModel
@@ -14,14 +13,17 @@ namespace GpsNotebook.ViewModel
     public class SignUpViewModel : ViewModelBase
     {
         private IUserModelService _userRepository;
+        private IPageDialogService _pageDialogService;
         public SignUpViewModel(
             INavigationService navigationService,
-            IUserModelService userRepository) :
+            IUserModelService userRepository,
+            IPageDialogService pageDialogService) :
             base (navigationService)  
         {
             Title = "Sign Up";
 
             _userRepository = userRepository;
+            _pageDialogService = pageDialogService;
         }
 
         #region -- Public properties --
@@ -74,9 +76,31 @@ namespace GpsNotebook.ViewModel
         private async void OnNavigateToSignIn()
         {
             UserModel user = new UserModel { Email = UserEmail, Name = UserName, Password = UserPassword };
+
+            if(Validator.EmailValidator(UserEmail))
+            {
+                if(Validator.PasswordValidator(UserPassword))
+                {
+                    if(Validator.ConfirmPassowrdValidator(UserPassword, ConfirmPassword))
+                    {
+                        await NavigationService.NavigateAsync($"{nameof(SignInView)}");
+                    }
+                    else
+                    {
+                        await _pageDialogService.DisplayAlertAsync("Password not confirmed.", "Password and confirm password not equal.", "Ok");
+                    }
+                }
+                else
+                {
+                    await _pageDialogService.DisplayAlertAsync("Password not correct.", "Password must contain at least numbers and uppercase characters.", "Ok");
+                }
+            }
+            else
+            {
+                await _pageDialogService.DisplayAlertAsync("Email error", "Input correct email.", "Ok");
+            }
             _userRepository.AddUser(user);
 
-            await NavigationService.NavigateAsync($"{nameof(SignInView)}");
         }
 
         #endregion

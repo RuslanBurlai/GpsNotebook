@@ -1,7 +1,10 @@
-﻿using Prism.Mvvm;
+﻿using Prism.Commands;
+using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using System;
+using System.Windows.Input;
 using Xamarin.Forms.GoogleMaps;
+using Newtonsoft.Json;
 
 namespace GpsNotebook.Dialogs
 {
@@ -37,6 +40,40 @@ namespace GpsNotebook.Dialogs
             set { SetProperty(ref _pinDescription, value); }
         }
 
+        private string _qrCodeData = "1337";
+        public string QrCodeData 
+        {
+            get { return _qrCodeData; }
+            set { SetProperty(ref _qrCodeData, value); }
+        }
+
+        private bool _isVisibleQrCode;
+        public bool IsVisibleQrCode
+        {
+            get { return _isVisibleQrCode; }
+            set { SetProperty(ref _isVisibleQrCode, value); }
+        }
+
+        private ICommand _sharePinViaQrCode;
+        public ICommand SharePinViaQrCode =>
+            _sharePinViaQrCode ?? (_sharePinViaQrCode = new DelegateCommand(OnsharePinViaQrCodeCommand));
+
+        #endregion
+
+        #region -- Private Helpers --
+
+        private void OnsharePinViaQrCodeCommand()
+        {
+            if (IsVisibleQrCode == false)
+            {
+                IsVisibleQrCode = true;
+            }
+            else
+            {
+                IsVisibleQrCode = false;
+            }
+        }
+
         #endregion
 
         #region -- IDialogAware implementation --
@@ -59,6 +96,8 @@ namespace GpsNotebook.Dialogs
                 PinName = pin.Label;
                 PinLatitude = pin.Position.Latitude.ToString();
                 PinLongitude = pin.Position.Longitude.ToString();
+                string json = JsonConvert.SerializeObject(pin);
+                QrCodeData = json;
             }
         }
 

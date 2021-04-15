@@ -6,11 +6,12 @@ using GpsNotebook.Extensions;
 using GpsNotebook.Models;
 using System.ComponentModel;
 using Prism.Services.Dialogs;
-using GpsNotebook.Dialogs;
 using System.Windows.Input;
 using Xamarin.Forms;
-using System;
 using System.Linq;
+using Prism.Commands;
+using GpsNotebook.Services.Authorization;
+using GpsNotebook.View;
 
 namespace GpsNotebook.ViewModel
 {
@@ -18,17 +19,20 @@ namespace GpsNotebook.ViewModel
     {
         private IPinModelService _pinModelService;
         private IDialogService _dialogService;
+        private IAuthorizationService _authorizationService;
 
         public MapTabViewModel(
             INavigationService navigationService,
             IPinModelService pinModelService,
-            IDialogService dialogService) :
+            IDialogService dialogService,
+            IAuthorizationService authorizationService) :
             base(navigationService)
         {
             Title = "Map with pins";
 
             _pinModelService = pinModelService;
             _dialogService = dialogService;
+            _authorizationService = authorizationService;
         }
 
         #region -- Public properties --
@@ -47,9 +51,30 @@ namespace GpsNotebook.ViewModel
             set { SetProperty(ref _tapOnPin, value); }
         }
 
+        private ICommand _logOut;
+        public ICommand LogOut =>
+            _logOut ?? (_logOut = new DelegateCommand(OnLogOutCommand));
+
         private ICommand searchPins;
         public ICommand SearchPins =>
             searchPins ?? (searchPins = new Command<string>(OnGetSearchPins));
+
+        private MapSpan _moveCameraToPin;
+        public MapSpan MoveCameraToPin
+        {
+            get { return _moveCameraToPin; }
+            set { SetProperty(ref _moveCameraToPin, value); }
+        }
+
+        #endregion
+
+        #region -- Private Helpers --
+
+        private async void OnLogOutCommand()
+        {
+            _authorizationService.LogOut();
+            await NavigationService.NavigateAsync($"/{ nameof(NavigationPage)}/{ nameof(SignInView)}");
+        }
 
         private void OnGetSearchPins(string sesarchQuery)
         {
@@ -66,12 +91,6 @@ namespace GpsNotebook.ViewModel
             }
         }
 
-        private MapSpan _moveCameraToPin;
-        public MapSpan MoveCameraToPin
-        {
-            get { return _moveCameraToPin; }
-            set { SetProperty(ref _moveCameraToPin, value); }
-        }
 
         #endregion
 

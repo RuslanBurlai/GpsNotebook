@@ -1,19 +1,66 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Frame
-    x:Class="GpsNotebook.Dialogs.TapOnPin"
-    xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:prism="http://prismlibrary.com"
-    prism:DialogLayout.CloseOnBackgroundTapped="True"
-    prism:DialogLayout.RelativeWidthRequest="{OnIdiom Default=0.75, Desktop=0.5}"
-    prism:ViewModelLocator.AutowireViewModel="True"
-    CornerRadius="20">
+<Frame x:Class="GpsNotebook.Dialogs.TapOnPin"
+       xmlns="http://xamarin.com/schemas/2014/forms"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:prism="http://prismlibrary.com"
+       prism:DialogLayout.CloseOnBackgroundTapped="True"
+       prism:ViewModelLocator.AutowireViewModel="True"
+       prism:DialogLayout.RelativeHeightRequest="0.6"
+       prism:DialogLayout.RelativeWidthRequest="0.95"
+       xmlns:zxing="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
+       CornerRadius="20">
 
-    <StackLayout>
-        <Label Text="{Binding PinName}"/>
-        <Label Text="{Binding PinLatitude}"/>
-        <Label Text="{Binding PinLongitude}"/>
-        <Label Text="{Binding PinDescription}"/>
-    </StackLayout>
+    <Grid
+        RowDefinitions="0.3*, 0.3*, 0.4*"
+        ColumnDefinitions=" 0.3*, 0.7*">
+
+        <Grid
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Grid.Row="0"
+            RowDefinitions="0.25*, 0.25*, 0.25*, 0.25*"
+            ColumnDefinitions="0.3*, 0.7*">
+            
+            <Label Grid.Row="0" Grid.Column="0" Text="Name" />
+            <Label Grid.Row="1" Grid.Column="0" Text="Latitude" />
+            <Label Grid.Row="2" Grid.Column="0" Text="Longitude"/>
+            <Label Grid.Row="3" Grid.Column="0" Text="Description"/>
+            <Label Grid.Row="0" Grid.Column="1" Text="{Binding PinName}" />
+            <Label Grid.Row="1" Grid.Column="1" Text="{Binding PinLatitude}" />
+            <Label Grid.Row="2" Grid.Column="1" Text="{Binding PinLongitude}"/>
+            <Label Grid.Row="3" Grid.Column="1" Text="{Binding PinDescription}"/>
+        </Grid>
+
+        <StackLayout 
+            Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="2">
+            <Button Text="Share" Command="{Binding SharePinViaQrCode}" />
+            <Button Text="Scane"/>
+            <!--<zxing:ZXingScannerView
+            Grid.Row="1"
+            IsScanning="True"
+            HorizontalOptions="Center"
+            IsVisible="true"
+            IsTabStop="True"
+            />-->
+        </StackLayout>
+
+        <StackLayout 
+            Grid.Row="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            IsVisible="{Binding IsVisibleQrCode}">
+            
+            <zxing:ZXingBarcodeImageView
+            Grid.Row="2" 
+            BarcodeValue="{Binding QrCodeData}" 
+            BarcodeFormat="QR_CODE" 
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand"/>
+
+        </StackLayout>
+        
+    </Grid>
 
 </Frame>

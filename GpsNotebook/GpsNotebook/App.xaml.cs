@@ -16,6 +16,7 @@ namespace GpsNotebook
 {
     public partial class App : PrismApplication
     {
+        private IAuthorizationService _authorization => Container.Resolve<IAuthorizationService>();
         public App(IPlatformInitializer initializer = null) : base (initializer)
         {
         }
@@ -51,7 +52,16 @@ namespace GpsNotebook
             InitializeComponent();
 
             //add IsAuthorized property to AuthService
-            await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(MapTabbedView)}");
+            //await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(MapTabbedView)}");
+            if (_authorization.GetUserId != 0)
+            {
+                await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(MapTabbedView)}");
+            }
+            else
+            {
+                await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(SignInView)}");
+            }
+
         }
 
         protected override void OnStart()

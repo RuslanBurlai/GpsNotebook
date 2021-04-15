@@ -70,7 +70,7 @@ namespace GpsNotebook.ViewModel
             }
             else
             {
-                await _pageDialogService.DisplayAlertAsync("SingIn error", "Your not registered", "Ok");
+                await _pageDialogService.DisplayAlertAsync("SingIn error", "You not registered", "Ok");
             }
         }
 
