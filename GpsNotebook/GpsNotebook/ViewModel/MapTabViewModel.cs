@@ -12,6 +12,8 @@ using System.Linq;
 using Prism.Commands;
 using GpsNotebook.Services.Authorization;
 using GpsNotebook.View;
+using Newtonsoft.Json;
+using GpsNotebook.Dialogs;
 
 namespace GpsNotebook.ViewModel
 {
@@ -66,6 +68,11 @@ namespace GpsNotebook.ViewModel
             set { SetProperty(ref _moveCameraToPin, value); }
         }
 
+        private ICommand _navigateToScanQrCode;
+        public ICommand NavigateToScanQrCode =>
+            _navigateToScanQrCode ?? (_navigateToScanQrCode = new DelegateCommand(OnNavigateToScanQrCode));
+
+
         #endregion
 
         #region -- Private Helpers --
@@ -91,6 +98,11 @@ namespace GpsNotebook.ViewModel
             }
         }
 
+        private async void OnNavigateToScanQrCode()
+        {
+            await _dialogService.ShowDialogAsync(nameof(QrCodeScanDialogView));
+        }
+
 
         #endregion
 
@@ -105,6 +117,11 @@ namespace GpsNotebook.ViewModel
         {
             base.OnNavigatedTo(parameters);
 
+            if (parameters.TryGetValue(nameof(QrCodeScanDialogViewModel), out Pin pin))
+            {
+                MoveCameraToPin = MapSpan.FromCenterAndRadius(pin.Position, new Distance(10000));
+            }
+
             if (parameters.ContainsKey("Pins"))
             {
                 var list = new ObservableCollection<PinModel>();
@@ -112,10 +129,9 @@ namespace GpsNotebook.ViewModel
                 AllPins = new ObservableCollection<Pin>(list.Select(x => x.ToPin()));
             }
 
-            var p = new PinModel();
-            if (parameters.TryGetValue<PinModel>("SelectedItemFromPinTab", out p))
+            if (parameters.TryGetValue("SelectedItemFromPinTab", out PinModel pinModel))
             {
-                Position position = new Position(p.Latitude, p.Longitude);
+                Position position = new Position(pinModel.Latitude, pinModel.Longitude);
                 MoveCameraToPin = MapSpan.FromCenterAndRadius(position, new Distance(10000));
             }
         }

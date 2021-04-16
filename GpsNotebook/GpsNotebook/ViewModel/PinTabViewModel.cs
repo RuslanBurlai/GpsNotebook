@@ -1,4 +1,5 @@
-﻿using GpsNotebook.Models;
+﻿using GpsNotebook.Dialogs;
+using GpsNotebook.Models;
 using GpsNotebook.Services.Authorization;
 using GpsNotebook.Services.PinLocationRepository;
 using GpsNotebook.View;

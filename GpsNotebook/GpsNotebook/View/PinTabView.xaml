@@ -14,8 +14,8 @@
     </ContentPage.ToolbarItems>
     
     <Grid RowDefinitions="0.07*, *" ColumnDefinitions="0.3*, 0.7*">
-            
-                <Grid Grid.Row="0" 
+
+        <Grid Grid.Row="0" 
               Grid.Column="0"
               Grid.ColumnSpan="2"
               ColumnDefinitions="0.9*, 0.1*">
@@ -24,7 +24,7 @@
                 
                 SearchRequest="{Binding SearchPinsCommand}"
                 Grid.Column="0">
-                
+
             </customSearch:CustomSearchBar>
 
             <Image 
@@ -36,15 +36,6 @@
             </Image>
 
         </Grid>
-
-        <!--<SearchBar>
-            <SearchBar.Behaviors>
-                <prism:EventToCommandBehavior
-                    EventName="SearchPinsCommand"
-                    Command="{Binding OnSearchPinsCommand}" />
-
-            </SearchBar.Behaviors>
-        </SearchBar>-->
 
         <StackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
 

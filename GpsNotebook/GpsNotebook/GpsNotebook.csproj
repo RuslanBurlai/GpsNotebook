@@ -23,6 +23,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Dialogs\QrCodeScanDialogView.xaml.cs">
+      <DependentUpon>QrCodeScanDialogView.xaml</DependentUpon>
+    </Compile>
     <Compile Update="View\AddPinView.xaml.cs">
       <DependentUpon>AddPinView.xaml</DependentUpon>
     </Compile>
@@ -44,10 +47,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Dialogs\QrCodeScanDialogView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Dialogs\TapOnPin.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="View\AddPinView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="View\QrCodeScaningView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="View\SignInView.xaml">

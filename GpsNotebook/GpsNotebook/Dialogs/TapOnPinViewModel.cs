@@ -5,11 +5,22 @@ using System;
 using System.Windows.Input;
 using Xamarin.Forms.GoogleMaps;
 using Newtonsoft.Json;
+using GpsNotebook.ViewModel;
+using Prism.Navigation;
+using GpsNotebook.View;
+using Xamarin.Forms;
+using ZXing;
+using ZXing.Net.Mobile.Forms;
 
 namespace GpsNotebook.Dialogs
 {
-    public class TapOnPinViewModel : BindableBase, IDialogAware
+    public class TapOnPinViewModel : ViewModelBase, IDialogAware
     {
+        public TapOnPinViewModel(INavigationService navigationService) :
+            base(navigationService)
+        {
+        }
+
         #region -- Public Property --
 
         private string _pinName;
@@ -40,7 +51,7 @@ namespace GpsNotebook.Dialogs
             set { SetProperty(ref _pinDescription, value); }
         }
 
-        private string _qrCodeData = "1337";
+        private string _qrCodeData;
         public string QrCodeData 
         {
             get { return _qrCodeData; }
@@ -69,6 +80,7 @@ namespace GpsNotebook.Dialogs
                 IsVisibleQrCode = true;
             }
             else
+            
             {
                 IsVisibleQrCode = false;
             }
