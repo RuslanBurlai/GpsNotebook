@@ -2,9 +2,9 @@
 
 namespace GpsNotebook.View
 {
-    public partial class SignInView : ContentPage
+    public partial class LogInView : BaseContentPage
     {
-        public SignInView()
+        public LogInView()
         {
             InitializeComponent();
         }

@@ -31,17 +31,19 @@ namespace GpsNotebook.ViewModel
             _authorization = authorization;
             _pageDialogService = pageDialogService;
 
-            Categories = new List<CategoriesForPin>();
-            Categories.Add(new CategoriesForPin { Name = "Gyms" });
-            Categories.Add(new CategoriesForPin { Name = "Restaurants" });
-            Categories.Add(new CategoriesForPin { Name = "Hotels" });
-            Categories.Add(new CategoriesForPin { Name = "Supermarkets" });
-            Categories.Add(new CategoriesForPin { Name = "Schools" });
-            Categories.Add(new CategoriesForPin { Name = "Place to rest" });
-            Categories.Add(new CategoriesForPin { Name = "Work" });
-            Categories.Add(new CategoriesForPin { Name = "Home" });
-            Categories.Add(new CategoriesForPin { Name = "Airports" });
-            Categories.Add(new CategoriesForPin { Name = "Football stadium" });
+            Categories = new List<CategoriesForPin>
+            {
+                new CategoriesForPin { Name = "Gyms" },
+                new CategoriesForPin { Name = "Restaurants" },
+                new CategoriesForPin { Name = "Hotels" },
+                new CategoriesForPin { Name = "Supermarkets" },
+                new CategoriesForPin { Name = "Schools" },
+                new CategoriesForPin { Name = "Place to rest" },
+                new CategoriesForPin { Name = "Work" },
+                new CategoriesForPin { Name = "Home" },
+                new CategoriesForPin { Name = "Airports" },
+                new CategoriesForPin { Name = "Football stadium" }
+            };
         }
 
         #region --  Public properties --

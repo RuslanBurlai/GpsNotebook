@@ -89,7 +89,7 @@ namespace GpsNotebook.ViewModel
                     if(Validator.ConfirmPassowrdValidator(UserPassword, ConfirmPassword))
                     {
                         _userRepository.AddUser(user);
-                        await NavigationService.NavigateAsync($"{nameof(SignInView)}");
+                        await NavigationService.NavigateAsync($"{nameof(LogInView)}");
                     }
                     else
                     {

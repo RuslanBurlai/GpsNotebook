@@ -2,7 +2,7 @@
 
 namespace GpsNotebook.View
 {
-    public partial class PinTabView : ContentPage
+    public partial class PinTabView : BaseContentPage
     {
         public PinTabView()
         {

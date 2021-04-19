@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage x:Class="GpsNotebook.View.SignInView"
-             xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:prism="http://prismlibrary.com"
-             Title="{Binding Title}"
-             prism:ViewModelLocator.AutowireViewModel="True">
+<baseContentPage:BaseContentPage x:Class="GpsNotebook.View.LogInView"
+                                 xmlns="http://xamarin.com/schemas/2014/forms"
+                                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                                 xmlns:baseContentPage="clr-namespace:GpsNotebook.View"
+                                 xmlns:prism="http://prismlibrary.com"
+                                 Title="{Binding Title}"
+                                 prism:ViewModelLocator.AutowireViewModel="True">
     
     <Grid RowDefinitions="*, 0.3*">
 
@@ -45,4 +46,4 @@
             </Label>
         </StackLayout>
     </Grid>
-</ContentPage>
+</baseContentPage:BaseContentPage>

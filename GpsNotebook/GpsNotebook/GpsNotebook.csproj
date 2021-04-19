@@ -38,15 +38,18 @@
     <Compile Update="View\PinTabView.xaml.cs">
       <DependentUpon>PinTabView.xaml</DependentUpon>
     </Compile>
-    <Compile Update="View\SignInView.xaml.cs">
-      <DependentUpon>SignInView.xaml</DependentUpon>
+    <Compile Update="View\LogInView.xaml.cs">
+      <DependentUpon>LogInView.xaml</DependentUpon>
     </Compile>
-    <Compile Update="View\SignUpView.xaml.cs">
-      <DependentUpon>SignUpView.xaml</DependentUpon>
+    <Compile Update="View\RegisterView.xaml.cs">
+      <DependentUpon>RegisterView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Control\CustomNavigationBar.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Dialogs\QrCodeScanDialogView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -56,10 +59,13 @@
     <EmbeddedResource Update="View\AddPinView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="View\SignInView.xaml">
+    <EmbeddedResource Update="View\LogInOrRegisteredView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="View\SignUpView.xaml">
+    <EmbeddedResource Update="View\LogInView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="View\RegisterView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

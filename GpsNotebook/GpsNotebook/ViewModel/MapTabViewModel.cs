@@ -84,7 +84,7 @@ namespace GpsNotebook.ViewModel
         private async void OnLogOutCommand()
         {
             _authorizationService.LogOut();
-            await NavigationService.NavigateAsync($"/{ nameof(NavigationPage)}/{ nameof(SignInView)}");
+            await NavigationService.NavigateAsync($"/{ nameof(NavigationPage)}/{ nameof(LogInView)}");
         }
 
         private void OnGetSearchPins(string sesarchQuery)

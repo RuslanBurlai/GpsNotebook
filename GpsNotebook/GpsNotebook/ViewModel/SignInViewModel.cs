@@ -60,7 +60,7 @@ namespace GpsNotebook.ViewModel
 
         private async void OnNavigateToSignUp()
         {
-            await NavigationService.NavigateAsync($"{nameof(SignUpView)}");
+            await NavigationService.NavigateAsync($"{nameof(RegisterView)}");
         }
 
         private async void OnNavigateToMapTabbedPage()
