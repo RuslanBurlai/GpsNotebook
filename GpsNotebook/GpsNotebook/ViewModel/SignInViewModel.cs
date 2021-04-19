@@ -2,6 +2,8 @@
 using GpsNotebook.Services.Authorization;
 using GpsNotebook.Validators;
 using GpsNotebook.View;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services;

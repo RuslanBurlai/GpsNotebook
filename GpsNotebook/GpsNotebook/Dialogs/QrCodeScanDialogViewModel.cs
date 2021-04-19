@@ -6,6 +6,7 @@ using System;
 using System.Windows.Input;
 using Newtonsoft.Json;
 using Xamarin.Forms.GoogleMaps;
+using ZXing;
 
 namespace GpsNotebook.Dialogs
 {
@@ -37,16 +38,16 @@ namespace GpsNotebook.Dialogs
 
         private ICommand _qrScanResalt;
         public ICommand QrScanResalt =>
-            _qrScanResalt ?? (_qrScanResalt = new DelegateCommand<object>(OnQrScanResaltCommand));
+            _qrScanResalt ?? (_qrScanResalt = new DelegateCommand<Result>(OnQrScanResaltCommand));
 
         #endregion
 
         #region -- Private Helpers --
 
-        private void OnQrScanResaltCommand(object obj)
+        private void OnQrScanResaltCommand(Result obj)
         {
-            var scanedPin = obj as string;
-            //var pin = JsonConvert.DeserializeObject<string>(scanedPin);
+            var scanedPin = obj as Result;
+            var pin = JsonConvert.DeserializeObject<Pin>(scanedPin.Text);
 
             var pinParametrs = new NavigationParameters();
             pinParametrs.Add(nameof(QrCodeScanDialogViewModel), obj);
@@ -56,5 +57,4 @@ namespace GpsNotebook.Dialogs
 
         #endregion
     }
-
 }

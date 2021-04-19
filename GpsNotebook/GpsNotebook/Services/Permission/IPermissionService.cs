@@ -3,8 +3,8 @@ using Xamarin.Essentials;
 
 namespace GpsNotebook.Services.Permission
 {
-    public class GetPermissions
+    public interface IPermissionService
     {
-        
+        Task<PermissionStatus> GetRequestPermissionAsync();
     }
 }

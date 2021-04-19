@@ -75,7 +75,12 @@ namespace GpsNotebook.ViewModel
 
         private async void OnNavigateToSignIn()
         {
-            UserModel user = new UserModel { Email = UserEmail, Name = UserName, Password = UserPassword };
+            UserModel user = new UserModel 
+            { 
+                Email = UserEmail, 
+                Name =  UserName, 
+                Password = UserPassword 
+            };
 
             if(Validator.EmailValidator(UserEmail))
             {
@@ -83,6 +88,7 @@ namespace GpsNotebook.ViewModel
                 {
                     if(Validator.ConfirmPassowrdValidator(UserPassword, ConfirmPassword))
                     {
+                        _userRepository.AddUser(user);
                         await NavigationService.NavigateAsync($"{nameof(SignInView)}");
                     }
                     else
@@ -99,8 +105,6 @@ namespace GpsNotebook.ViewModel
             {
                 await _pageDialogService.DisplayAlertAsync("Email error", "Input correct email.", "Ok");
             }
-            _userRepository.AddUser(user);
-
         }
 
         #endregion

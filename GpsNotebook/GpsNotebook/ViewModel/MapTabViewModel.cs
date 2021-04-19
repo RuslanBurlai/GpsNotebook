@@ -14,6 +14,8 @@ using GpsNotebook.Services.Authorization;
 using GpsNotebook.View;
 using Newtonsoft.Json;
 using GpsNotebook.Dialogs;
+using Plugin.Permissions.Abstractions;
+using Plugin.Permissions;
 
 namespace GpsNotebook.ViewModel
 {
@@ -149,7 +151,7 @@ namespace GpsNotebook.ViewModel
             }
         }
 
-        public override void Initialize(INavigationParameters parameters)
+        public async override void Initialize(INavigationParameters parameters)
         {
             base.Initialize(parameters);
 
@@ -157,6 +159,8 @@ namespace GpsNotebook.ViewModel
                 .Select(pinModel => pinModel.ToPin());
 
             AllPins = new ObservableCollection<Pin>(pins);
+
+            //PermissionStatus status = await CrossPermissions.Current.RequestPermissionAsync<CalendarPermission>();
         }
 
         #endregion

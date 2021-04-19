@@ -55,12 +55,12 @@ namespace GpsNotebook.Droid
 
             if (requestCode == RequestLocationId)
             {
-                if ((grantResults.Length == 1) && (grantResults[0] == (int)Permission.Granted)) 
+                if ((grantResults.Length == 1) && (grantResults[0] == (int)Permission.Granted))
                 {
                     // Permissions granted - display a message.
                     Console.WriteLine("Location permissions granted.");
                 }
-                else 
+                else
                 {
                     // Permissions denied - display a message.
                     Console.WriteLine("Location permissions denied.");
@@ -71,7 +71,6 @@ namespace GpsNotebook.Droid
             {
                 base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
             }
-            //base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
         public class AndroidInitializer : IPlatformInitializer

@@ -10,7 +10,6 @@ namespace GpsNotebook.Services.Authorization
         private ISettingsManager _settingsManager;
         private IUserModelService _userModelService;
 
-
         public AuthorizationService(
             ISettingsManager settingManager,
             IUserModelService userModelService)
@@ -18,6 +17,7 @@ namespace GpsNotebook.Services.Authorization
             _settingsManager = settingManager;
             _userModelService = userModelService;
         }
+
         public int GetUserId
         {
             get { return _settingsManager.UserId; }
@@ -45,5 +45,13 @@ namespace GpsNotebook.Services.Authorization
 
             return registeredUser != null;
         }
+
+        //public UserModel ValidateAndCreateUser(string name, string password, string email)
+        //{
+        //    var newUser = new UserModel
+        //    {
+
+        //    };
+        //}
     }
 }
