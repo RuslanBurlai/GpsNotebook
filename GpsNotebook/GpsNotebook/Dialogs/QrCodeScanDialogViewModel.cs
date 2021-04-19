@@ -7,16 +7,12 @@ using System.Windows.Input;
 using Newtonsoft.Json;
 using Xamarin.Forms.GoogleMaps;
 using ZXing;
+using Prism.Mvvm;
 
 namespace GpsNotebook.Dialogs
 {
-    public class QrCodeScanDialogViewModel : ViewModelBase, IDialogAware
+    public class QrCodeScanDialogViewModel : BindableBase, IDialogAware
     {
-        public QrCodeScanDialogViewModel(INavigationService navigationService) :
-            base(navigationService)
-        {
-
-        }
 
         #region -- IDialogAware implementation --
 
@@ -46,13 +42,12 @@ namespace GpsNotebook.Dialogs
 
         private void OnQrScanResaltCommand(Result obj)
         {
-            var scanedPin = obj as Result;
-            var pin = JsonConvert.DeserializeObject<Pin>(scanedPin.Text);
+            var pin = JsonConvert.DeserializeObject<Pin>(obj.Text);
 
-            var pinParametrs = new NavigationParameters();
-            pinParametrs.Add(nameof(QrCodeScanDialogViewModel), obj);
-
-            NavigationService.GoBackAsync(pinParametrs);
+            RequestClose(new DialogParameters 
+            { 
+                { nameof(QrCodeScanDialogViewModel), pin } 
+            });
         }
 
         #endregion

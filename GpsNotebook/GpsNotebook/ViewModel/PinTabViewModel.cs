@@ -165,9 +165,9 @@ namespace GpsNotebook.ViewModel
             {
                 case nameof(SelectedItemInListView):
                     {
-                        NavigationParameters p = new NavigationParameters();
-                        p.Add("SelectedItemFromPinTab", SelectedItemInListView);
-                        await NavigationService.NavigateAsync(nameof(MapTabbedView), p);
+                        NavigationParameters pinParametrs = new NavigationParameters();
+                        pinParametrs.Add("SelectedItemFromPinTab", SelectedItemInListView);
+                        await NavigationService.NavigateAsync(nameof(MapTabbedView), pinParametrs);
                         break;
                     }
 

@@ -68,7 +68,10 @@ namespace GpsNotebook.Control
         {
             if (propertyName == nameof(ListOfPins))
             {
-                Pins.Clear();
+                if(ListOfPins != null)
+                {
+                    Pins.Clear();
+                }
                 foreach (var item in ListOfPins)
                 {
                     Pins.Add(item);

@@ -37,6 +37,8 @@ namespace GpsNotebook.ViewModel
             _pinModelService = pinModelService;
             _dialogService = dialogService;
             _authorizationService = authorizationService;
+
+            AllPins = new ObservableCollection<Pin>();
         }
 
         #region -- Public properties --
@@ -100,11 +102,22 @@ namespace GpsNotebook.ViewModel
             }
         }
 
-        private async void OnNavigateToScanQrCode()
+        private void OnNavigateToScanQrCode()
         {
-            await _dialogService.ShowDialogAsync(nameof(QrCodeScanDialogView));
+            _dialogService.ShowDialog(nameof(QrCodeScanDialogView), OnDialogClosed);
         }
 
+        private void OnDialogClosed(IDialogResult result)
+        {
+            if (result.Parameters.ContainsKey(nameof(QrCodeScanDialogViewModel)))
+            {
+                var pin = new Pin();
+                pin = result.Parameters.GetValue<Pin>(nameof(QrCodeScanDialogViewModel));
+                AllPins = new ObservableCollection<Pin>();
+                AllPins.Add(pin);
+                MoveCameraToPin = MapSpan.FromCenterAndRadius(pin.Position, new Distance(10000));
+            }
+        }
 
         #endregion
 
@@ -118,11 +131,6 @@ namespace GpsNotebook.ViewModel
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
-
-            if (parameters.TryGetValue(nameof(QrCodeScanDialogViewModel), out Pin pin))
-            {
-                MoveCameraToPin = MapSpan.FromCenterAndRadius(pin.Position, new Distance(10000));
-            }
 
             if (parameters.ContainsKey("Pins"))
             {

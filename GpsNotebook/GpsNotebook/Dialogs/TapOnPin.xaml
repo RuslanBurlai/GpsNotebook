@@ -5,13 +5,13 @@
        xmlns:prism="http://prismlibrary.com"
        prism:DialogLayout.CloseOnBackgroundTapped="True"
        prism:ViewModelLocator.AutowireViewModel="True"
-       prism:DialogLayout.RelativeHeightRequest="0.45"
+       prism:DialogLayout.RelativeHeightRequest="0.75"
        prism:DialogLayout.RelativeWidthRequest="0.95"
        xmlns:zxing="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
        CornerRadius="20">
 
     <Grid
-        RowDefinitions="0.4*, 0.2*, 0.4*">
+        RowDefinitions="0.4*, 0.1*, 0.5*">
 
         <Grid
             Grid.Column="0"
