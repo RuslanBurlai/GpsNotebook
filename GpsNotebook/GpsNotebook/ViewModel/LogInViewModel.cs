@@ -12,17 +12,17 @@ using Xamarin.Forms;
 
 namespace GpsNotebook.ViewModel
 {
-    public class SignInViewModel : ViewModelBase
+    public class LogInViewModel : ViewModelBase
     {
         private IAuthorizationService _authorizationService;
         private IPageDialogService _pageDialogService;
-        public SignInViewModel(
+        public LogInViewModel(
             IAuthorizationService authorizationService,
             INavigationService navigationService,
             IPageDialogService pageDialogService) :
             base(navigationService)
         {
-            Title = "Sing in";
+            Title = "Log in";
             _authorizationService = authorizationService;
             _pageDialogService = pageDialogService;
         }

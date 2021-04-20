@@ -29,7 +29,7 @@ namespace GpsNotebook
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<LogInOrRegisteredView, LogInOrRegisteredViewModel>();
 
-            containerRegistry.RegisterForNavigation<LogInView, SignInViewModel>();
+            containerRegistry.RegisterForNavigation<LogInView, LogInViewModel>();
             containerRegistry.RegisterForNavigation<RegisterView, SignUpViewModel>();
 
             containerRegistry.RegisterForNavigation<MapTabbedView>();
@@ -56,7 +56,7 @@ namespace GpsNotebook
             InitializeComponent();
 
             //add IsAuthorized property to AuthService
-            await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(LogInOrRegisteredView)}");
+            await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(LogInView)}");
             //if (_authorization.GetUserId != 0)
             //{
             //    await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(MapTabbedView)}");

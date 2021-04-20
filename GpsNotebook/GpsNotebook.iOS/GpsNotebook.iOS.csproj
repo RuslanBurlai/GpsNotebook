@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="Renderers\NoUnderlineEntry.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -388,4 +389,5 @@
   <ItemGroup>
     <BundleResource Include="Resources\pic_enter_page%403x.png" />
   </ItemGroup>
+  <ItemGroup />
 </Project>

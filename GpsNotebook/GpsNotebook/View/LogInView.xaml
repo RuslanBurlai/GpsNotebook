@@ -1,49 +1,52 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<baseContentPage:BaseContentPage x:Class="GpsNotebook.View.LogInView"
-                                 xmlns="http://xamarin.com/schemas/2014/forms"
-                                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                                 xmlns:baseContentPage="clr-namespace:GpsNotebook.View"
-                                 xmlns:prism="http://prismlibrary.com"
-                                 Title="{Binding Title}"
-                                 prism:ViewModelLocator.AutowireViewModel="True">
-    
-    <Grid RowDefinitions="*, 0.3*">
+<baseContentPage:BaseContentPage
+    x:Class="GpsNotebook.View.LogInView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:baseContentPage="clr-namespace:GpsNotebook.View"
+    xmlns:customEntry="clr-namespace:GpsNotebook.Control"
+    xmlns:navBar="clr-namespace:GpsNotebook.Control"
+    xmlns:prism="http://prismlibrary.com"
+    prism:ViewModelLocator.AutowireViewModel="True">
 
-        <StackLayout
+    <Grid RowDefinitions="0.2*, 0.5*, 0.3*">
+
+        <navBar:CustomNavigationBar
             Grid.Row="0"
-            Padding="25"
-            VerticalOptions="Center">
+            ImagePath="ic_left_blue"
+            NavBarTitle="{Binding Title}" />
 
-            <Entry Placeholder="Email" Text="{Binding UserEmail}" />
+        <StackLayout Grid.Row="1">
 
-            <Entry
-                IsPassword="True"
-                Placeholder="Password"
-                Text="{Binding UserPassword}" />
+            <customEntry:CustomEntry
+                Grid.Row="1"
+                Margin="15,0,15,0"
+                FooterEntry="Error"
+                HeaderEntry="Email"
+                ImagePath="ic_eye" />
+
+            <customEntry:CustomEntry
+                Grid.Row="2"
+                Margin="15,0,15,0"
+                FooterEntry="Error"
+                HeaderEntry="Password"
+                ImagePath="ic_eye_off" />
 
         </StackLayout>
 
-        <StackLayout Grid.Row="1" VerticalOptions="Center">
+        <Button
+            Grid.Row="4"
+            BackgroundColor="RoyalBlue"
+            Command="{Binding NavigateToMapTabbedPageCommand}"
+            FontSize="20"
+            Text="Log in"
+            TextColor="White"
+            VerticalOptions="Start" />
 
-            <Button
-                Margin="25,0,25,0"
-                Command="{Binding NavigateToMapTabbedPageCommand}"
-                Text="Sign In" />
-
-            <Label HorizontalOptions="Center">
-                <Label.FormattedText>
-                    <FormattedString>
-                        <Span
-                            Text="Sign up"
-                            TextColor="Blue"
-                            TextDecorations="Underline">
-                            <Span.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding NavigateToSignUpCommand}" />
-                            </Span.GestureRecognizers>
-                        </Span>
-                    </FormattedString>
-                </Label.FormattedText>
-            </Label>
-        </StackLayout>
     </Grid>
+
+    <!--  https://github.com/xamarin/GoogleApisForiOSComponents/issues/324  -->
+    <!--  https://stackoverflow.com/questions/49747811/error-error-mt1008-failed-to-launch-the-simulator  -->
+    <!--  https://forums.xamarin.com/discussion/43086/need-help-to-resolve-issues-in-xamarin-ios  -->
+
 </baseContentPage:BaseContentPage>
