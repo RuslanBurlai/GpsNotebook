@@ -7,6 +7,8 @@ using Plugin.Permissions.Abstractions;
 using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services;
+using System;
+using System.ComponentModel;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -43,44 +45,126 @@ namespace GpsNotebook.ViewModel
             set { SetProperty(ref _userPassword, value); }
         }
 
-        private ICommand _navigateToMapTabbedPageCommand;
-        public ICommand NavigateToMapTabbedPageCommand =>
-            _navigateToMapTabbedPageCommand ?? (_navigateToMapTabbedPageCommand = new DelegateCommand(OnNavigateToMapTabbedPage, CanExecuteNavigateToMapTabbedPage)
-            .ObservesProperty<string>(() => UserEmail)
-            .ObservesProperty<string>(() => UserPassword));
+        private bool _showPassword;
+        public bool ShowPassword
+        {
+            get { return _showPassword; }
+            set { SetProperty(ref _showPassword, value); }
+        }
 
-        private ICommand _navigateToSignUpCommand;
-        public ICommand NavigateToSignUpCommand =>
-            _navigateToSignUpCommand ?? (_navigateToSignUpCommand = new DelegateCommand(OnNavigateToSignUp));
+        private string _emailError;
+        public string EmailError
+        {
+            get { return _emailError; }
+            set { SetProperty(ref _emailError, value); }
+        }
+
+        private string _passwordError;
+        public string PasswordError
+        {
+            get { return _passwordError; }
+            set { SetProperty(ref _passwordError, value); }
+        }
+
+        private bool _showRightImageEmail;
+        public bool ShowRightImageEmail
+        {
+            get { return _showRightImageEmail; }
+            set { SetProperty(ref _showRightImageEmail, value); }
+        }
+
+        private bool _showRightImagePassword;
+        public bool ShowRightImagePassword
+        {
+            get { return _showRightImagePassword; }
+            set { SetProperty(ref _showRightImagePassword, value); }
+        }
+
+        private string _imagePathRightIcon;
+        public string ImagePathRightIcon
+        {
+            get { return _imagePathRightIcon; }
+            set { SetProperty(ref _imagePathRightIcon, value); }
+        }
+
+        private ICommand _clearEmailEntryCommand;
+        public ICommand ClearEmailEntryCommand =>
+            _clearEmailEntryCommand ?? (_clearEmailEntryCommand = new Command(OnClearEmailEntry));
+
+        private ICommand _hidePasswordCommand;
+        public ICommand HidePasswordCommand =>
+            _hidePasswordCommand ?? (_hidePasswordCommand = new Command(OnHidePassword));
+
+        private ICommand _onLogInOrRegisterViewCommand;
+        public ICommand OnLogInOrRegisterViewCommand =>
+            _onLogInOrRegisterViewCommand ?? (_onLogInOrRegisterViewCommand = new Command(OnShowPreviousViews));
 
         #endregion
 
 
         #region -- Private Helpers --
 
-        private async void OnNavigateToSignUp()
+        private void OnHidePassword()
         {
-            await NavigationService.NavigateAsync($"{nameof(RegisterView)}");
-        }
-
-        private async void OnNavigateToMapTabbedPage()
-        {
-            UserModel user = new UserModel { Email = UserEmail, Password = UserPassword };
-            if (_authorizationService.CheckRegistrationForUser(user))
+            if (ShowPassword == true)
             {
-                await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MapTabbedView)}");
+                ImagePathRightIcon = "ic_eye";
+                ShowPassword = false;
             }
             else
             {
-                await _pageDialogService.DisplayAlertAsync("SingIn error", "You not registered", "Ok");
+                ImagePathRightIcon = "ic_eye_off";
+                ShowPassword = true;
             }
         }
 
-        private bool CanExecuteNavigateToMapTabbedPage()
+        private async void OnShowPreviousViews(object obj)
         {
-            return Validator.AllFieldsIsNullOrEmpty(UserPassword, UserEmail);
+            await NavigationService.GoBackAsync();
         }
 
+        private void OnClearEmailEntry()
+        {
+            UserEmail = string.Empty;
+        }
+
+        #endregion
+
+        #region -- Overrides --
+
+        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+        {
+            base.OnPropertyChanged(args);
+
+            switch (args.PropertyName)
+            {
+                case nameof(UserEmail): 
+                    {
+                        if (UserEmail != string.Empty)
+                        {
+                            ShowRightImageEmail = true;
+                        }
+                        else
+                        {
+                            ShowRightImageEmail = false;
+                        }
+                         break; 
+                    }
+                case nameof(UserPassword): 
+                    {
+                        if (UserPassword != string.Empty)
+                        {
+                            ImagePathRightIcon = "ic_eye";
+                            ShowRightImagePassword = true;
+                        }
+                        else
+                        {
+                            ShowRightImagePassword = false;
+                        }
+                        break; 
+                    }
+            }
+        }
         #endregion
     }
 }

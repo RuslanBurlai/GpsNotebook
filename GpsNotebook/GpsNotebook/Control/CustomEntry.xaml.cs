@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using System.Windows.Input;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace GpsNotebook.Control
 {
@@ -30,7 +24,8 @@ namespace GpsNotebook.Control
         public static readonly BindableProperty TextProperty = BindableProperty.Create(
             propertyName: nameof(Text),
             returnType: typeof(string),
-            declaringType: typeof(CustomEntry));
+            declaringType: typeof(CustomEntry),
+            defaultBindingMode: BindingMode.TwoWay);
 
         public string Text
         {
@@ -71,16 +66,48 @@ namespace GpsNotebook.Control
             set { SetValue(ImagePathProperty, value); }
         }
 
-        //public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(
-        //    propertyName: nameof(BorderColor),
-        //    returnType: typeof(Color),
-        //    declaringType: typeof(CustomEntry));
+        public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(
+            propertyName: nameof(BorderColor),
+            returnType: typeof(Color),
+            declaringType: typeof(CustomEntry));
 
-        //public Color BorderColor
-        //{
-        //    get { return (Color)GetValue(BorderColorProperty); }
-        //    set { SetValue(BorderColorProperty, value); }
-        //}
+        public Color BorderColor
+        {
+            get { return (Color)GetValue(BorderColorProperty); }
+            set { SetValue(BorderColorProperty, value); }
+        }
 
+        public static readonly BindableProperty ClearOrHideTextProperty = BindableProperty.Create(
+            propertyName: nameof(ClearOrHideText),
+            returnType: typeof(ICommand),
+            declaringType: typeof(CustomEntry));
+
+        public ICommand ClearOrHideText
+        {
+            get { return (ICommand)GetValue(ClearOrHideTextProperty); }
+            set { SetValue(ClearOrHideTextProperty, value); }
+        }
+
+        public static readonly BindableProperty IsPasswordProperty = BindableProperty.Create(
+            propertyName: nameof(IsPassword),
+            returnType: typeof(bool),
+            declaringType: typeof(CustomEntry));
+
+        public bool IsPassword
+        {
+            get { return (bool)GetValue(IsPasswordProperty); }
+            set { SetValue(IsPasswordProperty, value); }
+        }
+
+        public static readonly BindableProperty IsVisibleRightImageProperty = BindableProperty.Create(
+            propertyName: nameof(IsVisibleRightImage),
+            returnType: typeof(bool),
+            declaringType: typeof(CustomEntry));
+
+        public bool IsVisibleRightImage
+        {
+            get { return (bool)GetValue(IsVisibleRightImageProperty); }
+            set { SetValue(IsVisibleRightImageProperty, value); }
+        }
     }
 }

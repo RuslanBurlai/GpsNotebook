@@ -1,22 +1,56 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<baseContentPage:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<baseContentPage:BaseContentPage x:Class="GpsNotebook.View.RegisterView"
+                                 xmlns="http://xamarin.com/schemas/2014/forms"
                                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                                  xmlns:baseContentPage="clr-namespace:GpsNotebook.View"
-                                 x:Class="GpsNotebook.View.RegisterView"
-                                 Title="{Binding Title}">
-    
-    <Grid RowDefinitions="*, 0.3*">
-        <StackLayout Grid.Row="0" VerticalOptions="Center" Padding="25">
-            <Entry Placeholder="Name" Text="{Binding UserName}"/>
-            <Entry Placeholder="Email" Text="{Binding UserEmail}"/>
-            <Entry Placeholder="Password" Text="{Binding UserPassword}"/>
-            <Entry Placeholder="Confirm password" Text="{Binding ConfirmPassword}"/>
-        </StackLayout>
+                                 xmlns:customNavBar="clr-namespace:GpsNotebook.Control"
+                                 xmlns:customEntry="clr-namespace:GpsNotebook.Control">
+
+    <Grid RowDefinitions="0.11*, 0.14*, 0.25*, 0.5*">
         
-        <Button 
-            Text="Sign In" 
-            Command="{Binding NavigateToSignInCommand}"  
-            Grid.Row="1" VerticalOptions="Center" 
-            Margin="25"/>
+        <StackLayout Grid.Row="0" 
+                     VerticalOptions="Center">
+            
+            <customNavBar:CustomNavigationBar ImagePath="ic_left_blue" 
+                                              NavBarTitle="{Binding Title}" 
+                                              GoBackCommand="{Binding ShowPreviousViewsCommand}"/>
+        </StackLayout>
+
+        <StackLayout Grid.Row="1">
+
+            <customEntry:CustomEntry Grid.Row="1"
+                                     Margin="15,0,15,0"
+                                     BorderColor="Gray"
+                                     ClearOrHideText="{Binding ClearNameEntryCommand}"
+                                     FooterEntry="{Binding NameError}"
+                                     HeaderEntry="Name"
+                                     ImagePath="ic_clear"
+                                     IsVisibleRightImage="{Binding IsShowedRightImageName}"
+                                     Placeholder="Enter your name"
+                                     Text="{Binding UserName}" />
+        </StackLayout>
+
+        <StackLayout Grid.Row="2"
+                     Margin="15,0,15,0"
+                     Spacing="20">
+
+            <customEntry:CustomEntry BorderColor="Gray"
+                                     ClearOrHideText="{Binding ClearEmailEntryCommand}"
+                                     FooterEntry="{Binding PasswordError}"
+                                     HeaderEntry="Email"
+                                     ImagePath="ic_clear"
+                                     IsVisibleRightImage="{Binding IsShowedRightImageEmail}"
+                                     Placeholder="Enter email"
+                                     Text="{Binding UserEmail}" />
+
+            <Button BackgroundColor="RoyalBlue"
+                    Command="{Binding NavigateToRegisterAndPasswordCommand}"
+                    FontSize="20"
+                    Text="Next"
+                    TextColor="White"
+                    VerticalOptions="End" />
+
+        </StackLayout>
+
     </Grid>
 </baseContentPage:BaseContentPage>
