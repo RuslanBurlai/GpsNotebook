@@ -10,5 +10,7 @@ namespace GpsNotebook.Services.Permission
         //{
         //    var status = await CrossPermissions.Current.CheckPermissionStatusAsync<LocationPermission>();
         //}
+
+
     }
 }

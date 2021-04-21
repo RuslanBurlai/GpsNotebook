@@ -11,40 +11,41 @@ namespace GpsNotebook.Services.RepositoryService
     {
         public RepositoryService()
         {
-            _dataBase = new Lazy<SQLiteConnection>(() =>
+            _dataBase = new Lazy<SQLiteAsyncConnection>(() =>
             {
                 var dataBaseName = "UserAndPinLocations.db";
                 var dataBasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), dataBaseName);
-                var dataBase = new SQLiteConnection(dataBasePath);
+                var dataBase = new SQLiteAsyncConnection(dataBasePath);
 
-                dataBase.CreateTable<UserModel>();
-                dataBase.CreateTable<PinModel>();
+                dataBase.CreateTableAsync<UserModel>().Wait();
+                dataBase.CreateTableAsync<PinModel>().Wait();
 
                 return dataBase;
             });
         }
 
-        private Lazy<SQLiteConnection> _dataBase;
+        private Lazy<SQLiteAsyncConnection> _dataBase;
+
         public void AddItem<T>(T item) where T : IEntityBaseForModel, new()
         {
             if (item.Id != 0)
             {
-                _dataBase.Value.Update(item);
+                _dataBase.Value.UpdateAsync(item);
             }
             else
             {
-                _dataBase.Value.Insert(item);
+                _dataBase.Value.InsertAsync(item);
             }
         }
 
         public void DeleteItem<T>(T item) where T : IEntityBaseForModel, new()
         {
-            _dataBase.Value.Delete(item);
+            _dataBase.Value.DeleteAsync(item);
         }
 
         public IEnumerable<T> GetAllItems<T>() where T : IEntityBaseForModel, new()
         {
-            return _dataBase.Value.Table<T>();
+            return (IEnumerable<T>)_dataBase.Value.Table<T>();
         }
     }
 }
