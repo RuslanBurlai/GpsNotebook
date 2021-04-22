@@ -16,32 +16,33 @@
                                               GoBackCommand="{Binding ShowPreviousViewsCommand}"/>
         </StackLayout>
 
-        <StackLayout Grid.Row="1">
+        <StackLayout Grid.Row="1" 
+                     Margin="15,0,15,0">
 
-            <customEntry:CustomEntry Grid.Row="1"
-                                     Margin="15,0,15,0"
-                                     BorderColor="Gray"
-                                     ClearOrHideText="{Binding ClearNameEntryCommand}"
-                                     FooterEntry="{Binding NameError}"
-                                     HeaderEntry="Name"
-                                     ImagePath="ic_clear"
-                                     IsVisibleRightImage="{Binding IsShowedRightImageName}"
-                                     Placeholder="Enter your name"
-                                     Text="{Binding UserName}" />
+            <customEntry:CustomEntryWithLabel BorderColor="Gray"
+                                              ClearOrHideText="{Binding ClearNameEntryCommand}"
+                                              FooterEntry="{Binding NameError}"
+                                              HeaderEntry="Name"
+                                              ImagePath="{Binding EntryNameRightImage}"
+                                              
+                                              Placeholder="Enter your name"
+                                              Text="{Binding UserName}" />
+            <!--IsVisibleRightImage="{Binding IsShowedRightImageName}"-->
         </StackLayout>
 
         <StackLayout Grid.Row="2"
                      Margin="15,0,15,0"
                      Spacing="20">
 
-            <customEntry:CustomEntry BorderColor="Gray"
-                                     ClearOrHideText="{Binding ClearEmailEntryCommand}"
-                                     FooterEntry="{Binding PasswordError}"
-                                     HeaderEntry="Email"
-                                     ImagePath="ic_clear"
-                                     IsVisibleRightImage="{Binding IsShowedRightImageEmail}"
-                                     Placeholder="Enter email"
-                                     Text="{Binding UserEmail}" />
+            <customEntry:CustomEntryWithLabel BorderColor="Gray"
+                                              ClearOrHideText="{Binding ClearEmailEntryCommand}"
+                                              FooterEntry="{Binding PasswordError}"
+                                              HeaderEntry="Email"
+                                              ImagePath="{Binding EntryEmailRightImage}"
+                                              Placeholder="Enter email"
+                                              Text="{Binding UserEmail}" />
+            <!--IsVisibleRightImage="{Binding IsShowedRightImageEmail}"-->
+
 
             <Button BackgroundColor="RoyalBlue"
                     Command="{Binding NavigateToRegisterAndPasswordCommand}"

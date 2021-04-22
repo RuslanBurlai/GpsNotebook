@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using GpsNotebook.Models;
 using SQLite;
 
@@ -43,9 +44,9 @@ namespace GpsNotebook.Services.RepositoryService
             _dataBase.Value.DeleteAsync(item);
         }
 
-        public IEnumerable<T> GetAllItems<T>() where T : IEntityBaseForModel, new()
+        public Task<List<T>> GetAllItems<T>() where T : IEntityBaseForModel, new()
         {
-            return (IEnumerable<T>)_dataBase.Value.Table<T>();
+            return _dataBase.Value.Table<T>().ToListAsync();
         }
     }
 }

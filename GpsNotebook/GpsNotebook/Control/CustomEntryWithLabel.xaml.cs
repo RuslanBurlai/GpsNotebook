@@ -3,9 +3,9 @@ using Xamarin.Forms;
 
 namespace GpsNotebook.Control
 {
-    public partial class CustomEntry : Grid
+    public partial class CustomEntryWithLabel : Grid
     {
-        public CustomEntry()
+        public CustomEntryWithLabel()
         {
             InitializeComponent();
         }
@@ -13,7 +13,7 @@ namespace GpsNotebook.Control
         public static readonly BindableProperty HeaderEntryProperty = BindableProperty.Create(
             propertyName: nameof(HeaderEntry),
             returnType: typeof(string),
-            declaringType: typeof(CustomEntry));
+            declaringType: typeof(CustomEntryWithLabel));
 
         public string HeaderEntry
         {
@@ -24,7 +24,7 @@ namespace GpsNotebook.Control
         public static readonly BindableProperty TextProperty = BindableProperty.Create(
             propertyName: nameof(Text),
             returnType: typeof(string),
-            declaringType: typeof(CustomEntry),
+            declaringType: typeof(CustomEntryWithLabel),
             defaultBindingMode: BindingMode.TwoWay);
 
         public string Text
@@ -36,7 +36,7 @@ namespace GpsNotebook.Control
         public static readonly BindableProperty PlaceholderProperty = BindableProperty.Create(
             propertyName: nameof(Placeholder),
             returnType: typeof(string),
-            declaringType: typeof(CustomEntry));
+            declaringType: typeof(CustomEntryWithLabel));
 
         public string Placeholder
         {
@@ -47,7 +47,7 @@ namespace GpsNotebook.Control
         public static readonly BindableProperty FooterEntryProperty = BindableProperty.Create(
             propertyName: nameof(FooterEntry),
             returnType: typeof(string),
-            declaringType: typeof(CustomEntry));
+            declaringType: typeof(CustomEntryWithLabel));
 
         public string FooterEntry
         {
@@ -58,7 +58,7 @@ namespace GpsNotebook.Control
         public static readonly BindableProperty ImagePathProperty = BindableProperty.Create(
             propertyName: nameof(ImagePath),
             returnType: typeof(string),
-            declaringType: typeof(CustomEntry));
+            declaringType: typeof(CustomEntryWithLabel));
 
         public string ImagePath
         {
@@ -69,7 +69,7 @@ namespace GpsNotebook.Control
         public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(
             propertyName: nameof(BorderColor),
             returnType: typeof(Color),
-            declaringType: typeof(CustomEntry));
+            declaringType: typeof(CustomEntryWithLabel));
 
         public Color BorderColor
         {
@@ -80,7 +80,7 @@ namespace GpsNotebook.Control
         public static readonly BindableProperty ClearOrHideTextProperty = BindableProperty.Create(
             propertyName: nameof(ClearOrHideText),
             returnType: typeof(ICommand),
-            declaringType: typeof(CustomEntry));
+            declaringType: typeof(CustomEntryWithLabel));
 
         public ICommand ClearOrHideText
         {
@@ -91,7 +91,7 @@ namespace GpsNotebook.Control
         public static readonly BindableProperty IsPasswordProperty = BindableProperty.Create(
             propertyName: nameof(IsPassword),
             returnType: typeof(bool),
-            declaringType: typeof(CustomEntry));
+            declaringType: typeof(CustomEntryWithLabel));
 
         public bool IsPassword
         {
@@ -99,15 +99,15 @@ namespace GpsNotebook.Control
             set { SetValue(IsPasswordProperty, value); }
         }
 
-        public static readonly BindableProperty IsVisibleRightImageProperty = BindableProperty.Create(
-            propertyName: nameof(IsVisibleRightImage),
-            returnType: typeof(bool),
-            declaringType: typeof(CustomEntry));
+        //public static readonly BindableProperty IsVisibleRightImageProperty = BindableProperty.Create(
+        //    propertyName: nameof(IsVisibleRightImage),
+        //    returnType: typeof(bool),
+        //    declaringType: typeof(CustomEntry));
 
-        public bool IsVisibleRightImage
-        {
-            get { return (bool)GetValue(IsVisibleRightImageProperty); }
-            set { SetValue(IsVisibleRightImageProperty, value); }
-        }
+        //public bool IsVisibleRightImage
+        //{
+        //    get { return (bool)GetValue(IsVisibleRightImageProperty); }
+        //    set { SetValue(IsVisibleRightImageProperty, value); }
+        //}
     }
 }

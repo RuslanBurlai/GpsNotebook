@@ -20,31 +20,32 @@
 
         <StackLayout Grid.Row="1">
 
-            <customEntry:CustomEntry Grid.Row="1"
-                                     Margin="15,0,15,0"
-                                     BorderColor="Gray"
-                                     ClearOrHideText="{Binding ClearEmailEntryCommand}"
-                                     FooterEntry="{Binding EmailError}"
-                                     HeaderEntry="Email"
-                                     ImagePath="ic_clear"
-                                     IsVisibleRightImage="{Binding ShowRightImageEmail}"
-                                     Placeholder="Enter email"
-                                     Text="{Binding UserEmail}" />
+            <customEntry:CustomEntryWithLabel Grid.Row="1"
+                                              Margin="15,0,15,0"
+                                              BorderColor="Gray"
+                                              ClearOrHideText="{Binding ClearEmailEntryCommand}"
+                                              FooterEntry="{Binding EmailError}"
+                                              HeaderEntry="Email"
+                                              ImagePath="{Binding EmailEntryRightImage}"
+                                              Placeholder="Enter email"
+                                              Text="{Binding UserEmail}" />
+            <!--IsVisibleRightImage="{Binding ShowRightImageEmail}"-->
         </StackLayout>
 
         <StackLayout Grid.Row="2"
                      Margin="15,0,15,0"
                      Spacing="20">
 
-            <customEntry:CustomEntry BorderColor="Gray"
-                                     ClearOrHideText="{Binding HidePasswordCommand}"
-                                     FooterEntry="{Binding PasswordError}"
-                                     HeaderEntry="Password"
-                                     ImagePath="{Binding ImagePathRightIcon}"
-                                     IsPassword="{Binding ShowPassword}"
-                                     IsVisibleRightImage="{Binding ShowRightImagePassword}"
-                                     Placeholder="Enter password"
-                                     Text="{Binding UserPassword}" />
+            <customEntry:CustomEntryWithLabel BorderColor="Gray"
+                                              ClearOrHideText="{Binding HidePasswordCommand}"
+                                              FooterEntry="{Binding PasswordError}"
+                                              HeaderEntry="Password"
+                                              ImagePath="{Binding PasswordEntryRightImage}"
+                                              IsPassword="{Binding ShowPassword}"
+                                              Placeholder="Enter password"
+                                              Text="{Binding UserPassword}" />
+            <!--IsVisibleRightImage="{Binding ShowRightImagePassword}"-->
+
 
             <Button BackgroundColor="RoyalBlue"
                     Command="{Binding NavigateToMapTabbedPageCommand}"

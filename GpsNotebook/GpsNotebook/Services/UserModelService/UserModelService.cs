@@ -2,6 +2,7 @@
 using GpsNotebook.Services.RepositoryService;
 using GpsNotebook.Services.UserModelService;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace GpsNotebook.Services.UserRepository
 {
@@ -20,7 +21,7 @@ namespace GpsNotebook.Services.UserRepository
 
         public IEnumerable<UserModel> GetAllUser()
         {
-            return _repository.GetAllItems<UserModel>();
+            return _repository.GetAllItems<UserModel>().Result;
         }
     }
 }

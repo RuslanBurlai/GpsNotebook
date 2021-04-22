@@ -4,6 +4,7 @@ using GpsNotebook.Services.Authorization;
 using System.Collections.Generic;
 using System.Linq;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace GpsNotebook.Services.PinLocationRepository
 {
@@ -26,7 +27,7 @@ namespace GpsNotebook.Services.PinLocationRepository
 
         public IEnumerable<PinModel> GetAllPins()
         {
-            return _repository.GetAllItems<PinModel>().Where((id) => id.UserId == _authorization.GetUserId);
+            return _repository.GetAllItems<PinModel>().Result.Where((id) => id.UserId == _authorization.GetUserId);
         }
 
         public void DeletePinLocation(PinModel pinLocation)

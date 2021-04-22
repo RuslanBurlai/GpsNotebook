@@ -4,16 +4,18 @@
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:behaviors="clr-namespace:GpsNotebook.Behavior"
             xmlns:pages="clr-namespace:GpsNotebook.View;assembly=GpsNotebook"
-            Title="Map">
+            xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+            android:TabbedPage.ToolbarPlacement="Bottom" 
+            NavigationPage.HasNavigationBar="False">
 
     <TabbedPage.Behaviors>
         <behaviors:TabbedPageNavigationBehavior />
     </TabbedPage.Behaviors>
     <TabbedPage.Children>
 
-        <pages:MapTabView />
+        <pages:MapTabView IconImageSource="ic_map"/>
 
-        <pages:PinTabView />
+        <pages:PinTabView IconImageSource="ic_pin"/>
 
     </TabbedPage.Children>
 </TabbedPage>

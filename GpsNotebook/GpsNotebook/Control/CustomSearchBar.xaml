@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Grid xmlns="http://xamarin.com/schemas/2014/forms" 
+      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+      x:Class="GpsNotebook.Control.CustomSearchBar"
+      ColumnDefinitions="0.15*, 0.03*, 0.57*, 0.1*, 0.15*"
+      ColumnSpacing="1">
+
+    <Image Grid.Column="0" />
+    
+    <BoxView Grid.Column="0"
+             BackgroundColor="Transparent"
+             VerticalOptions="Fill"
+             HorizontalOptions="Fill"/>
+
+    <Frame Grid.Column="1"
+           Grid.ColumnSpan="3"
+           CornerRadius="5"
+           HasShadow="False" />
+
+    <Entry Grid.Column="2"
+           Placeholder="Search" />
+
+    <Image Grid.Column="3" />
+
+    <BoxView Grid.Column="3"
+             BackgroundColor="Transparent"
+             VerticalOptions="Fill"
+             HorizontalOptions="Fill" />
+
+    <Image Grid.Column="4"/>
+    
+    <BoxView Grid.Column="3"
+             BackgroundColor="Transparent"
+             VerticalOptions="Fill"
+             HorizontalOptions="Fill" />
+    
+</Grid>

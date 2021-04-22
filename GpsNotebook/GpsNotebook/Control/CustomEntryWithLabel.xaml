@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
-<Grid x:Class="GpsNotebook.Control.CustomEntry"
+<Grid x:Class="GpsNotebook.Control.CustomEntryWithLabel"
       xmlns="http://xamarin.com/schemas/2014/forms"
       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
       x:Name="customEntry"
@@ -27,10 +27,9 @@
 
     <Image Grid.Row="1"
            Grid.Column="1"
-           HorizontalOptions="Fill"
-           IsVisible="{Binding IsVisibleRightImage, Source={x:Reference customEntry}}"
-           Source="{Binding ImagePath, Source={x:Reference customEntry}}"
-           VerticalOptions="Fill"/>
+           Source="{Binding ImagePath, Source={x:Reference customEntry}}"/>
+    <!--IsVisible="{Binding IsVisibleRightImage, Source={x:Reference customEntry}}"-->
+
 
     <BoxView Grid.Row="1"
              Grid.Column="1"

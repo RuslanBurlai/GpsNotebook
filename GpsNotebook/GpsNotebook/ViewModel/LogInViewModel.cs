@@ -73,18 +73,25 @@ namespace GpsNotebook.ViewModel
             set { SetProperty(ref _showRightImageEmail, value); }
         }
 
-        private bool _showRightImagePassword;
-        public bool ShowRightImagePassword
+        //private bool _showRightImagePassword;
+        //public bool ShowRightImagePassword
+        //{
+        //    get { return _showRightImagePassword; }
+        //    set { SetProperty(ref _showRightImagePassword, value); }
+        //}
+
+        private string _passwordEntryRightImage;
+        public string PasswordEntryRightImage
         {
-            get { return _showRightImagePassword; }
-            set { SetProperty(ref _showRightImagePassword, value); }
+            get { return _passwordEntryRightImage; }
+            set { SetProperty(ref _passwordEntryRightImage, value); }
         }
 
-        private string _imagePathRightIcon;
-        public string ImagePathRightIcon
+        private string _emailEntryRightImage;
+        public string EmailEntryRightImage
         {
-            get { return _imagePathRightIcon; }
-            set { SetProperty(ref _imagePathRightIcon, value); }
+            get { return _emailEntryRightImage; }
+            set { SetProperty(ref _emailEntryRightImage, value); }
         }
 
         private ICommand _clearEmailEntryCommand;
@@ -108,12 +115,12 @@ namespace GpsNotebook.ViewModel
         {
             if (ShowPassword == true)
             {
-                ImagePathRightIcon = "ic_eye";
+                PasswordEntryRightImage = "ic_eye";
                 ShowPassword = false;
             }
             else
             {
-                ImagePathRightIcon = "ic_eye_off";
+                PasswordEntryRightImage = "ic_eye_off";
                 ShowPassword = true;
             }
         }
@@ -142,11 +149,11 @@ namespace GpsNotebook.ViewModel
                     {
                         if (UserEmail != string.Empty)
                         {
-                            ShowRightImageEmail = true;
+                            EmailEntryRightImage = "ic_clear";
                         }
                         else
                         {
-                            ShowRightImageEmail = false;
+                            EmailEntryRightImage = string.Empty;
                         }
                          break; 
                     }
@@ -154,12 +161,13 @@ namespace GpsNotebook.ViewModel
                     {
                         if (UserPassword != string.Empty)
                         {
-                            ImagePathRightIcon = "ic_eye";
-                            ShowRightImagePassword = true;
+                            PasswordEntryRightImage = "ic_eye";
+                            //ShowRightImagePassword = true;
                         }
                         else
                         {
-                            ShowRightImagePassword = false;
+                            //ShowRightImagePassword = false;
+                            PasswordEntryRightImage = string.Empty;
                         }
                         break; 
                     }

@@ -6,35 +6,43 @@
                                  xmlns:googleMap="clr-namespace:GpsNotebook.Control"
                                  xmlns:baseContentPage="clr-namespace:GpsNotebook.View"
                                  xmlns:prism="http://prismlibrary.com"
-                                 xmlns:searchText="clr-namespace:GpsNotebook.Behavior"
+                                 xmlns:control="clr-namespace:GpsNotebook.Control"
                                  Title="{Binding Title}">
-    
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Command="{Binding LogOut}" IconImageSource="logoutbuttonsketch.png"/>
-    </ContentPage.ToolbarItems>
 
-    <Grid RowDefinitions="0.07*, 0.73*, 0.2*">
 
-        <searchText:CustomSearchBar Grid.Row="0" SearchRequest="{Binding SearchPins}" />
+    <Grid RowDefinitions="0.1*, 0.7*, 0.2*"
+          >
+        <Grid.Triggers>
+            <DataTrigger TargetType="Grid"
+                         Binding="{Binding Isjwvjwvvw}"
+                         Value="true">
+                <Setter Property="ColumnDefinitions" Value="0.15*, 0.03*, 0.57*, 0.1*, 0.15*"/>
+                
+            </DataTrigger>
+            
+        </Grid.Triggers>
 
-        <googleMap:CustomMapForMapTabViewModel
-            Grid.Row="1"
-            Grid.RowSpan="2"
-            CameraOnSelectedPin="{Binding MoveCameraToPin}"
-            ListOfPins="{Binding AllPins}"
-            MyLocationEnabled="True"
-            SelectedPin="{Binding TapOnPin}" />
+        <control:CustomSearchBar Grid.Row="0" />
+        
+        <googleMap:CustomMapForMapTabViewModel Grid.Row="1"
+                                               Grid.RowSpan="2"
+                                               CameraOnSelectedPin="{Binding MoveCameraToPin}"
+                                               ListOfPins="{Binding AllPins}"
+                                               MyLocationEnabled="True"
+                                               SelectedPin="{Binding TapOnPin}" />
 
-        <Frame
-            Grid.Row="2"
-            HorizontalOptions="Start"
-            VerticalOptions="Center"
-            Margin="10, 0, 0, 0">
+        <Frame Grid.Row="2"
+               HorizontalOptions="Start"
+               VerticalOptions="Center"
+               Margin="10, 0, 0, 0"
+               HasShadow="True">
 
             <Frame.GestureRecognizers>
                 <TapGestureRecognizer Command="{Binding NavigateToScanQrCode}"/>
             </Frame.GestureRecognizers>
+            
         </Frame>
 
     </Grid>
+    
 </baseContentPage:BaseContentPage>

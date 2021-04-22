@@ -30,6 +30,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Control\CustomEntryWithLabel.xaml.cs">
+      <DependentUpon>CustomEntryWithLabel.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Dialogs\QrCodeScanDialogView.xaml.cs">
       <DependentUpon>QrCodeScanDialogView.xaml</DependentUpon>
     </Compile>
@@ -60,10 +63,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Control\CustomEntry.xaml">
+    <EmbeddedResource Update="Control\CustomEntryWithLabel.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Control\CustomNavigationBar.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Control\CustomSearchBar.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Dialogs\QrCodeScanDialogView.xaml">

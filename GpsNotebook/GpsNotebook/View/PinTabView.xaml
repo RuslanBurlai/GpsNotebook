@@ -20,13 +20,6 @@
               Grid.ColumnSpan="2"
               ColumnDefinitions="0.9*, 0.1*">
 
-            <customSearch:CustomSearchBar
-                
-                SearchRequest="{Binding SearchPinsCommand}"
-                Grid.Column="0">
-
-            </customSearch:CustomSearchBar>
-
             <Image 
                 Grid.Column="1"
                 Source = "category.png" >

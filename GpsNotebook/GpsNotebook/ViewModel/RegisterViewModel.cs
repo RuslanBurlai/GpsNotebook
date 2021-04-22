@@ -45,20 +45,6 @@ namespace GpsNotebook.ViewModel
             set { SetProperty(ref _userEmail, value); }
         }
 
-        //private string _userPassword; 
-        //public string UserPassword
-        //{ 
-        //    get { return _userPassword; }
-        //    set { SetProperty(ref _userPassword, value); } 
-        //}
-
-        //private string _confirmPassword;
-        //public string ConfirmPassword
-        //{
-        //    get { return _confirmPassword; }
-        //    set { SetProperty(ref _confirmPassword, value); }
-        //}
-
         private string _nameError;
         public string NameError
         {
@@ -66,20 +52,33 @@ namespace GpsNotebook.ViewModel
             set { SetProperty(ref _nameError, value); }
         }
 
-        private bool _isShowedRightImageName;
-        public bool IsShowedRightImageName
+        //private bool _isShowedRightImageName;
+        //public bool IsShowedRightImageName
+        //{
+        //    get { return _isShowedRightImageName; }
+        //    set { SetProperty(ref _isShowedRightImageName, value); }
+        //}
+
+        //private bool _isShowedRightImageEmail;
+        //public bool IsShowedRightImageEmail
+        //{
+        //    get { return _isShowedRightImageEmail; }
+        //    set { SetProperty(ref _isShowedRightImageEmail, value); }
+        //}
+
+        private string _entryEmailRightImage;
+        public string EntryEmailRightImage
         {
-            get { return _isShowedRightImageName; }
-            set { SetProperty(ref _isShowedRightImageName, value); }
+            get { return _entryEmailRightImage; }
+            set { SetProperty(ref _entryEmailRightImage, value); }
         }
 
-        private bool _isShowedRightImageEmail;
-        public bool IsShowedRightImageEmail
+        private string _entryNameRightImage;
+        public string EntryNameRightImage
         {
-            get { return _isShowedRightImageEmail; }
-            set { SetProperty(ref _isShowedRightImageEmail, value); }
+            get { return _entryNameRightImage; }
+            set { SetProperty(ref _entryNameRightImage, value); }
         }
-
 
         private ICommand _navigateToRegisterAndPasswordCommand;
         public ICommand NavigateToRegisterAndPasswordCommand =>
@@ -162,11 +161,13 @@ namespace GpsNotebook.ViewModel
                     {
                         if (UserName != string.Empty)
                         {
-                            IsShowedRightImageName = true;
+                            //IsShowedRightImageName = true;
+                            EntryNameRightImage = "ic_clear";
                         }
                         else
                         {
-                            IsShowedRightImageName = false;
+                            //IsShowedRightImageName = false;
+                            EntryNameRightImage = string.Empty;
                         }
                         break;
                     }
@@ -174,11 +175,13 @@ namespace GpsNotebook.ViewModel
                     {
                         if (UserEmail != string.Empty)
                         {
-                            IsShowedRightImageEmail = true;
+                            EntryEmailRightImage = "ic_clear";
+                            //IsShowedRightImageEmail = true;
                         }
                         else
                         {
-                            IsShowedRightImageEmail = false;
+                            EntryEmailRightImage = string.Empty;
+                            //IsShowedRightImageEmail = false;
                         }
                         break;
                     }
