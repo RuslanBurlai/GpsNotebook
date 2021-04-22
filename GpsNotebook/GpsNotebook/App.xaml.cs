@@ -1,5 +1,6 @@
 ﻿using GpsNotebook.Dialogs;
 using GpsNotebook.Services.Authorization;
+using GpsNotebook.Services.Permission;
 using GpsNotebook.Services.PinLocationRepository;
 using GpsNotebook.Services.RepositoryService;
 using GpsNotebook.Services.SettingsManager;
@@ -28,7 +29,6 @@ namespace GpsNotebook
             //Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<LogInOrRegisterView, LogInOrRegisteredViewModel>();
-
             containerRegistry.RegisterForNavigation<LogInView, LogInViewModel>();
             containerRegistry.RegisterForNavigation<RegisterView, RegisterViewModel>();
             containerRegistry.RegisterForNavigation<RegisterAndPasswordView, RegisterAndPasswordViewModel>();
@@ -46,8 +46,10 @@ namespace GpsNotebook
             containerRegistry.RegisterInstance<IUserModelService>(Container.Resolve<UserModelService>());
             containerRegistry.RegisterInstance<IAuthorizationService>(Container.Resolve<AuthorizationService>());
             containerRegistry.RegisterInstance<IPinModelService>(Container.Resolve<PinModelService>());
+            containerRegistry.RegisterInstance<IPermissionService>(Container.Resolve<PermissionsService>());
 
-            //Dialog
+
+            //Dialogs
             containerRegistry.RegisterDialog<TapOnPin, TapOnPinViewModel>();
             containerRegistry.RegisterDialog<QrCodeScanDialogView, QrCodeScanDialogViewModel>();
         }

@@ -1,4 +1,6 @@
-﻿using GpsNotebook.View;
+﻿using GpsNotebook.Services.Permission;
+using GpsNotebook.View;
+using Plugin.Permissions;
 using Prism.Commands;
 using Prism.Navigation;
 using System;
@@ -8,10 +10,16 @@ namespace GpsNotebook.ViewModel
 {
     public class LogInOrRegisteredViewModel : ViewModelBase
     {
-        public LogInOrRegisteredViewModel(INavigationService navigationService) :
+        private IPermissionService _permissionService;
+        public LogInOrRegisteredViewModel(
+            INavigationService navigationService,
+            IPermissionService permissionService) :
             base(navigationService)
         {
+            _permissionService = permissionService;
         }
+
+        #region -- Public Property --
 
         private ICommand _loginCommand;
         public ICommand LoginCommand =>
@@ -21,6 +29,10 @@ namespace GpsNotebook.ViewModel
         public ICommand RegisterCommand =>
             _registerCommand ?? (_registerCommand = new DelegateCommand(OnRegister));
 
+        #endregion
+
+        #region -- Private Helpers --
+
         private async void OnRegister()
         {
             await NavigationService.NavigateAsync(nameof(RegisterView));
@@ -28,7 +40,11 @@ namespace GpsNotebook.ViewModel
 
         private async void OnLogin()
         {
+            var p = _permissionService.CheckPermissions(new LocationPermission());
             await NavigationService.NavigateAsync(nameof(LogInView));
         }
+
+        #endregion
+
     }
 }
