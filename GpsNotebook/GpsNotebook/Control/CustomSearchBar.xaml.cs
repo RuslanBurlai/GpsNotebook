@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -37,5 +37,40 @@ namespace GpsNotebook.Control
             get { return (string)GetValue(LeftSideImagePathProperty); }
             set { SetValue(LeftSideImagePathProperty, value); }
         }
+
+        public static readonly BindableProperty ClearSerchBarImageProperty = BindableProperty.Create(
+            propertyName: nameof(ClearSerchBarImage),
+            returnType: typeof(string),
+            declaringType: typeof(CustomSearchBar));
+
+        public string ClearSerchBarImage
+        {
+            get { return (string)GetValue(ClearSerchBarImageProperty); }
+            set { SetValue(ClearSerchBarImageProperty, value); }
+        }
+
+        public static readonly BindableProperty TapOnLeftImageCommandProperty = BindableProperty.Create(
+            propertyName: nameof(TapOnLeftImageCommand),
+            returnType: typeof(ICommand),
+            declaringType: typeof(CustomSearchBar));
+
+        public ICommand TapOnLeftImageCommand
+        {
+            get { return (ICommand)GetValue(TapOnLeftImageCommandProperty); }
+            set { SetValue(TapOnLeftImageCommandProperty, value); }
+        }
+
+        public static readonly BindableProperty TapOnRightImageCommandProperty = BindableProperty.Create(
+            propertyName: nameof(TapOnRightImageCommand),
+            returnType: typeof(ICommand),
+            declaringType: typeof(CustomSearchBar));
+
+        public ICommand TapOnRightImageCommand
+        {
+            get { return (ICommand)GetValue(TapOnRightImageCommandProperty); }
+            set { SetValue(TapOnRightImageCommandProperty, value); }
+        }
+
+
     }
 }

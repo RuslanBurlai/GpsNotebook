@@ -16,6 +16,7 @@ using Newtonsoft.Json;
 using GpsNotebook.Dialogs;
 using Plugin.Permissions.Abstractions;
 using Plugin.Permissions;
+using System.Collections.Generic;
 
 namespace GpsNotebook.ViewModel
 {
@@ -32,13 +33,28 @@ namespace GpsNotebook.ViewModel
             IAuthorizationService authorizationService) :
             base(navigationService)
         {
-            Title = "Map with pins";
+            Title = "Map";
 
             _pinModelService = pinModelService;
             _dialogService = dialogService;
             _authorizationService = authorizationService;
 
             AllPins = new ObservableCollection<Pin>();
+
+            Categories = new List<CategoriesForPin>
+            {
+                new CategoriesForPin { Name = "Gyms" },
+                new CategoriesForPin { Name = "Restaurants" },
+                new CategoriesForPin { Name = "Hotels" },
+                new CategoriesForPin { Name = "Supermarkets" },
+                new CategoriesForPin { Name = "Schools" },
+                new CategoriesForPin { Name = "Place to rest" },
+                new CategoriesForPin { Name = "Work" },
+                new CategoriesForPin { Name = "Home" },
+                new CategoriesForPin { Name = "Airports" },
+                new CategoriesForPin { Name = "Football stadium" }
+            };
+
         }
 
         #region -- Public properties --
@@ -50,6 +66,20 @@ namespace GpsNotebook.ViewModel
             set { SetProperty(ref _allPins, value); }
         }
 
+        private CategoriesForPin _selectedCategories;
+        public CategoriesForPin SelectedCategories
+        {
+            get { return _selectedCategories; }
+            set { SetProperty(ref _selectedCategories, value); }
+        }
+
+        private List<CategoriesForPin> _categories;
+        public List<CategoriesForPin> Categories
+        {
+            get { return _categories; }
+            set { SetProperty(ref _categories, value); }
+        }
+
         private Pin _tapOnPin;
         public Pin TapOnPin
         {
@@ -57,9 +87,9 @@ namespace GpsNotebook.ViewModel
             set { SetProperty(ref _tapOnPin, value); }
         }
 
-        private ICommand _logOut;
-        public ICommand LogOut =>
-            _logOut ?? (_logOut = new DelegateCommand(OnLogOutCommand));
+        private ICommand _logOutCommand;
+        public ICommand LogOutCommand =>
+            _logOutCommand ?? (_logOutCommand = new DelegateCommand(OnLogOut));
 
         private ICommand searchPins;
         public ICommand SearchPins =>
@@ -72,16 +102,16 @@ namespace GpsNotebook.ViewModel
             set { SetProperty(ref _moveCameraToPin, value); }
         }
 
-        private ICommand _navigateToScanQrCode;
-        public ICommand NavigateToScanQrCode =>
-            _navigateToScanQrCode ?? (_navigateToScanQrCode = new DelegateCommand(OnNavigateToScanQrCode));
+        private ICommand _settingsCommand;
+        public ICommand SettingsCommand =>
+            _settingsCommand ?? (_settingsCommand = new DelegateCommand(OnSettings));
 
 
         #endregion
 
         #region -- Private Helpers --
 
-        private async void OnLogOutCommand()
+        private async void OnLogOut()
         {
             _authorizationService.LogOut();
             await NavigationService.NavigateAsync($"/{ nameof(NavigationPage)}/{ nameof(LogInView)}");
@@ -102,7 +132,7 @@ namespace GpsNotebook.ViewModel
             }
         }
 
-        private void OnNavigateToScanQrCode()
+        private void OnSettings()
         {
             _dialogService.ShowDialog(nameof(QrCodeScanDialogView), OnDialogClosed);
         }

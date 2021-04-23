@@ -1,6 +1,7 @@
 ﻿using GpsNotebook.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 using Xamarin.Forms.GoogleMaps;
 
 namespace GpsNotebook.Extensions
@@ -11,20 +12,23 @@ namespace GpsNotebook.Extensions
         {
             return new Pin
             {
+                
                 Label = pinModel.PinName,
                 Position = new Position(pinModel.Latitude, pinModel.Longitude)
+                
             };
         }
 
-        public static PinModelViewModel ToPinViewModel(this PinModel pinModel)
+        public static PinViewModel ToPinViewModel(this PinModel pinModel, ICommand likeCommand)
         {
-            return new PinModelViewModel
+            return new PinViewModel
             {
                 PinId = pinModel.Id,
                 PinName = pinModel.PinName,
                 PinDescription = pinModel.Description,
                 PinLatitude = pinModel.Latitude,
-                PinLongitude = pinModel.Longitude
+                PinLongitude = pinModel.Longitude,
+                LikePinCommand = likeCommand
             };
         }
     }

@@ -1,4 +1,5 @@
 ﻿using GpsNotebook.Dialogs;
+using GpsNotebook.Extensions;
 using GpsNotebook.Models;
 using GpsNotebook.Services.Authorization;
 using GpsNotebook.Services.PinLocationRepository;
@@ -25,7 +26,7 @@ namespace GpsNotebook.ViewModel
             base(navigationPage)
         {
             //to resources
-            Title = "List pins";
+            Title = "Pins";
 
             _pinModelService = pinModelService;
             _authorizationService = authorizationService;
@@ -33,8 +34,8 @@ namespace GpsNotebook.ViewModel
 
         #region -- Public properties --
 
-        private ObservableCollection<PinModel> _pins;
-        public ObservableCollection<PinModel> Pins
+        private ObservableCollection<PinViewModel> _pins;
+        public ObservableCollection<PinViewModel> Pins
         {
             get { return _pins; }
             set { SetProperty(ref _pins, value); }
@@ -63,9 +64,26 @@ namespace GpsNotebook.ViewModel
         public ICommand SearchPinsCommand =>
             _searchPinsCommand ?? (_searchPinsCommand = new Command<string>(OnSearchPinsCommand));
 
-        private ICommand _logOut;
-        public ICommand LogOut =>
-            _logOut ?? (_logOut = new DelegateCommand(OnLogOutCommand));
+        private ICommand _logOutCommand;
+        public ICommand LogOutCommand =>
+            _logOutCommand ?? (_logOutCommand = new DelegateCommand(OnLogOut));
+
+        private ICommand _settingsViewCommand;
+        public ICommand SettingsViewCommand =>
+            _settingsViewCommand ?? (_settingsViewCommand = new DelegateCommand(OnSettingsView));
+
+        private ICommand _setFavoritPinCommand;
+        public ICommand SetFavoritPinCommand =>
+            _setFavoritPinCommand ?? (_setFavoritPinCommand = new DelegateCommand(OnSetFavoritPin));
+
+        private void OnSetFavoritPin()
+        {
+        }
+
+        private void OnSettingsView()
+        {
+
+        }
 
         private bool _visibleDropDown;
         public bool VisibleDropDown
@@ -74,23 +92,14 @@ namespace GpsNotebook.ViewModel
             set { SetProperty(ref _visibleDropDown, value); }
         }
 
-        private ICommand _selectCategoryCommand;
-        public ICommand SelectCategoryCommand =>
-            _selectCategoryCommand ?? (_selectCategoryCommand = new DelegateCommand(OnSelectCategoryCommand));
-
-        private bool _isVisibleCategorySelector;
-        public bool IsVisibleCategorySelector
-        {
-            get { return _isVisibleCategorySelector; }
-            set { SetProperty(ref _isVisibleCategorySelector, value); }
-        }
-
         private object _sotrValue;
         public object SotrValue
         {
             get { return _sotrValue; }
             set { SetProperty(ref _sotrValue, value); }
         }
+
+
 
         #endregion
 
@@ -101,7 +110,7 @@ namespace GpsNotebook.ViewModel
             await NavigationService.NavigateAsync($"{nameof(AddPinView)}");
         }
 
-        private async void OnLogOutCommand()
+        private async void OnLogOut()
         {
             _authorizationService.LogOut();
             await NavigationService.NavigateAsync($"/{ nameof(NavigationPage)}/{ nameof(LogInView)}");
@@ -114,7 +123,7 @@ namespace GpsNotebook.ViewModel
         private void OnDeletePinFromListCommand(PinModel pin)
         {
             _pinModelService.DeletePinLocation(pin);
-            var myObservableCollection = new ObservableCollection<PinModel>(_pinModelService.GetAllPins());
+            var myObservableCollection = new ObservableCollection<PinViewModel>(_pinModelService.GetAllPins().Select(x => x.ToPinViewModel(SetFavoritPinCommand)));
             Pins = myObservableCollection;
         }
 
@@ -124,13 +133,13 @@ namespace GpsNotebook.ViewModel
             {
                 VisibleDropDown = true;
                 var searchPins = _pinModelService.SearchPins(searchQuery);
-                Pins = new ObservableCollection<PinModel>(searchPins);
+                Pins = new ObservableCollection<PinViewModel>(searchPins.Select(x => x.ToPinViewModel(SetFavoritPinCommand)));
             }
             else
             {
                 VisibleDropDown = false;
                 var pins = _pinModelService.GetAllPins();
-                Pins = new ObservableCollection<PinModel>(pins);
+                Pins = new ObservableCollection<PinViewModel>(pins.Select(x => x.ToPinViewModel(SetFavoritPinCommand)));
             }
         }
 
@@ -143,7 +152,7 @@ namespace GpsNotebook.ViewModel
 
             if(parameters.TryGetValue(nameof(PinModel),out PinModel newPin))
             {
-                Pins = new ObservableCollection<PinModel>(_pinModelService.GetAllPins());
+                Pins = new ObservableCollection<PinViewModel>(_pinModelService.GetAllPins().Select(x => x.ToPinViewModel(SetFavoritPinCommand)));
             }
         }
 
@@ -154,7 +163,7 @@ namespace GpsNotebook.ViewModel
 
         public override void Initialize(INavigationParameters parameters)
         {
-            Pins = new ObservableCollection<PinModel>(_pinModelService.GetAllPins());
+            Pins = new ObservableCollection<PinViewModel>(_pinModelService.GetAllPins().Select(x => x.ToPinViewModel(SetFavoritPinCommand)));
         }
 
         protected async override void OnPropertyChanged(PropertyChangedEventArgs args)
@@ -175,22 +184,11 @@ namespace GpsNotebook.ViewModel
                     {
                         var sortMethod = SotrValue as string;
                         var sortedPins = _pinModelService.GetAllPins().Where((pin) => pin.Categories == sortMethod);
-                        Pins = new ObservableCollection<PinModel>(sortedPins);
+
+                        Pins = new ObservableCollection<PinViewModel>(sortedPins.Select(x => x.ToPinViewModel(SetFavoritPinCommand)));
                         //IsVisibleCategorySelector = false;
                         break;
                     }
-            }
-        }
-
-        private void OnSelectCategoryCommand()
-        {
-            if (IsVisibleCategorySelector == true)
-            {
-                IsVisibleCategorySelector = false;
-            }
-            else
-            {
-                IsVisibleCategorySelector = true;
             }
         }
 

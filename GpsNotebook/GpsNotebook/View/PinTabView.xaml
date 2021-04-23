@@ -7,9 +7,102 @@
                                  xmlns:baseContentPage="clr-namespace:GpsNotebook.View"
                                  xmlns:prism="http://prismlibrary.com"
                                  x:Name="this"
+                                 xmlns:control="clr-namespace:GpsNotebook.Control"
                                  Title="{Binding Title}">
 
-    <ContentPage.ToolbarItems>
+    <Grid RowDefinitions="0.02*, 0.07*, 0.71*, 0.2*">
+
+        <control:CustomSearchBar Grid.Row="1" 
+                                 LeftSideImagePath="ic_settings"
+                                 RightSideImagePath="ic_exid"
+                                 TapOnRightImageCommand="{Binding LogOutCommand}"
+                                 TapOnLeftImageCommand="{Binding SettingsViewCommand}"/>
+
+        <StackLayout Grid.Row="2"
+                     Grid.RowSpan="2" >
+            <ListView
+                x:Name="ListPinLocations"
+                HasUnevenRows="True"
+                ItemsSource="{Binding Pins}"
+                SelectedItem="{Binding SelectedItemInListView}">
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <!--<ViewCell.ContextActions>
+                                <MenuItem
+                                    Command="{Binding Source={x:Reference this}, Path=BindingContext.EditPinLocation}"
+                                    CommandParameter="{Binding .}"
+                                    Text="Edit" />
+                                <MenuItem
+                                    Command="{Binding Source={x:Reference this}, Path=BindingContext.DeletePinFromListCommand}"
+                                    CommandParameter="{Binding .}"
+                                    Text="Delete" />
+                            </ViewCell.ContextActions>-->
+
+                            <Grid ColumnDefinitions="0.01*, 0.2*, 0.78*, 0.01*"
+                                  RowDefinitions="0.15*, 0.35*, 0.35*, 0.15*"
+                                  ColumnSpacing="20">
+
+                                <Image Grid.Column="1"
+                                       Grid.Row="1"
+                                       Grid.RowSpan="2"
+                                       InputTransparent="True"
+                                       Source="ic_like_gray"/>
+
+                                <Label Grid.Column="2"
+                                       Grid.Row="1"
+                                       FontAttributes="Bold"
+                                       Text="{Binding PinName}"/>
+                                
+                                <StackLayout Orientation="Horizontal" 
+                                             Grid.Row="2"
+                                             Grid.Column="2">
+                                    <Label Text="{Binding Latitude}" />
+                                    <Label Text=","/>
+                                    <Label Text="{Binding Longitude}" />
+                                    
+                                </StackLayout>
+
+                                <Frame Grid.Column="1"
+                                       Grid.Row="1"
+                                       Grid.RowSpan="2"
+                                       CornerRadius="5">
+
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SetFavoritPinCommand}"
+                                                              CommandParameter="{Binding .}"/>
+                                    </Frame.GestureRecognizers>
+
+                                </Frame>
+
+                            </Grid>
+                            <!--<StackLayout Orientation="Horizontal" Spacing="30">
+                                <Image Source="ic_like_gray"/>
+                                <StackLayout >
+                                    
+                                    <Label Text="{Binding PinName}" />
+                                    <StackLayout Orientation="Horizontal">
+                                        
+                                        <Label Text="{Binding Latitude}" />
+                                        <Label Text="{Binding Longitude}" />
+
+                                    </StackLayout>
+
+                                </StackLayout>
+
+
+                            </StackLayout>-->
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+
+        </StackLayout>
+
+    </Grid>
+    <!--<ContentPage.ToolbarItems>
         <ToolbarItem Command="{Binding LogOut}" IconImageSource="logoutbuttonsketch.png"/>
     </ContentPage.ToolbarItems>
     
@@ -22,7 +115,8 @@
 
             <Image 
                 Grid.Column="1"
-                Source = "category.png" >
+                Source = "category.png" 
+                BackgroundColor="Brown">
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding SelectCategoryCommand}"/>
                 </Image.GestureRecognizers>
@@ -32,39 +126,6 @@
 
         <StackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
 
-            <ListView
-                x:Name="ListPinLocations"
-                HasUnevenRows="True"
-                ItemsSource="{Binding Pins}"
-                SelectedItem="{Binding SelectedItemInListView}">
-
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <ViewCell.ContextActions>
-                                <MenuItem
-                                    Command="{Binding Source={x:Reference this}, Path=BindingContext.EditPinLocation}"
-                                    CommandParameter="{Binding .}"
-                                    Text="Edit" />
-                                <MenuItem
-                                    Command="{Binding Source={x:Reference this}, Path=BindingContext.DeletePinFromListCommand}"
-                                    CommandParameter="{Binding .}"
-                                    Text="Delete" />
-                            </ViewCell.ContextActions>
-
-                            <StackLayout>
-
-                                <Label Text="{Binding PinName}" />
-                                <Label Text="{Binding Latitude}" />
-                                <Label Text="{Binding Longitude}" />
-
-
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-
-            </ListView>
 
         </StackLayout>
 
@@ -140,5 +201,5 @@
                 <RadioButton Value="Football stadium" Content="Football stadium" />
             </StackLayout>
         </Frame>
-    </Grid>
+    </Grid>-->
 </baseContentPage:BaseContentPage>

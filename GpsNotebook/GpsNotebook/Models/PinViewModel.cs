@@ -6,7 +6,7 @@ using System.Windows.Input;
 
 namespace GpsNotebook.Models
 {
-    public class PinModelViewModel : BindableBase
+    public class PinViewModel : BindableBase
     {
         #region -- Public Property --
 
@@ -43,6 +43,13 @@ namespace GpsNotebook.Models
         {
             get { return _pinLongitude; }
             set { SetProperty(ref _pinLongitude, value); }
+        }
+
+        private ICommand _likePinCommand;
+        public ICommand LikePinCommand
+        {
+            get { return _likePinCommand; }
+            set { SetProperty(ref _likePinCommand, value); }
         }
 
         #endregion

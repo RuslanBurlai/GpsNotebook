@@ -9,18 +9,33 @@
                                  xmlns:prism="http://prismlibrary.com"
                                  Title="{Binding Title}">
 
+    <Grid RowDefinitions="0.02*, 0.06*, 0.07*, 0.44*, 0.4*">
 
-    <Grid RowDefinitions="0.03*, 0.1*, 0.75*, 0.2*">
-        
-        <StackLayout Grid.Row="1">
-            
-            <control:CustomSearchBar Grid.Row="0" 
-                                     LeftSideImagePath="ic_settings"
-                                     RightSideImagePath="ic_exid"/>
+            <control:CustomSearchBar LeftSideImagePath="ic_settings"
+                                     RightSideImagePath="ic_exid"
+                                     ClearSerchBarImage="ic_clear"
+                                     TapOnRightImageCommand="{Binding LogOutCommand}"
+                                     TapOnLeftImageCommand="{Binding SettingsCommand}" 
+                                     Grid.Row="1"/>
 
+        <ScrollView Grid.Row="2" Orientation="Horizontal">
+        <StackLayout Orientation="Horizontal" BindableLayout.ItemsSource="{Binding Categories}">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                        <StackLayout>
+                            <Frame CornerRadius="25" 
+                                   Padding="8"
+                                   HasShadow="False"
+                                   BackgroundColor="#F1F3FD">
+                                <Label Text="{Binding Name}"/>
+                            </Frame>
+                        </StackLayout>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
         </StackLayout>
-        
-        <googleMap:CustomMapForMapTabViewModel Grid.Row="2"
+        </ScrollView>
+
+        <googleMap:CustomMapForMapTabViewModel Grid.Row="3"
                                                Grid.RowSpan="2"
                                                CameraOnSelectedPin="{Binding MoveCameraToPin}"
                                                ListOfPins="{Binding AllPins}"
@@ -28,17 +43,83 @@
                                                SelectedPin="{Binding TapOnPin}" />
 
         <Frame Grid.Row="3"
-               Margin="10,0,0,0"
-               HasShadow="True"
-               HorizontalOptions="Start"
-               VerticalOptions="Center">
+               IsVisible="false">
 
-            <Frame.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding NavigateToScanQrCode}" />
-            </Frame.GestureRecognizers>
+            <ListView
+                ItemsSource="{Binding AllPins}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+
+                            <StackLayout Orientation="Horizontal">
+
+                                <Image Source="ic_pin_gray" VerticalOptions="Center"/>
+
+                                <StackLayout Orientation="Vertical">
+
+                                    <Label Text="{Binding Label}"/>
+                                    <Label Text="{Binding Description}"/>
+
+                                </StackLayout>
+                            </StackLayout>
+
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
 
         </Frame>
-
     </Grid>
+    
+    <!--<Grid RowDefinitions="0.02*, 0.069*, 0.72*, 0.2*" >
+        
+        <StackLayout Grid.Row="1" 
+                     Grid.RowSpan="3">
+
+            <control:CustomSearchBar LeftSideImagePath="ic_settings"
+                                     RightSideImagePath="ic_exid"
+                                     ClearSerchBarImage="ic_clear"
+                                     TapOnRightImageCommand="{Binding LogOutCommand}"
+                                     TapOnLeftImageCommand="{Binding SettingsCommand}" />
+
+            <googleMap:CustomMapForMapTabViewModel Grid.Row="2"
+                                                   Grid.RowSpan="2"
+                                                   CameraOnSelectedPin="{Binding MoveCameraToPin}"
+                                                   ListOfPins="{Binding AllPins}"
+                                                   MyLocationEnabled="True"
+                                                   SelectedPin="{Binding TapOnPin}" />
+                
+        </StackLayout>
+
+        <Frame Grid.Row="2"
+               IsVisible="false"
+               HeightRequest="80">
+            
+            <ListView
+                ItemsSource="{Binding AllPins}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+
+                            <StackLayout Orientation="Horizontal">
+                                
+                                <Image Source="ic_pin_gray" VerticalOptions="Center"/>
+                                
+                                <StackLayout Orientation="Vertical">
+                                    
+                                    <Label Text="{Binding Label}"/>
+                                    <Label Text="{Binding Description}"/>
+                                    
+                                </StackLayout>
+                            </StackLayout>
+                                
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            
+        </Frame>
+        
+    </Grid>-->
 
 </baseContentPage:BaseContentPage>

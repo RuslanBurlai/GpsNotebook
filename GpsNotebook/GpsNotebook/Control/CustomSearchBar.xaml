@@ -2,7 +2,7 @@
 <Grid xmlns="http://xamarin.com/schemas/2014/forms" 
       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
       x:Class="GpsNotebook.Control.CustomSearchBar"
-      ColumnDefinitions="0.15*, 0.03*, 0.57*, 0.1*, 0.15*"
+      ColumnDefinitions="0.18*, 0.03*, 0.52*, 0.07*, 0.2*"
       ColumnSpacing="1"
       x:Name="customSearchBar">
     
@@ -18,20 +18,38 @@
 
     <Image Grid.Column="0" 
            Source="{Binding LeftSideImagePath, Source={x:Reference customSearchBar}}" />
-    
+
     <BoxView Grid.Column="0"
              BackgroundColor="Transparent"
              VerticalOptions="Fill"
-             HorizontalOptions="Fill"/>
+             HorizontalOptions="Fill">
+        <BoxView.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding TapOnLeftImageCommand, Source={x:Reference customSearchBar}}"/>
+        </BoxView.GestureRecognizers>
+        
+    </BoxView>
 
     <Frame Grid.Column="1"
            Grid.ColumnSpan="3"
            CornerRadius="5"
            HasShadow="False" 
-           BackgroundColor="#BCD4E6"/>
+           BackgroundColor="#F1F3FD" />
 
     <Entry Grid.Column="2"
-           Placeholder="Search" />
+           Placeholder="Search" 
+           FontSize="14"/>
+
+    <Image Grid.Column="3" 
+           Source="{Binding ClearSerchBarImage, Source={x:Reference customSearchBar}}"/>
+
+    <BoxView Grid.Column="3"
+             BackgroundColor="Transparent"
+             VerticalOptions="Fill"
+             HorizontalOptions="Fill" >
+        <BoxView.GestureRecognizers>
+            <TapGestureRecognizer />
+        </BoxView.GestureRecognizers>
+    </BoxView>
 
     <Image Grid.Column="4" 
            Source="{Binding RightSideImagePath, Source={x:Reference customSearchBar}}"/>
@@ -39,6 +57,11 @@
     <BoxView Grid.Column="4"
              BackgroundColor="Transparent"
              VerticalOptions="Fill"
-             HorizontalOptions="Fill" />
-    
+             HorizontalOptions="Fill" >
+        <BoxView.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding TapOnRightImageCommand, Source={x:Reference customSearchBar}}"/>
+        </BoxView.GestureRecognizers>
+    </BoxView>
+
+
 </Grid>
