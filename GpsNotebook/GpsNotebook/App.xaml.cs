@@ -39,7 +39,6 @@ namespace GpsNotebook
 
             containerRegistry.RegisterForNavigation<AddPinView, AddPinViewModel>();
 
-
             //Services
             containerRegistry.RegisterInstance<ISettingsManager>(Container.Resolve<SettingsManager>());
             containerRegistry.RegisterInstance<IRepositoryService>(Container.Resolve<RepositoryService>());
@@ -47,7 +46,6 @@ namespace GpsNotebook
             containerRegistry.RegisterInstance<IAuthorizationService>(Container.Resolve<AuthorizationService>());
             containerRegistry.RegisterInstance<IPinModelService>(Container.Resolve<PinModelService>());
             containerRegistry.RegisterInstance<IPermissionService>(Container.Resolve<PermissionsService>());
-
 
             //Dialogs
             containerRegistry.RegisterDialog<TapOnPin, TapOnPinViewModel>();

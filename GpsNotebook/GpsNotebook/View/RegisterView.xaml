@@ -24,7 +24,6 @@
                                               FooterEntry="{Binding NameError}"
                                               HeaderEntry="Name"
                                               ImagePath="{Binding EntryNameRightImage}"
-                                              
                                               Placeholder="Enter your name"
                                               Text="{Binding UserName}" />
             <!--IsVisibleRightImage="{Binding IsShowedRightImageName}"-->

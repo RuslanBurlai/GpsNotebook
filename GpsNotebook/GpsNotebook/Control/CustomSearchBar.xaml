@@ -3,9 +3,21 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
       x:Class="GpsNotebook.Control.CustomSearchBar"
       ColumnDefinitions="0.15*, 0.03*, 0.57*, 0.1*, 0.15*"
-      ColumnSpacing="1">
+      ColumnSpacing="1"
+      x:Name="customSearchBar">
+    
+    <Grid.Triggers>
+        <DataTrigger TargetType="Grid"
+                         Binding="{Binding Isjwvjwvvw}"
+                         Value="true">
+            <Setter Property="Grid.ColumnSpan" Value="4"/>
 
-    <Image Grid.Column="0" />
+        </DataTrigger>
+
+    </Grid.Triggers>
+
+    <Image Grid.Column="0" 
+           Source="{Binding LeftSideImagePath, Source={x:Reference customSearchBar}}" />
     
     <BoxView Grid.Column="0"
              BackgroundColor="Transparent"
@@ -15,21 +27,16 @@
     <Frame Grid.Column="1"
            Grid.ColumnSpan="3"
            CornerRadius="5"
-           HasShadow="False" />
+           HasShadow="False" 
+           BackgroundColor="#BCD4E6"/>
 
     <Entry Grid.Column="2"
            Placeholder="Search" />
 
-    <Image Grid.Column="3" />
+    <Image Grid.Column="4" 
+           Source="{Binding RightSideImagePath, Source={x:Reference customSearchBar}}"/>
 
-    <BoxView Grid.Column="3"
-             BackgroundColor="Transparent"
-             VerticalOptions="Fill"
-             HorizontalOptions="Fill" />
-
-    <Image Grid.Column="4"/>
-    
-    <BoxView Grid.Column="3"
+    <BoxView Grid.Column="4"
              BackgroundColor="Transparent"
              VerticalOptions="Fill"
              HorizontalOptions="Fill" />

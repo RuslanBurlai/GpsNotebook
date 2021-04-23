@@ -40,7 +40,7 @@ namespace GpsNotebook.ViewModel
 
         private async void OnLogin()
         {
-            var p = _permissionService.CheckPermissions(new LocationPermission());
+            //var p = _permissionService.CheckPermissions(new LocationPermission());
             await NavigationService.NavigateAsync(nameof(LogInView));
         }
 
