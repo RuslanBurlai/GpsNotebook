@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Frame x:Class="GpsNotebook.Dialogs.SharePinViaQRDialogView"
+       xmlns="http://xamarin.com/schemas/2014/forms"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:prism="http://prismlibrary.com"
+       prism:DialogLayout.CloseOnBackgroundTapped="True"
+       prism:ViewModelLocator.AutowireViewModel="True"
+       prism:DialogLayout.RelativeHeightRequest="0.65"
+       prism:DialogLayout.RelativeWidthRequest="0.95"
+       xmlns:zxing="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
+       CornerRadius="20">
+
+    <Grid RowDefinitions="0.15*, 0.7*, 0.15*">
+        
+            <zxing:ZXingBarcodeImageView
+                Grid.Row="1"
+                BarcodeValue="{Binding QrCodeData}" 
+                BarcodeFormat="QR_CODE" 
+                VerticalOptions="Fill"
+                HorizontalOptions="Fill" />
+    </Grid>
+
+</Frame>

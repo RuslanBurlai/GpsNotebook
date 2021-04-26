@@ -10,13 +10,10 @@ namespace GpsNotebook.ViewModel
 {
     public class LogInOrRegisteredViewModel : ViewModelBase
     {
-        private IPermissionService _permissionService;
         public LogInOrRegisteredViewModel(
-            INavigationService navigationService,
-            IPermissionService permissionService) :
+            INavigationService navigationService) :
             base(navigationService)
         {
-            _permissionService = permissionService;
         }
 
         #region -- Public Property --
@@ -40,7 +37,7 @@ namespace GpsNotebook.ViewModel
 
         private async void OnLogin()
         {
-            //var p = _permissionService.CheckPermissions(new LocationPermission());
+
             await NavigationService.NavigateAsync(nameof(LogInView));
         }
 

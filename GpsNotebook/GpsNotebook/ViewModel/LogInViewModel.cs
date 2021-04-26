@@ -1,5 +1,6 @@
 ﻿using GpsNotebook.Models;
 using GpsNotebook.Services.Authorization;
+using GpsNotebook.Services.UserModelService;
 using GpsNotebook.Validators;
 using GpsNotebook.View;
 using Plugin.Permissions;
@@ -17,16 +18,17 @@ namespace GpsNotebook.ViewModel
     public class LogInViewModel : ViewModelBase
     {
         private IAuthorizationService _authorizationService;
-        private IPageDialogService _pageDialogService;
+        private IUserModelService _userModelService;
         public LogInViewModel(
             IAuthorizationService authorizationService,
             INavigationService navigationService,
-            IPageDialogService pageDialogService) :
+            IUserModelService userModelService) :
             base(navigationService)
         {
             Title = "Log in";
+
             _authorizationService = authorizationService;
-            _pageDialogService = pageDialogService;
+            _userModelService = userModelService;
         }
 
         #region -- Public properties --
@@ -102,7 +104,15 @@ namespace GpsNotebook.ViewModel
 
         private async void OnNavigateToMapTabbedPage()
         {
-            await NavigationService.NavigateAsync(nameof(MapTabbedView));
+            if (_userModelService.GetUserId(UserEmail, UserPassword) != 0)
+            {
+                await NavigationService.NavigateAsync(nameof(MapTabbedView));
+            }
+            else
+            {
+                EmailError = "Email incorrect";
+                PasswordError = "Password incorrect";
+            }
         }
 
         private void OnHidePassword()
@@ -121,7 +131,7 @@ namespace GpsNotebook.ViewModel
 
         private async void OnShowPreviousViews(object obj)
         {
-            await NavigationService.GoBackAsync();
+            await NavigationService.NavigateAsync(nameof(LogInOrRegisterView));
         }
 
         private void OnClearEmailEntry()

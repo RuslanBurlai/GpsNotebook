@@ -104,5 +104,10 @@ namespace GpsNotebook.Control
             get { return (bool)GetValue(IsSearchBarSpanProperty); }
             set { SetValue(IsSearchBarSpanProperty, value); }
         }
+
+        private void ClearSearchEntry(object sender, EventArgs e)
+        {
+            searchEntry.Text = string.Empty;
+        }
     }
 }

@@ -40,11 +40,11 @@ namespace GpsNotebook.ViewModel
             set { SetProperty(ref _pins, value); }
         }
 
-        private string _like;
-        public string Like
+        private string _likeimage;
+        public string LikeImage
         {
-            get { return _like; }
-            set { SetProperty(ref _like, value); }
+            get { return _likeimage; }
+            set { SetProperty(ref _likeimage, value); }
         }
 
         private PinViewModel _selectedItemInListView;
@@ -87,21 +87,23 @@ namespace GpsNotebook.ViewModel
 
         private ICommand _setFavoritPinCommand;
         public ICommand SetFavoritPinCommand =>
-            _setFavoritPinCommand ?? (_setFavoritPinCommand = new DelegateCommand(OnSetFavoritPin));
+            _setFavoritPinCommand ?? (_setFavoritPinCommand = new DelegateCommand<PinViewModel>(OnSetFavoritPin));
 
         #endregion
 
         #region -- Private Helpers --
 
-        private void OnSetFavoritPin()
+        private void OnSetFavoritPin(PinViewModel pin)
         {
-            if (Like == "ic_like_gray")
+            if (LikeImage == "ic_like_gray")
             {
-                Like = "ic_like_blue";
+                pin.ImageFavoritPin = "ic_like_blue";
+                LikeImage = "ic_like_blue";
             }
             else
             {
-                Like = "ic_like_gray";
+                pin.ImageFavoritPin = "ic_like_gray";
+                LikeImage = "ic_like_gray";
             }
         }
 

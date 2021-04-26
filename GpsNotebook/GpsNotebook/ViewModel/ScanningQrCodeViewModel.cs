@@ -30,12 +30,13 @@ namespace GpsNotebook.ViewModel
             NavigationService.NavigateAsync(nameof(MapTabView));
         }
 
-        private void OnQrScanResalt(Result resalt)
+        private async void OnQrScanResalt(Result resalt)
         {
             var pin = JsonConvert.DeserializeObject<Pin>(resalt.Text);
             var qrResalt = new NavigationParameters();
+
             qrResalt.Add(nameof(ScanningQrCodeViewModel), pin);
-            NavigationService.NavigateAsync(nameof(MapTabView), qrResalt);
+            await NavigationService.NavigateAsync(nameof(MapTabbedView), qrResalt);
         }
     }
 }

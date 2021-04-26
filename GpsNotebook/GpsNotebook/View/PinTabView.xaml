@@ -32,19 +32,19 @@
             <ListView
                 x:Name="ListPinLocations"
                 HasUnevenRows="True"
-                ItemsSource="{Binding Pins}"
-                SelectedItem="{Binding SelectedItemInListView}">
+                ItemsSource="{Binding Pins}">
+                <!--SelectedItem="{Binding SelectedItemInListView}">-->
 
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <ViewCell.ContextActions>
                                 <MenuItem
-                                    Command="{Binding Source={x:Reference this}, Path=BindingContext.EditPinInListCommand}"
+                                    Command="{Binding Source={x:Reference ListPinLocations}, Path=BindingContext.EditPinInListCommand}"
                                     CommandParameter="{Binding .}"
                                     Text="Edit" />
                                 <MenuItem
-                                    Command="{Binding Source={x:Reference this}, Path=BindingContext.DeletePinFromListCommand}"
+                                    Command="{Binding Source={x:Reference ListPinLocations}, Path=BindingContext.DeletePinFromListCommand}"
                                     CommandParameter="{Binding .}"
                                     Text="Delete" />
                             </ViewCell.ContextActions>
@@ -54,24 +54,33 @@
                                 ColumnSpacing="20"
                                 RowDefinitions="0.1*, 0.40*, 0.40*, 0.1*">
 
-                                <Frame
+                                <!--<Frame
                                     Grid.Row="1"
                                     Grid.RowSpan="2"
                                     Grid.Column="1"
                                     BackgroundColor="#F1F3FD"
                                     CornerRadius="5">
 
-                                    <Frame.GestureRecognizers>
-                                        <!--<TapGestureRecognizer Command="{Binding Source={x:Reference this}, Path=BindingContext.SetFavoritPinCommand}" />-->
-                                    </Frame.GestureRecognizers>
+                                    --><!--<Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={x:Reference ListPinLocations}, Path=BindingContext.SetFavoritPinCommand}" 
+                                                              CommandParameter="{Binding .}"/>
+                                    </Frame.GestureRecognizers>--><!--
 
-                                </Frame>
+                                </Frame>-->
 
                                 <Image
                                     Grid.Row="1"
                                     Grid.RowSpan="2"
                                     Grid.Column="1"
-                                    Source="{Binding Like}" />
+                                    Source="{Binding LikeImage}" >
+
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={x:Reference ListPinLocations}, Path=BindingContext.SetFavoritPinCommand}" 
+                                                              CommandParameter="{Binding .}"/>
+                                    </Image.GestureRecognizers>
+
+
+                                </Image>
 
                                 <Label
                                     Grid.Row="1"

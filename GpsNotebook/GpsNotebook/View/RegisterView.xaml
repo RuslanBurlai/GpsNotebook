@@ -26,7 +26,6 @@
                                               ImagePath="{Binding EntryNameRightImage}"
                                               Placeholder="Enter your name"
                                               Text="{Binding UserName}" />
-            <!--IsVisibleRightImage="{Binding IsShowedRightImageName}"-->
         </StackLayout>
 
         <StackLayout Grid.Row="2"
@@ -35,12 +34,11 @@
 
             <customEntry:CustomEntryWithLabel BorderColor="Gray"
                                               ClearOrHideText="{Binding ClearEmailEntryCommand}"
-                                              FooterEntry="{Binding PasswordError}"
+                                              FooterEntry="{Binding EmailError}"
                                               HeaderEntry="Email"
                                               ImagePath="{Binding EntryEmailRightImage}"
                                               Placeholder="Enter email"
                                               Text="{Binding UserEmail}" />
-            <!--IsVisibleRightImage="{Binding IsShowedRightImageEmail}"-->
 
 
             <Button BackgroundColor="RoyalBlue"

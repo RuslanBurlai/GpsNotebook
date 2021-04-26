@@ -123,6 +123,13 @@ namespace GpsNotebook.ViewModel
             set { SetProperty(ref _searchBarSpaned, value); }
         }
 
+        private string _qrCodeData;
+        public string QrCodeData
+        {
+            get { return _qrCodeData; }
+            set { SetProperty(ref _qrCodeData, value); }
+        }
+
         private ICommand _logOutCommand;
         public ICommand LogOutCommand =>
             _logOutCommand ?? (_logOutCommand = new DelegateCommand(OnLogOut));
@@ -143,9 +150,20 @@ namespace GpsNotebook.ViewModel
         public ICommand ClearSearchBarCommand =>
             _clearSearchBarCommand ?? (_clearSearchBarCommand = new DelegateCommand(OnClearSearchBar));
 
+        private ICommand _sharePinCommand;
+        public ICommand SharePinCommand =>
+            _sharePinCommand ?? (_sharePinCommand = new DelegateCommand(OnSharePin));
+
         #endregion
 
         #region -- Private Helpers --
+
+        private void OnSharePin()
+        {
+            var dialogParametr = new DialogParameters();
+            dialogParametr.Add(nameof(SharePinCommand), QrCodeData);
+             _dialogService.ShowDialog(nameof(SharePinViaQRDialogView), dialogParametr);
+        }
 
         private void OnClearSearchBar()
         {
@@ -268,7 +286,11 @@ namespace GpsNotebook.ViewModel
                         if (TapOnPin != null)
                         {
                             ShowInfoAboutPin = true;
+                            //var pin = new Pin();
+                            string json = JsonConvert.SerializeObject(TapOnPin);
+                            QrCodeData = json;
                         }
+
                         break;
                     }
             }

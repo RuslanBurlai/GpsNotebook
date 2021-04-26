@@ -1,37 +1,37 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
-<Grid
-    x:Class="GpsNotebook.Control.CustomSearchBar"
-    xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    x:Name="customSearchBar"
-    ColumnDefinitions="0.18*, 0.03*, 0.52*, 0.07*, 0.15*, 0.05*"
-    ColumnSpacing="1">
+<Grid x:Class="GpsNotebook.Control.CustomSearchBar"
+      xmlns="http://xamarin.com/schemas/2014/forms"
+      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+      x:Name="customSearchBar"
+      ColumnDefinitions="0.18*, 0.03*, 0.52*, 0.07*, 0.15*, 0.05*"
+      ColumnSpacing="1">
 
-    <Image Grid.Column="0" Source="{Binding LeftSideImagePath, Source={x:Reference customSearchBar}}" />
+    <Image Grid.Column="0" 
+           Source="{Binding LeftSideImagePath, Source={x:Reference customSearchBar}}" />
 
-    <BoxView
-        Grid.Column="0"
-        BackgroundColor="Transparent"
-        HorizontalOptions="Fill"
-        VerticalOptions="Fill">
+    <BoxView Grid.Column="0"
+             BackgroundColor="Transparent"
+             HorizontalOptions="Fill"
+             VerticalOptions="Fill">
+        
         <BoxView.GestureRecognizers>
             <TapGestureRecognizer Command="{Binding TapOnLeftImageCommand, Source={x:Reference customSearchBar}}" />
         </BoxView.GestureRecognizers>
 
     </BoxView>
 
-    <Frame
-        Grid.Column="1"
-        Grid.ColumnSpan="3"
-        BackgroundColor="#F1F3FD"
-        CornerRadius="5"
-        HasShadow="False">
+    <Frame Grid.Column="1"
+           Grid.ColumnSpan="3"
+           BackgroundColor="#F1F3FD"
+           CornerRadius="5"
+           HasShadow="False">
 
         <Frame.Triggers>
-            <DataTrigger
-                Binding="{Binding IsSearchBarSpan, Source={x:Reference customSearchBar}}"
-                TargetType="Frame"
-                Value="true">
+            
+            <DataTrigger Binding="{Binding IsSearchBarSpan, Source={x:Reference customSearchBar}}"
+                         TargetType="Frame"
+                         Value="true">
+                
                 <Setter Property="Grid.ColumnSpan" Value="4" />
 
             </DataTrigger>
@@ -40,96 +40,64 @@
 
     </Frame>
 
-    <Entry
-        Grid.Column="2"
-        FontSize="14"
-        Placeholder="Search"
-        Text="{Binding TextQuery, Source={x:Reference customSearchBar}}" >
+    <Entry Grid.Column="2"
+           FontSize="14"
+           Placeholder="Search"
+           x:Name="searchEntry"
+           Text="{Binding TextQuery, Source={x:Reference customSearchBar}}" >
 
         <Entry.Triggers>
-                <DataTrigger
-                Binding="{Binding IsSearchBarSpan, Source={x:Reference customSearchBar}}"
-                TargetType="Entry"
-                Value="true">
-                    <Setter Property="Grid.ColumnSpan" Value="2" />
+            
+                <DataTrigger Binding="{Binding IsSearchBarSpan, Source={x:Reference customSearchBar}}"
+                             TargetType="Entry"
+                             Value="true">
+                    
+                    <Setter Property="Grid.ColumnSpan" Value="3" />
 
                 </DataTrigger>
+            
             </Entry.Triggers>
         
     </Entry>
 
 
-    <Image Grid.Column="3" Source="{Binding ClearSerchBarImage, Source={x:Reference customSearchBar}}">
+    <Image Grid.Column="4"
+           Source="{Binding ClearSerchBarImage, Source={x:Reference customSearchBar}}"
+           IsVisible="False"
+           HorizontalOptions="End">
+
+        <Image.GestureRecognizers>
+            <TapGestureRecognizer Tapped="ClearSearchEntry"/>
+        </Image.GestureRecognizers>
 
         <Image.Triggers>
-            <DataTrigger
-                Binding="{Binding IsSearchBarSpan, Source={x:Reference customSearchBar}}"
-                TargetType="Image"
-                Value="true">
-                <Setter Property="Grid.Column" Value="4" />
+            
+            <DataTrigger Binding="{Binding IsSearchBarSpan, Source={x:Reference customSearchBar}}"
+                         TargetType="Image"
+                         Value="true">
+                <Setter Property="IsVisible" Value="true" />
 
             </DataTrigger>
+            
         </Image.Triggers>
-
 
     </Image>
 
-    <BoxView
-        Grid.Column="3"
-        BackgroundColor="Transparent"
-        HorizontalOptions="Fill"
-        VerticalOptions="Fill">
-        
-        <BoxView.GestureRecognizers>
-            <TapGestureRecognizer Command="{Binding ClearSearchQueryCommand, Source={x:Reference customSearchBar}}" />
-        </BoxView.GestureRecognizers>
-
-        <BoxView.Triggers>
-            <DataTrigger
-                Binding="{Binding IsSearchBarSpan, Source={x:Reference customSearchBar}}"
-                TargetType="BoxView"
-                Value="true">
-                <Setter Property="Grid.Column" Value="4" />
-
-            </DataTrigger>
-        </BoxView.Triggers>
-
-    </BoxView>
-
-    <Image Grid.Column="4" Source="{Binding RightSideImagePath, Source={x:Reference customSearchBar}}">
+    <Image Grid.Column="4"
+           Source="{Binding RightSideImagePath, Source={x:Reference customSearchBar}}"
+           IsVisible="True">
 
         <Image.Triggers>
-            <DataTrigger
-                Binding="{Binding IsSearchBarSpan, Source={x:Reference customSearchBar}}"
-                TargetType="Image"
-                Value="true">
-                <Setter Property="Source" Value="" />
+            
+            <DataTrigger Binding="{Binding IsSearchBarSpan, Source={x:Reference customSearchBar}}"
+                         TargetType="Image"
+                         Value="true">
+                <Setter Property="IsVisible" Value="False" />
 
             </DataTrigger>
 
         </Image.Triggers>
 
     </Image>
-
-    <BoxView
-        Grid.Column="4"
-        BackgroundColor="Transparent"
-        HorizontalOptions="Fill"
-        VerticalOptions="Fill">
-        
-        <BoxView.GestureRecognizers>
-            <TapGestureRecognizer Command="{Binding TapOnRightImageCommand, Source={x:Reference customSearchBar}}" />
-        </BoxView.GestureRecognizers>
-
-        <BoxView.Triggers>
-            <DataTrigger
-                Binding="{Binding IsSearchBarSpan, Source={x:Reference customSearchBar}}"
-                TargetType="BoxView"
-                Value="true">
-                <Setter Property="Grid.Column" Value="1" />
-
-            </DataTrigger>
-        </BoxView.Triggers>
-    </BoxView>
 
 </Grid>

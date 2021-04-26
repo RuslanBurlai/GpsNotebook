@@ -4,9 +4,9 @@ using Xamarin.Forms;
 
 namespace GpsNotebook.Dialogs
 {
-    public partial class TapOnPin
+    public partial class SharePinViaQRDialogView
     {
-        public TapOnPin()
+        public SharePinViaQRDialogView()
         {
             InitializeComponent();
         }

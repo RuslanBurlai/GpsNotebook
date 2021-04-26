@@ -52,19 +52,12 @@ namespace GpsNotebook.ViewModel
             set { SetProperty(ref _nameError, value); }
         }
 
-        //private bool _isShowedRightImageName;
-        //public bool IsShowedRightImageName
-        //{
-        //    get { return _isShowedRightImageName; }
-        //    set { SetProperty(ref _isShowedRightImageName, value); }
-        //}
-
-        //private bool _isShowedRightImageEmail;
-        //public bool IsShowedRightImageEmail
-        //{
-        //    get { return _isShowedRightImageEmail; }
-        //    set { SetProperty(ref _isShowedRightImageEmail, value); }
-        //}
+        private string _emailError;
+        public string EmailError
+        {
+            get { return _emailError; }
+            set { SetProperty(ref _emailError, value); }
+        }
 
         private string _entryEmailRightImage;
         public string EntryEmailRightImage
@@ -82,10 +75,7 @@ namespace GpsNotebook.ViewModel
 
         private ICommand _navigateToRegisterAndPasswordCommand;
         public ICommand NavigateToRegisterAndPasswordCommand =>
-            _navigateToRegisterAndPasswordCommand ?? (_navigateToRegisterAndPasswordCommand = new DelegateCommand(OnNavigateToRegisterAndPassword, CanNavigateToRegisterAndPassword)
-            .ObservesProperty<string>(() => UserName)
-            .ObservesProperty<string>(() => UserEmail));
-
+            _navigateToRegisterAndPasswordCommand ?? (_navigateToRegisterAndPasswordCommand = new DelegateCommand(OnNavigateToRegisterAndPassword));
         private ICommand _showPreviousViewsCommand;
         public ICommand ShowPreviousViewsCommand =>
             _showPreviousViewsCommand ?? (_showPreviousViewsCommand = new Command(OnShowPreviousViews));
@@ -101,21 +91,18 @@ namespace GpsNotebook.ViewModel
         private void OnClearEmailEntry()
         {
             UserEmail = string.Empty;
+            EmailError = string.Empty;
         }
 
         private void OnClearNameEntry()
         {
             UserName = string.Empty;
+            NameError = string.Empty;
         }
 
         #endregion
 
         #region -- Private Helpers --
-
-        private bool CanNavigateToRegisterAndPassword()
-        {
-            return Validator.AllFieldsIsNullOrEmpty(UserName, UserEmail);
-        }
 
         private async void OnNavigateToRegisterAndPassword()
         {
@@ -124,27 +111,29 @@ namespace GpsNotebook.ViewModel
                 Email = UserEmail,
                 Name = UserName,
             };
-            await NavigationService.NavigateAsync($"{nameof(RegisterAndPasswordView)}");
-            //if (Validator.EmailValidator(UserEmail))
-            //{
-            //    if (Validator.NameValidator(UserName))
-            //    {
-            //        await NavigationService.NavigateAsync($"{nameof(LogInView)}");
-            //    }
-            //    else
-            //    {
-            //        await _pageDialogService.DisplayAlertAsync("Name error", "name failed", "Ok");
-            //    }
-            //}
-            //else
-            //{
-            //    await _pageDialogService.DisplayAlertAsync("Email error", "Input correct email.", "Ok");
-            //}
+
+            if (Validator.NameValidator(user.Name))
+            {
+                if (Validator.EmailValidator(user.Email))
+                {
+                    var newUser = new NavigationParameters();
+                    newUser.Add("newUser", user);
+                    await NavigationService.NavigateAsync(nameof(RegisterAndPasswordView), newUser);
+                }
+                else
+                {
+                    EmailError = "Incorrect email";
+                }
+            }
+            else
+            {
+                NameError = "Incorrect name";
+            }
         }
 
         private async void OnShowPreviousViews(object obj)
         {
-            await NavigationService.GoBackAsync();
+            await NavigationService.NavigateAsync(nameof(LogInOrRegisterView));
         }
 
         #endregion
@@ -161,12 +150,10 @@ namespace GpsNotebook.ViewModel
                     {
                         if (UserName != string.Empty)
                         {
-                            //IsShowedRightImageName = true;
                             EntryNameRightImage = "ic_clear";
                         }
                         else
                         {
-                            //IsShowedRightImageName = false;
                             EntryNameRightImage = string.Empty;
                         }
                         break;
@@ -176,12 +163,10 @@ namespace GpsNotebook.ViewModel
                         if (UserEmail != string.Empty)
                         {
                             EntryEmailRightImage = "ic_clear";
-                            //IsShowedRightImageEmail = true;
                         }
                         else
                         {
                             EntryEmailRightImage = string.Empty;
-                            //IsShowedRightImageEmail = false;
                         }
                         break;
                     }

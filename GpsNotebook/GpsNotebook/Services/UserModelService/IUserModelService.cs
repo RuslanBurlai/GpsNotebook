@@ -7,5 +7,7 @@ namespace GpsNotebook.Services.UserModelService
     {
         void AddUser(UserModel user);
         IEnumerable<UserModel> GetAllUser();
+
+        int GetUserId(string email, string password);
     }
 }

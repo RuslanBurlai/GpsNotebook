@@ -45,11 +45,10 @@ namespace GpsNotebook
             containerRegistry.RegisterInstance<IUserModelService>(Container.Resolve<UserModelService>());
             containerRegistry.RegisterInstance<IAuthorizationService>(Container.Resolve<AuthorizationService>());
             containerRegistry.RegisterInstance<IPinModelService>(Container.Resolve<PinModelService>());
-            containerRegistry.RegisterInstance<IPermissionService>(Container.Resolve<PermissionsService>());
+            //containerRegistry.RegisterInstance<IPermissionService>(Container.Resolve<PermissionsService>());
 
             //Dialogs
-            containerRegistry.RegisterDialog<TapOnPin, TapOnPinViewModel>();
-            containerRegistry.RegisterDialog<QrCodeScanDialogView, QrCodeScanDialogViewModel>();
+            containerRegistry.RegisterDialog<SharePinViaQRDialogView, SharePinViaQRDialogViewModel>();
         }
 
         protected async override void OnInitialized()
@@ -57,15 +56,14 @@ namespace GpsNotebook
             InitializeComponent();
 
             //add IsAuthorized property to AuthService
-            await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(MapTabbedView)}");
-            //if (_authorization.GetUserId != 0)
-            //{
-            //    await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(MapTabbedView)}");
-            //}
-            //else
-            //{
-            //    await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(SignInView)}");
-            //}
+            if (_authorization.GetUserId != 0)
+            {
+                await NavigationService.NavigateAsync(nameof(MapTabbedView));
+            }
+            else
+            {
+                await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(LogInOrRegisterView)}");
+            }
 
         }
 

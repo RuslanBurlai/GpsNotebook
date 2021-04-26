@@ -15,7 +15,7 @@ namespace GpsNotebook.Validators
 
         public static bool PasswordValidator(String input)
         {
-            Regex regex = new Regex(@"^([\d]|[\w]|[\+\*\?\^\.\[\]\{\}\(\)\|]){8,}$");
+            Regex regex = new Regex(@"^([\d]|[\w]|[\!\+\*\?\^\.\[\]\{\}\(\)\|]){8,}$");
 
             return regex.IsMatch(input);
         }

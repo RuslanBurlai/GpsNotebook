@@ -98,16 +98,5 @@ namespace GpsNotebook.Control
             get { return (bool)GetValue(IsPasswordProperty); }
             set { SetValue(IsPasswordProperty, value); }
         }
-
-        //public static readonly BindableProperty IsVisibleRightImageProperty = BindableProperty.Create(
-        //    propertyName: nameof(IsVisibleRightImage),
-        //    returnType: typeof(bool),
-        //    declaringType: typeof(CustomEntry));
-
-        //public bool IsVisibleRightImage
-        //{
-        //    get { return (bool)GetValue(IsVisibleRightImageProperty); }
-        //    set { SetValue(IsVisibleRightImageProperty, value); }
-        //}
     }
 }

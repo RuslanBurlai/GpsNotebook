@@ -34,8 +34,8 @@
     <Compile Update="Control\CustomEntryWithLabel.xaml.cs">
       <DependentUpon>CustomEntryWithLabel.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Dialogs\QrCodeScanDialogView.xaml.cs">
-      <DependentUpon>QrCodeScanDialogView.xaml</DependentUpon>
+    <Compile Update="Dialogs\SharePinViaQRDialogView.xaml.cs">
+      <DependentUpon>SharePinViaQRDialogView.xaml</DependentUpon>
     </Compile>
     <Compile Update="View\AddPinView.xaml.cs">
       <DependentUpon>AddPinView.xaml</DependentUpon>
@@ -73,10 +73,7 @@
     <EmbeddedResource Update="Control\CustomSearchBar.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Dialogs\QrCodeScanDialogView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Dialogs\TapOnPin.xaml">
+    <EmbeddedResource Update="Dialogs\SharePinViaQRDialogView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="View\AddPinView.xaml">

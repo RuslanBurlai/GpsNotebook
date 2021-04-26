@@ -7,7 +7,7 @@
     xmlns:c="clr-namespace:GpsNotebook.ViewModel"
     xmlns:control="clr-namespace:GpsNotebook.Control"
     xmlns:googleMap="clr-namespace:GpsNotebook.Control"
-    xmlns:prism="http://prismlibrary.com"
+    xmlns:prism="http://prismlibrary.com" xmlns:zxing="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
     Title="{Binding Title}">
 
     <Grid RowDefinitions="0.02*, 0.06*, 0.07*, 0.41*, 0.11*, 0.33*" RowSpacing="7">
@@ -54,13 +54,12 @@
             </StackLayout>
         </ScrollView>
 
-        <googleMap:CustomMapForMapTabViewModel
-            Grid.Row="3"
-            Grid.RowSpan="3"
-            CameraOnSelectedPin="{Binding MoveCameraToPin}"
-            ListOfPins="{Binding AllPins}"
-            MyLocationEnabled="True"
-            SelectedPin="{Binding TapOnPin}">
+        <googleMap:CustomMapForMapTabViewModel Grid.Row="3"
+                                               Grid.RowSpan="3"
+                                               CameraOnSelectedPin="{Binding MoveCameraToPin}"
+                                               ListOfPins="{Binding AllPins}"
+                                               MyLocationEnabled="True"
+                                               SelectedPin="{Binding TapOnPin}">
 
             <googleMap:CustomMapForMapTabViewModel.Behaviors>
                 <prism:EventToCommandBehavior Command="{Binding MapClickCommand}" EventName="MapClicked" />
@@ -68,7 +67,8 @@
 
         </googleMap:CustomMapForMapTabViewModel>
 
-        <Frame Grid.Row="3" IsVisible="false">
+        <Frame Grid.Row="3" 
+               IsVisible="false">
 
             <ListView ItemsSource="{Binding AllPins}">
                 <ListView.ItemTemplate>
@@ -77,10 +77,9 @@
 
                             <StackLayout Orientation="Horizontal">
 
-                                <Image
-                                    HorizontalOptions="Center"
-                                    Source="ic_pin_gray"
-                                    VerticalOptions="Center" />
+                                <Image HorizontalOptions="Center"
+                                       Source="ic_pin_gray"
+                                       VerticalOptions="Center" />
 
                                 <StackLayout Orientation="Vertical">
 
@@ -96,35 +95,31 @@
             </ListView>
         </Frame>
 
-        <Frame
-            Grid.Row="5"
-            CornerRadius="7"
-            IsVisible="{Binding ShowInfoAboutPin}">
+        <Frame Grid.Row="5"
+               CornerRadius="7"
+               IsVisible="{Binding ShowInfoAboutPin}">
 
-            <Grid
-                ColumnDefinitions="0.02*, 0.89*, 0.07*, 0.02*"
-                RowDefinitions="0.02*, 0.2*, 0.78*"
-                VerticalOptions="Center">
+            <Grid ColumnDefinitions="0.02*, 0.89*, 0.07*, 0.02*"
+                  RowDefinitions="0.02*, 0.2*, 0.78*"
+                  VerticalOptions="Center">
 
-                <Label
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    FontAttributes="Bold"
-                    FontSize="18"
-                    Text="{Binding TapOnPin.Label}"
-                    TextColor="Black" />
+                <Label Grid.Row="1"
+                       Grid.Column="1"
+                       FontAttributes="Bold"
+                       FontSize="18"
+                       Text="{Binding TapOnPin.Label}"
+                       TextColor="Black" />
 
-                <ImageButton
-                    Grid.Row="1"
-                    Grid.Column="2"
-                    BackgroundColor="Transparent"
-                    Source="ic_share" />
+                <ImageButton Grid.Row="1"
+                             Grid.Column="2"
+                             BackgroundColor="Transparent"
+                             Source="ic_share" 
+                             Command="{Binding SharePinCommand}"/>
 
-                <StackLayout
-                    Grid.Row="2"
-                    Grid.Column="1"
-                    Grid.ColumnSpan="2"
-                    Spacing="20">
+                <StackLayout Grid.Row="2"
+                             Grid.Column="1"
+                             Grid.ColumnSpan="2"
+                             Spacing="20">
 
                     <StackLayout Orientation="Horizontal">
 
