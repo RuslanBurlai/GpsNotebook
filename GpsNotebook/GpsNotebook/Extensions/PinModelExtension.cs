@@ -8,27 +8,16 @@ namespace GpsNotebook.Extensions
 {
     public static class PinModelExtension
     {
-        public static Pin ToPin(this PinModel pinModel)
-        {
-            return new Pin
-            {
-                
-                Label = pinModel.PinName,
-                Position = new Position(pinModel.Latitude, pinModel.Longitude)
-                
-            };
-        }
-
-        public static PinViewModel ToPinViewModel(this PinModel pinModel, ICommand likeCommand)
+        public static PinViewModel ToPinViewModel(this PinModel pinModel)
         {
             return new PinViewModel
             {
-                PinId = pinModel.Id,
+                Id = pinModel.Id,
                 PinName = pinModel.PinName,
                 PinDescription = pinModel.Description,
                 PinLatitude = pinModel.Latitude,
                 PinLongitude = pinModel.Longitude,
-                LikePinCommand = likeCommand
+                ImageFavoritPin = pinModel.FavoritPin
             };
         }
     }

@@ -45,13 +45,5 @@ namespace GpsNotebook.Services.Authorization
 
             return registeredUser != null;
         }
-
-        //public UserModel ValidateAndCreateUser(string name, string password, string email)
-        //{
-        //    var newUser = new UserModel
-        //    {
-
-        //    };
-        //}
     }
 }

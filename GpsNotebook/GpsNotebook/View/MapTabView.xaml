@@ -1,64 +1,91 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<baseContentPage:BaseContentPage x:Class="GpsNotebook.View.MapTabView"
-                                 xmlns="http://xamarin.com/schemas/2014/forms"
-                                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                                 xmlns:baseContentPage="clr-namespace:GpsNotebook.View"
-                                 xmlns:c="clr-namespace:GpsNotebook.ViewModel"
-                                 xmlns:control="clr-namespace:GpsNotebook.Control"
-                                 xmlns:googleMap="clr-namespace:GpsNotebook.Control"
-                                 xmlns:prism="http://prismlibrary.com"
-                                 Title="{Binding Title}">
+<baseContentPage:BaseContentPage
+    x:Class="GpsNotebook.View.MapTabView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:baseContentPage="clr-namespace:GpsNotebook.View"
+    xmlns:c="clr-namespace:GpsNotebook.ViewModel"
+    xmlns:control="clr-namespace:GpsNotebook.Control"
+    xmlns:googleMap="clr-namespace:GpsNotebook.Control"
+    xmlns:prism="http://prismlibrary.com"
+    Title="{Binding Title}">
 
-    <Grid RowDefinitions="0.02*, 0.06*, 0.07*, 0.44*, 0.4*">
+    <Grid RowDefinitions="0.02*, 0.06*, 0.07*, 0.41*, 0.11*, 0.33*" RowSpacing="7">
 
-            <control:CustomSearchBar LeftSideImagePath="ic_settings"
-                                     RightSideImagePath="ic_exid"
-                                     ClearSerchBarImage="ic_clear"
-                                     TapOnRightImageCommand="{Binding LogOutCommand}"
-                                     TapOnLeftImageCommand="{Binding SettingsCommand}" 
-                                     Grid.Row="1"/>
+        <control:CustomSearchBar
+            Grid.Row="1"
+            ClearSearchQueryCommand="{Binding ClearSearchBarCommand}"
+            ClearSerchBarImage="{Binding ShowClearImageButtom}"
+            LeftSideImagePath="ic_settings"
+            RightSideImagePath="ic_exid"
+            TapOnLeftImageCommand="{Binding SettingsCommand}"
+            TapOnRightImageCommand="{Binding LogOutCommand}"
+            TextQuery="{Binding SearchingText}" 
+            IsSearchBarSpan="{Binding SearchBarSpaned}"/>
 
         <ScrollView Grid.Row="2" Orientation="Horizontal">
-        <StackLayout Orientation="Horizontal" BindableLayout.ItemsSource="{Binding Categories}">
-            <BindableLayout.ItemTemplate>
-                <DataTemplate>
-                        <StackLayout>
-                            <Frame CornerRadius="25" 
-                                   Padding="8"
-                                   HasShadow="False"
-                                   BackgroundColor="#F1F3FD">
-                                <Label Text="{Binding Name}"/>
+
+            <StackLayout
+                x:Name="ListCategory"
+                BindableLayout.ItemsSource="{Binding Categories}"
+                Orientation="Horizontal">
+
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Grid RowDefinitions="1*" RowSpacing="10">
+                            <Frame
+                                Grid.Row="0"
+                                Padding="8"
+                                BackgroundColor="#F1F3FD"
+                                CornerRadius="25"
+                                HasShadow="False"
+                                HorizontalOptions="FillAndExpand"
+                                VerticalOptions="FillAndExpand">
+                                <Label Text="{Binding Name}" />
+
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={x:Reference ListCategory}, Path=BindingContext.SelectSortCategoryCommand}" CommandParameter="{Binding .}" />
+                                </Frame.GestureRecognizers>
+
                             </Frame>
-                        </StackLayout>
-                </DataTemplate>
-            </BindableLayout.ItemTemplate>
-        </StackLayout>
+                        </Grid>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
         </ScrollView>
 
-        <googleMap:CustomMapForMapTabViewModel Grid.Row="3"
-                                               Grid.RowSpan="2"
-                                               CameraOnSelectedPin="{Binding MoveCameraToPin}"
-                                               ListOfPins="{Binding AllPins}"
-                                               MyLocationEnabled="True"
-                                               SelectedPin="{Binding TapOnPin}" />
+        <googleMap:CustomMapForMapTabViewModel
+            Grid.Row="3"
+            Grid.RowSpan="3"
+            CameraOnSelectedPin="{Binding MoveCameraToPin}"
+            ListOfPins="{Binding AllPins}"
+            MyLocationEnabled="True"
+            SelectedPin="{Binding TapOnPin}">
 
-        <Frame Grid.Row="3"
-               IsVisible="false">
+            <googleMap:CustomMapForMapTabViewModel.Behaviors>
+                <prism:EventToCommandBehavior Command="{Binding MapClickCommand}" EventName="MapClicked" />
+            </googleMap:CustomMapForMapTabViewModel.Behaviors>
 
-            <ListView
-                ItemsSource="{Binding AllPins}">
+        </googleMap:CustomMapForMapTabViewModel>
+
+        <Frame Grid.Row="3" IsVisible="false">
+
+            <ListView ItemsSource="{Binding AllPins}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
 
                             <StackLayout Orientation="Horizontal">
 
-                                <Image Source="ic_pin_gray" VerticalOptions="Center"/>
+                                <Image
+                                    HorizontalOptions="Center"
+                                    Source="ic_pin_gray"
+                                    VerticalOptions="Center" />
 
                                 <StackLayout Orientation="Vertical">
 
-                                    <Label Text="{Binding Label}"/>
-                                    <Label Text="{Binding Description}"/>
+                                    <Label Text="{Binding Label}" />
+                                    <Label Text="{Binding Tag}" />
 
                                 </StackLayout>
                             </StackLayout>
@@ -67,59 +94,56 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+        </Frame>
+
+        <Frame
+            Grid.Row="5"
+            CornerRadius="7"
+            IsVisible="{Binding ShowInfoAboutPin}">
+
+            <Grid
+                ColumnDefinitions="0.02*, 0.89*, 0.07*, 0.02*"
+                RowDefinitions="0.02*, 0.2*, 0.78*"
+                VerticalOptions="Center">
+
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    FontAttributes="Bold"
+                    FontSize="18"
+                    Text="{Binding TapOnPin.Label}"
+                    TextColor="Black" />
+
+                <ImageButton
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    BackgroundColor="Transparent"
+                    Source="ic_share" />
+
+                <StackLayout
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    Spacing="20">
+
+                    <StackLayout Orientation="Horizontal">
+
+                        <Label FontSize="18" Text="{Binding TapOnPin.Position.Latitude}" />
+                        <Label FontSize="18" Text="{Binding TapOnPin.Position.Longitude}" />
+
+                    </StackLayout>
+
+                    <StackLayout Spacing="18">
+                        <BoxView BackgroundColor="#F1F3FD" HeightRequest="1" />
+                        <Label FontSize="18" Text="{Binding TapOnPin.Tag}" />
+                    </StackLayout>
+
+                </StackLayout>
+
+            </Grid>
 
         </Frame>
+
     </Grid>
-    
-    <!--<Grid RowDefinitions="0.02*, 0.069*, 0.72*, 0.2*" >
-        
-        <StackLayout Grid.Row="1" 
-                     Grid.RowSpan="3">
-
-            <control:CustomSearchBar LeftSideImagePath="ic_settings"
-                                     RightSideImagePath="ic_exid"
-                                     ClearSerchBarImage="ic_clear"
-                                     TapOnRightImageCommand="{Binding LogOutCommand}"
-                                     TapOnLeftImageCommand="{Binding SettingsCommand}" />
-
-            <googleMap:CustomMapForMapTabViewModel Grid.Row="2"
-                                                   Grid.RowSpan="2"
-                                                   CameraOnSelectedPin="{Binding MoveCameraToPin}"
-                                                   ListOfPins="{Binding AllPins}"
-                                                   MyLocationEnabled="True"
-                                                   SelectedPin="{Binding TapOnPin}" />
-                
-        </StackLayout>
-
-        <Frame Grid.Row="2"
-               IsVisible="false"
-               HeightRequest="80">
-            
-            <ListView
-                ItemsSource="{Binding AllPins}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-
-                            <StackLayout Orientation="Horizontal">
-                                
-                                <Image Source="ic_pin_gray" VerticalOptions="Center"/>
-                                
-                                <StackLayout Orientation="Vertical">
-                                    
-                                    <Label Text="{Binding Label}"/>
-                                    <Label Text="{Binding Description}"/>
-                                    
-                                </StackLayout>
-                            </StackLayout>
-                                
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            
-        </Frame>
-        
-    </Grid>-->
 
 </baseContentPage:BaseContentPage>

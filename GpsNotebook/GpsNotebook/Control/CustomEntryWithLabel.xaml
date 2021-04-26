@@ -1,51 +1,57 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
-<Grid x:Class="GpsNotebook.Control.CustomEntryWithLabel"
-      xmlns="http://xamarin.com/schemas/2014/forms"
-      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-      x:Name="customEntryWithLabel"
-      ColumnDefinitions="0.9*, 0.1*"
-      RowDefinitions="0.2*, 0.6*, 0.2*">
+<Grid
+    x:Class="GpsNotebook.Control.CustomEntryWithLabel"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Name="customEntryWithLabel"
+    ColumnDefinitions="0.01*, 0.9*, 0.1*"
+    RowDefinitions="0.2*, 0.6*, 0.2*">
 
-    <Label Grid.Row="0"
-           Grid.Column="0"
-           Grid.ColumnSpan="2"
-           Margin="13,0,0,0"
-           Text="{Binding HeaderEntry, Source={x:Reference customEntryWithLabel}}" />
+    <Label
+        Grid.Row="0"
+        Grid.Column="1"
+        Grid.ColumnSpan="2"
+        FontAttributes="Bold"
+        Text="{Binding HeaderEntry, Source={x:Reference customEntryWithLabel}}" />
 
-    <Frame Grid.Row="1"
-           Grid.Column="0"
-           Grid.ColumnSpan="2"
-           BorderColor="{Binding BorderColor, Source={x:Reference customEntryWithLabel}}"
-           HasShadow="False" />
+    <Frame
+        Grid.Row="1"
+        Grid.Column="0"
+        Grid.ColumnSpan="3"
+        BorderColor="{Binding BorderColor, Source={x:Reference customEntryWithLabel}}"
+        HasShadow="False" />
 
-    <Entry Grid.Row="1"
-           Grid.Column="0"
-           FontSize="20"
-           IsPassword="{Binding IsPassword, Source={x:Reference customEntryWithLabel}}"
-           Placeholder="{Binding Placeholder, Source={x:Reference customEntryWithLabel}}"
-           Text="{Binding Text, Source={x:Reference customEntryWithLabel}}" />
+    <Entry
+        Grid.Row="1"
+        Grid.Column="1"
+        FontSize="20"
+        IsPassword="{Binding IsPassword, Source={x:Reference customEntryWithLabel}}"
+        Placeholder="{Binding Placeholder, Source={x:Reference customEntryWithLabel}}"
+        Text="{Binding Text, Source={x:Reference customEntryWithLabel}}" />
 
-    <Image Grid.Row="1"
-           Grid.Column="1"
-           Source="{Binding ImagePath, Source={x:Reference customEntryWithLabel}}"/>
-    <!--IsVisible="{Binding IsVisibleRightImage, Source={x:Reference customEntry}}"-->
+    <Image
+        Grid.Row="1"
+        Grid.Column="2"
+        Source="{Binding ImagePath, Source={x:Reference customEntryWithLabel}}" />
+    <!--  IsVisible="{Binding IsVisibleRightImage, Source={x:Reference customEntry}}"  -->
 
 
-    <BoxView Grid.Row="1"
-             Grid.Column="1"
-             HorizontalOptions="Fill"
-             VerticalOptions="Fill">
-        
+    <BoxView
+        Grid.Row="1"
+        Grid.Column="2"
+        HorizontalOptions="Fill"
+        VerticalOptions="Fill">
+
         <BoxView.GestureRecognizers>
             <TapGestureRecognizer Command="{Binding ClearOrHideText, Source={x:Reference customEntryWithLabel}}" />
         </BoxView.GestureRecognizers>
 
     </BoxView>
 
-    <Label Grid.Row="2"
-           Grid.Column="0"
-           Grid.ColumnSpan="2"
-           Margin="13,0,0,0"
-           Text="{Binding FooterEntry, Source={x:Reference customEntryWithLabel}}"
-           TextColor="Red" />
+    <Label
+        Grid.Row="2"
+        Grid.Column="0"
+        Grid.ColumnSpan="2"
+        Text="{Binding FooterEntry, Source={x:Reference customEntryWithLabel}}"
+        TextColor="Red" />
 </Grid>

@@ -49,5 +49,26 @@ namespace GpsNotebook.Control
             set { SetValue(GoBackCommandProperty, value); }
         }
 
+        public static readonly BindableProperty RightImageSourceProperty = BindableProperty.Create(
+            propertyName: nameof(RightImageSource),
+            returnType: typeof(string),
+            declaringType: typeof(CustomNavigationBar));
+
+        public string RightImageSource
+        {
+            get { return (string)GetValue(RightImageSourceProperty); }
+            set { SetValue(RightImageSourceProperty, value); }
+        }
+
+        public static readonly BindableProperty RightImageCommandProperty = BindableProperty.Create(
+            propertyName: nameof(RightImageCommand),
+            returnType: typeof(ICommand),
+            declaringType: typeof(CustomNavigationBar));
+
+        public ICommand RightImageCommand
+        {
+            get { return (ICommand)GetValue(RightImageCommandProperty); }
+            set { SetValue(RightImageCommandProperty, value); }
+        }
     }
 }

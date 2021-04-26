@@ -27,21 +27,24 @@ namespace GpsNotebook.Services.RepositoryService
 
         private Lazy<SQLiteAsyncConnection> _dataBase;
 
-        public void AddItem<T>(T item) where T : IEntityBaseForModel, new()
+        public async Task<int> AddItem<T>(T item) where T : IEntityBaseForModel, new()
         {
             if (item.Id != 0)
             {
-                _dataBase.Value.UpdateAsync(item);
+                await _dataBase.Value.UpdateAsync(item);
+                return item.Id;
             }
             else
             {
-                _dataBase.Value.InsertAsync(item);
+                await _dataBase.Value.InsertAsync(item);
+                return item.Id;
             }
         }
 
-        public void DeleteItem<T>(T item) where T : IEntityBaseForModel, new()
+        public async Task<int> DeleteItem<T>(T item) where T : IEntityBaseForModel, new()
         {
-            _dataBase.Value.DeleteAsync(item);
+            await _dataBase.Value.DeleteAsync(item);
+            return item.Id;
         }
 
         public Task<List<T>> GetAllItems<T>() where T : IEntityBaseForModel, new()

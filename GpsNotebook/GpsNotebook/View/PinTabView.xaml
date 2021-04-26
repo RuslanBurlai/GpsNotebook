@@ -1,25 +1,34 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<baseContentPage:BaseContentPage x:Class="GpsNotebook.View.PinTabView"
-                                 xmlns="http://xamarin.com/schemas/2014/forms"
-                                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                                 xmlns:c="clr-namespace:GpsNotebook.ViewModel"
-                                 xmlns:customSearch="clr-namespace:GpsNotebook.Behavior"
-                                 xmlns:baseContentPage="clr-namespace:GpsNotebook.View"
-                                 xmlns:prism="http://prismlibrary.com"
-                                 x:Name="this"
-                                 xmlns:control="clr-namespace:GpsNotebook.Control"
-                                 Title="{Binding Title}">
+<baseContentPage:BaseContentPage
+    x:Class="GpsNotebook.View.PinTabView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:baseContentPage="clr-namespace:GpsNotebook.View"
+    xmlns:c="clr-namespace:GpsNotebook.ViewModel"
+    xmlns:control="clr-namespace:GpsNotebook.Control"
+    xmlns:customSearch="clr-namespace:GpsNotebook.Behavior"
+    xmlns:prism="http://prismlibrary.com"
+    x:Name="this"
+    Title="{Binding Title}">
 
-    <Grid RowDefinitions="0.02*, 0.07*, 0.71*, 0.2*">
+    <Grid ColumnDefinitions="0.74*, 0.21*, 0.05*" RowDefinitions="0.02*, 0.06*, 0.75*, 0.14*, 0.03*">
 
-        <control:CustomSearchBar Grid.Row="1" 
-                                 LeftSideImagePath="ic_settings"
-                                 RightSideImagePath="ic_exid"
-                                 TapOnRightImageCommand="{Binding LogOutCommand}"
-                                 TapOnLeftImageCommand="{Binding SettingsViewCommand}"/>
+        <control:CustomSearchBar
+            Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            LeftSideImagePath="ic_settings"
+            RightSideImagePath="ic_exid"
+            TapOnLeftImageCommand="{Binding SettingsViewCommand}"
+            TapOnRightImageCommand="{Binding LogOutCommand}" 
+            TextQuery="{Binding SearchingText}"/>
 
-        <StackLayout Grid.Row="2"
-                     Grid.RowSpan="2" >
+        <StackLayout
+            Grid.Row="2"
+            Grid.RowSpan="3"
+            Grid.Column="0"
+            Grid.ColumnSpan="3">
+
             <ListView
                 x:Name="ListPinLocations"
                 HasUnevenRows="True"
@@ -29,70 +38,58 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <!--<ViewCell.ContextActions>
+                            <ViewCell.ContextActions>
                                 <MenuItem
-                                    Command="{Binding Source={x:Reference this}, Path=BindingContext.EditPinLocation}"
+                                    Command="{Binding Source={x:Reference this}, Path=BindingContext.EditPinInListCommand}"
                                     CommandParameter="{Binding .}"
                                     Text="Edit" />
                                 <MenuItem
                                     Command="{Binding Source={x:Reference this}, Path=BindingContext.DeletePinFromListCommand}"
                                     CommandParameter="{Binding .}"
                                     Text="Delete" />
-                            </ViewCell.ContextActions>-->
+                            </ViewCell.ContextActions>
 
-                            <Grid ColumnDefinitions="0.01*, 0.2*, 0.78*, 0.01*"
-                                  RowDefinitions="0.15*, 0.35*, 0.35*, 0.15*"
-                                  ColumnSpacing="20">
+                            <Grid
+                                ColumnDefinitions="0.01*, 0.18*, 0.8*, 0.01*"
+                                ColumnSpacing="20"
+                                RowDefinitions="0.1*, 0.40*, 0.40*, 0.1*">
 
-                                <Image Grid.Column="1"
-                                       Grid.Row="1"
-                                       Grid.RowSpan="2"
-                                       InputTransparent="True"
-                                       Source="ic_like_gray"/>
-
-                                <Label Grid.Column="2"
-                                       Grid.Row="1"
-                                       FontAttributes="Bold"
-                                       Text="{Binding PinName}"/>
-                                
-                                <StackLayout Orientation="Horizontal" 
-                                             Grid.Row="2"
-                                             Grid.Column="2">
-                                    <Label Text="{Binding Latitude}" />
-                                    <Label Text=","/>
-                                    <Label Text="{Binding Longitude}" />
-                                    
-                                </StackLayout>
-
-                                <Frame Grid.Column="1"
-                                       Grid.Row="1"
-                                       Grid.RowSpan="2"
-                                       CornerRadius="5">
+                                <Frame
+                                    Grid.Row="1"
+                                    Grid.RowSpan="2"
+                                    Grid.Column="1"
+                                    BackgroundColor="#F1F3FD"
+                                    CornerRadius="5">
 
                                     <Frame.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding SetFavoritPinCommand}"
-                                                              CommandParameter="{Binding .}"/>
+                                        <!--<TapGestureRecognizer Command="{Binding Source={x:Reference this}, Path=BindingContext.SetFavoritPinCommand}" />-->
                                     </Frame.GestureRecognizers>
 
                                 </Frame>
 
-                            </Grid>
-                            <!--<StackLayout Orientation="Horizontal" Spacing="30">
-                                <Image Source="ic_like_gray"/>
-                                <StackLayout >
-                                    
-                                    <Label Text="{Binding PinName}" />
-                                    <StackLayout Orientation="Horizontal">
-                                        
-                                        <Label Text="{Binding Latitude}" />
-                                        <Label Text="{Binding Longitude}" />
+                                <Image
+                                    Grid.Row="1"
+                                    Grid.RowSpan="2"
+                                    Grid.Column="1"
+                                    Source="{Binding Like}" />
 
-                                    </StackLayout>
+                                <Label
+                                    Grid.Row="1"
+                                    Grid.Column="2"
+                                    FontAttributes="Bold"
+                                    Text="{Binding PinName}" />
+
+                                <StackLayout
+                                    Grid.Row="2"
+                                    Grid.Column="2"
+                                    Orientation="Horizontal">
+                                    <Label Text="{Binding PinLatitude}" />
+                                    <Label Text="," />
+                                    <Label Text="{Binding PinLongitude}" />
 
                                 </StackLayout>
 
-
-                            </StackLayout>-->
+                            </Grid>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -101,51 +98,17 @@
 
         </StackLayout>
 
-    </Grid>
-    <!--<ContentPage.ToolbarItems>
-        <ToolbarItem Command="{Binding LogOut}" IconImageSource="logoutbuttonsketch.png"/>
-    </ContentPage.ToolbarItems>
-    
-    <Grid RowDefinitions="0.07*, *" ColumnDefinitions="0.3*, 0.7*">
-
-        <Grid Grid.Row="0" 
-              Grid.Column="0"
-              Grid.ColumnSpan="2"
-              ColumnDefinitions="0.9*, 0.1*">
-
-            <Image 
-                Grid.Column="1"
-                Source = "category.png" 
-                BackgroundColor="Brown">
-                <Image.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding SelectCategoryCommand}"/>
-                </Image.GestureRecognizers>
-            </Image>
-
-        </Grid>
-
-        <StackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
-
-
-        </StackLayout>
-
         <Frame
-            Grid.Row="1"
+            Grid.Row="3"
             Grid.Column="1"
-            Margin="15"
-            BackgroundColor="DodgerBlue"
-            CornerRadius="45"
-            HeightRequest="30"
-            HorizontalOptions="End"
-            VerticalOptions="End"
-            WidthRequest="30">
+            BackgroundColor="#495CDD"
+            CornerRadius="39"
+            HasShadow="True">
 
-            <Label
-                FontAttributes="Bold"
-                FontSize="Title"
-                HorizontalOptions="Center"
-                Text="+"
-                VerticalOptions="Center" />
+            <Image
+                Grid.Row="3"
+                Grid.Column="1"
+                Source="ic_plus" />
 
             <Frame.GestureRecognizers>
                 <TapGestureRecognizer Command="{Binding NavigateToAddPin}" />
@@ -153,53 +116,5 @@
 
         </Frame>
 
-        <Frame
-            Grid.Row="1"
-            Grid.Column="0"
-            Grid.ColumnSpan="2"
-            HeightRequest="100"
-            IsVisible="{Binding VisibleDropDown}"
-            VerticalOptions="Start"
-            Margin="5, 0, 5, 0">
-            <StackLayout>
-                <ListView
-                    ItemsSource="{Binding Pins}"
-                    SelectedItem="{Binding SelectedItemInListView}"
-                    SeparatorVisibility="None"
-                    RowHeight="25">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <StackLayout>
-                                    <Label Text="{Binding PinName}" />
-                                </StackLayout>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </StackLayout>
-        </Frame>
-
-        <Frame 
-            Grid.Row="1" 
-            Grid.Column="1"
-            IsVisible="{Binding IsVisibleCategorySelector}"
-            VerticalOptions="Start"
-            CornerRadius="25">
-            <StackLayout 
-                RadioButtonGroup.GroupName="Categories" 
-                RadioButtonGroup.SelectedValue="{Binding SotrValue}">
-                <RadioButton Value="Gyms" Content="Gyms"/>
-                <RadioButton Value="Restaurants" Content="Restaurants"/>
-                <RadioButton Value="Hotels" Content="Hotels"/>
-                <RadioButton Value="Supermarkets" Content="Supermarkets"/>
-                <RadioButton Value="Schools" Content="Schools"/>
-                <RadioButton Value="Place to rest" Content="Place to rest"/>
-                <RadioButton Value="Work" Content="Work"/>
-                <RadioButton Value="Home" Content="Home" />
-                <RadioButton Value="Airports" Content="Airports" />
-                <RadioButton Value="Football stadium" Content="Football stadium" />
-            </StackLayout>
-        </Frame>
-    </Grid>-->
+    </Grid>
 </baseContentPage:BaseContentPage>

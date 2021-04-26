@@ -6,15 +6,15 @@ using System.Windows.Input;
 
 namespace GpsNotebook.Models
 {
-    public class PinViewModel : BindableBase
+    public class PinViewModel : BindableBase, IEntityBaseForModel
     {
         #region -- Public Property --
 
-        private int _pinId;
-        public int PinId
+        private int _id;
+        public int Id
         {
-            get { return _pinId; }
-            set { SetProperty(ref _pinId, value); }
+            get { return _id; }
+            set { SetProperty(ref _id, value); }
         }
 
         private string _pinName;
@@ -45,11 +45,18 @@ namespace GpsNotebook.Models
             set { SetProperty(ref _pinLongitude, value); }
         }
 
-        private ICommand _likePinCommand;
-        public ICommand LikePinCommand
+        private string _pinCategories;
+        public string PinCategories
         {
-            get { return _likePinCommand; }
-            set { SetProperty(ref _likePinCommand, value); }
+            get { return _pinCategories; }
+            set { SetProperty(ref _pinCategories, value); }
+        }
+
+        private string _imageFavoritPin;
+        public string ImageFavoritPin
+        {
+            get { return _imageFavoritPin; }
+            set { SetProperty(ref _imageFavoritPin, value); }
         }
 
         #endregion

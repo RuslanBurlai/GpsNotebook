@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<contetPage:BaseContentPage
+    x:Class="GpsNotebook.View.SettingsView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:contetPage="clr-namespace:GpsNotebook.View"
+    xmlns:controls="clr-namespace:GpsNotebook.Control">
+
+    <Grid RowDefinitions="0.02*, 0.98*">
+
+        <StackLayout Grid.Row="1">
+
+            <controls:CustomNavigationBar
+                GoBackCommand="{Binding MapTabbedCommand}"
+                ImagePath="ic_left_blue"
+                NavBarTitle="{Binding Title}" />
+            <BoxView BackgroundColor="#F1F3FD" HeightRequest="1" />
+
+            <TableView HasUnevenRows="True" Intent="Settings" >
+                <TableSection>
+                    <SwitchCell Text="Dark Theme" />
+                    <TextCell Command="{Binding ScanQrCode}" Text="Scan the QR code" />
+                </TableSection>
+            </TableView>
+
+        </StackLayout>
+
+    </Grid>
+    
+</contetPage:BaseContentPage>

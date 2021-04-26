@@ -32,12 +32,12 @@ namespace GpsNotebook
             containerRegistry.RegisterForNavigation<LogInView, LogInViewModel>();
             containerRegistry.RegisterForNavigation<RegisterView, RegisterViewModel>();
             containerRegistry.RegisterForNavigation<RegisterAndPasswordView, RegisterAndPasswordViewModel>();
-
             containerRegistry.RegisterForNavigation<MapTabbedView>();
             containerRegistry.RegisterForNavigation<MapTabView, MapTabViewModel>();
             containerRegistry.RegisterForNavigation<PinTabView, PinTabViewModel>();
-
             containerRegistry.RegisterForNavigation<AddPinView, AddPinViewModel>();
+            containerRegistry.RegisterForNavigation<SettingsView, SettingsViewModel>();
+            containerRegistry.RegisterForNavigation<ScanningQrCodeView, ScanningQrCodeViewModel>();
 
             //Services
             containerRegistry.RegisterInstance<ISettingsManager>(Container.Resolve<SettingsManager>());
@@ -57,7 +57,7 @@ namespace GpsNotebook
             InitializeComponent();
 
             //add IsAuthorized property to AuthService
-            await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(PinTabView)}");
+            await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(MapTabbedView)}");
             //if (_authorization.GetUserId != 0)
             //{
             //    await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(MapTabbedView)}");

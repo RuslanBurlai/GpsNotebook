@@ -66,20 +66,6 @@ namespace GpsNotebook.ViewModel
             set { SetProperty(ref _passwordError, value); }
         }
 
-        private bool _showRightImageEmail;
-        public bool ShowRightImageEmail
-        {
-            get { return _showRightImageEmail; }
-            set { SetProperty(ref _showRightImageEmail, value); }
-        }
-
-        //private bool _showRightImagePassword;
-        //public bool ShowRightImagePassword
-        //{
-        //    get { return _showRightImagePassword; }
-        //    set { SetProperty(ref _showRightImagePassword, value); }
-        //}
-
         private string _passwordEntryRightImage;
         public string PasswordEntryRightImage
         {
@@ -106,10 +92,18 @@ namespace GpsNotebook.ViewModel
         public ICommand OnLogInOrRegisterViewCommand =>
             _onLogInOrRegisterViewCommand ?? (_onLogInOrRegisterViewCommand = new Command(OnShowPreviousViews));
 
+        private ICommand _navigateToMapTabbedPageCommand;
+        public ICommand NavigateToMapTabbedPageCommand =>
+            _navigateToMapTabbedPageCommand ?? (_navigateToMapTabbedPageCommand = new DelegateCommand(OnNavigateToMapTabbedPage));
+
         #endregion
 
-
         #region -- Private Helpers --
+
+        private async void OnNavigateToMapTabbedPage()
+        {
+            await NavigationService.NavigateAsync(nameof(MapTabbedView));
+        }
 
         private void OnHidePassword()
         {
@@ -162,11 +156,9 @@ namespace GpsNotebook.ViewModel
                         if (UserPassword != string.Empty)
                         {
                             PasswordEntryRightImage = "ic_eye";
-                            //ShowRightImagePassword = true;
                         }
                         else
                         {
-                            //ShowRightImagePassword = false;
                             PasswordEntryRightImage = string.Empty;
                         }
                         break; 

@@ -6,6 +6,8 @@ namespace GpsNotebook.Services.Permission
 {
     public interface IPermissionService
     {
-        Task<PermissionStatus> CheckPermissions(BasePermission permission);
+        Task<PermissionStatus> GetPermissionStatus<T>() where T : BasePermission, new();
+
+        Task<bool> CheckPermission<T>() where T : BasePermission, new();
     }
 }

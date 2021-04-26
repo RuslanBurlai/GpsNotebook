@@ -2,7 +2,6 @@
 
 namespace GpsNotebook.Models
 {
-    //rename to PinModel
     [Table("Pins")]
     public class PinModel : IEntityBaseForModel
     {
@@ -13,6 +12,7 @@ namespace GpsNotebook.Models
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public string Categories { get; set; }
+        public string FavoritPin { get; set; }
 
         public int UserId { get; set; }
     }

@@ -76,6 +76,11 @@ namespace GpsNotebook.Control
                     Pins.Add(item);
                 }
             }
+
+            if (propertyName == nameof(SelectedPin))
+            {
+
+            }
         }
     }
 }

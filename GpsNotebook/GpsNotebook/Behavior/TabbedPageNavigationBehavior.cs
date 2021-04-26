@@ -12,7 +12,6 @@ namespace GpsNotebook.Behavior
     {
         #region -- Private Helpers --
 
-        //regions
         private Page CurrentPage;
         private void OnCurrentPageChanged(object sender, EventArgs e)
         {

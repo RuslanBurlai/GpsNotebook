@@ -71,6 +71,38 @@ namespace GpsNotebook.Control
             set { SetValue(TapOnRightImageCommandProperty, value); }
         }
 
+        public static readonly BindableProperty ClearSearchQueryCommandProperty = BindableProperty.Create(
+            propertyName: nameof(ClearSearchQueryCommand),
+            returnType: typeof(ICommand),
+            declaringType: typeof(CustomSearchBar));
 
+        public ICommand ClearSearchQueryCommand
+        {
+            get { return (ICommand)GetValue(ClearSearchQueryCommandProperty); }
+            set { SetValue(ClearSearchQueryCommandProperty, value); }
+        }
+
+        public static readonly BindableProperty TextQueryProperty = BindableProperty.Create(
+            propertyName: nameof(TextQuery),
+            returnType: typeof(string),
+            declaringType: typeof(CustomSearchBar),
+            defaultBindingMode: BindingMode.TwoWay);
+
+        public string TextQuery
+        {
+            get { return (string)GetValue(TextQueryProperty); }
+            set { SetValue(TextQueryProperty, value); }
+        }
+
+        public static readonly BindableProperty IsSearchBarSpanProperty = BindableProperty.Create(
+            propertyName: nameof(IsSearchBarSpan),
+            returnType: typeof(bool),
+            declaringType: typeof(CustomSearchBar));
+
+        public bool IsSearchBarSpan
+        {
+            get { return (bool)GetValue(IsSearchBarSpanProperty); }
+            set { SetValue(IsSearchBarSpanProperty, value); }
+        }
     }
 }

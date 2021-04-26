@@ -1,18 +1,21 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
-<Grid x:Class="GpsNotebook.Control.CustomNavigationBar"
-      xmlns="http://xamarin.com/schemas/2014/forms"
-      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-      x:Name="customNavigationBar"
-      ColumnDefinitions="0.1*, 0.8*, 0.1*">
+<Grid
+    x:Class="GpsNotebook.Control.CustomNavigationBar"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Name="customNavigationBar"
+    ColumnDefinitions="0.1*, 0.8*, 0.1*">
 
-    <Image Grid.Column="0"
-           HorizontalOptions="Fill"
-           Source="{Binding ImagePath, Source={x:Reference customNavigationBar}}"
-           VerticalOptions="Fill" />
+    <Image
+        Grid.Column="0"
+        HorizontalOptions="Fill"
+        Source="{Binding ImagePath, Source={x:Reference customNavigationBar}}"
+        VerticalOptions="Fill" />
 
-    <BoxView Grid.Column="0"
-             HorizontalOptions="Fill"
-             VerticalOptions="Fill">
+    <BoxView
+        Grid.Column="0"
+        HorizontalOptions="Fill"
+        VerticalOptions="Fill">
 
         <BoxView.GestureRecognizers>
 
@@ -22,12 +25,32 @@
 
     </BoxView>
 
-    <Label Grid.Column="1"
-           FontAttributes="Bold"
-           FontSize="20"
-           HorizontalOptions="Center"
-           Text="{Binding NavBarTitle, Source={x:Reference customNavigationBar}}"
-           TextColor="Black"
-           VerticalOptions="Center" />
-    
+    <Label
+        Grid.Column="1"
+        FontAttributes="Bold"
+        FontSize="20"
+        HorizontalOptions="Center"
+        Text="{Binding NavBarTitle, Source={x:Reference customNavigationBar}}"
+        TextColor="Black"
+        VerticalOptions="Center" />
+
+    <Image
+        Grid.Column="2"
+        HorizontalOptions="Fill"
+        Source="{Binding RightImageSource, Source={x:Reference customNavigationBar}}"
+        VerticalOptions="Fill" />
+
+    <BoxView
+        Grid.Column="2"
+        HorizontalOptions="Fill"
+        VerticalOptions="Fill">
+
+        <BoxView.GestureRecognizers>
+
+            <TapGestureRecognizer Command="{Binding RightImageCommand, Source={x:Reference customNavigationBar}}" />
+
+        </BoxView.GestureRecognizers>
+
+    </BoxView>
+
 </Grid>

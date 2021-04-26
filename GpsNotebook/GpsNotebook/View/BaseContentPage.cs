@@ -1,4 +1,5 @@
 ﻿using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 
 namespace GpsNotebook.View
 {
@@ -6,7 +7,8 @@ namespace GpsNotebook.View
     {
         public BaseContentPage()
         {
-            NavigationPage.SetHasNavigationBar(this, false);
+            On<Xamarin.Forms.PlatformConfiguration.iOS>().SetUseSafeArea(true);
+            Xamarin.Forms.NavigationPage.SetHasNavigationBar(this, false);
         }
     }
 }

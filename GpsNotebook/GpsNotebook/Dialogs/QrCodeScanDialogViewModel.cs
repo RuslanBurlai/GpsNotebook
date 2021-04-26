@@ -1,6 +1,4 @@
-﻿using GpsNotebook.ViewModel;
-using Prism.Commands;
-using Prism.Navigation;
+﻿using Prism.Commands;
 using Prism.Services.Dialogs;
 using System;
 using System.Windows.Input;

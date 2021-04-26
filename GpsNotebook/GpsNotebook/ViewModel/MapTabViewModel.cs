@@ -17,6 +17,7 @@ using GpsNotebook.Dialogs;
 using Plugin.Permissions.Abstractions;
 using Plugin.Permissions;
 using System.Collections.Generic;
+using System;
 
 namespace GpsNotebook.ViewModel
 {
@@ -66,8 +67,8 @@ namespace GpsNotebook.ViewModel
             set { SetProperty(ref _allPins, value); }
         }
 
-        private CategoriesForPin _selectedCategories;
-        public CategoriesForPin SelectedCategories
+        private string _selectedCategories;
+        public string SelectedCategories
         {
             get { return _selectedCategories; }
             set { SetProperty(ref _selectedCategories, value); }
@@ -87,13 +88,12 @@ namespace GpsNotebook.ViewModel
             set { SetProperty(ref _tapOnPin, value); }
         }
 
-        private ICommand _logOutCommand;
-        public ICommand LogOutCommand =>
-            _logOutCommand ?? (_logOutCommand = new DelegateCommand(OnLogOut));
-
-        private ICommand searchPins;
-        public ICommand SearchPins =>
-            searchPins ?? (searchPins = new Command<string>(OnGetSearchPins));
+        private bool _showInfoAboutPin;
+        public bool ShowInfoAboutPin
+        {
+            get { return _showInfoAboutPin; }
+            set { SetProperty(ref _showInfoAboutPin, value); }
+        }
 
         private MapSpan _moveCameraToPin;
         public MapSpan MoveCameraToPin
@@ -102,14 +102,62 @@ namespace GpsNotebook.ViewModel
             set { SetProperty(ref _moveCameraToPin, value); }
         }
 
+        private string _searchingText;
+        public string SearchingText
+        {
+            get { return _searchingText; }
+            set { SetProperty(ref _searchingText, value); }
+        }
+
+        private string _showClearImageButtom;
+        public string ShowClearImageButtom
+        {
+            get { return _showClearImageButtom; }
+            set { SetProperty(ref _showClearImageButtom, value); }
+        }
+
+        private bool _searchBarSpaned;
+        public bool SearchBarSpaned
+        {
+            get { return _searchBarSpaned; }
+            set { SetProperty(ref _searchBarSpaned, value); }
+        }
+
+        private ICommand _logOutCommand;
+        public ICommand LogOutCommand =>
+            _logOutCommand ?? (_logOutCommand = new DelegateCommand(OnLogOut));
+
+        private ICommand _mapClickCommand;
+        public ICommand MapClickCommand =>
+            _mapClickCommand ?? (_mapClickCommand = new Command<string>(OnMapClick));
+
         private ICommand _settingsCommand;
         public ICommand SettingsCommand =>
             _settingsCommand ?? (_settingsCommand = new DelegateCommand(OnSettings));
 
+        private ICommand _selectSortCategoryCommand;
+        public ICommand SelectSortCategoryCommand =>
+            _selectSortCategoryCommand ?? (_selectSortCategoryCommand = new DelegateCommand<CategoriesForPin>(SelectSortCategory));
+
+        private ICommand _clearSearchBarCommand;
+        public ICommand ClearSearchBarCommand =>
+            _clearSearchBarCommand ?? (_clearSearchBarCommand = new DelegateCommand(OnClearSearchBar));
 
         #endregion
 
         #region -- Private Helpers --
+
+        private void OnClearSearchBar()
+        {
+            SearchingText = string.Empty;
+            ShowClearImageButtom = string.Empty;
+
+            var pins = _pinModelService.GetAllPins()
+                .Select(pinModel => pinModel.ToPinViewModel().ToPin());
+
+            AllPins = new ObservableCollection<Pin>(pins);
+
+        }
 
         private async void OnLogOut()
         {
@@ -117,36 +165,33 @@ namespace GpsNotebook.ViewModel
             await NavigationService.NavigateAsync($"/{ nameof(NavigationPage)}/{ nameof(LogInView)}");
         }
 
-        private void OnGetSearchPins(string sesarchQuery)
+        private void OnMapClick(string sesarchQuery)
         {
-            if (!string.IsNullOrWhiteSpace(sesarchQuery))
+            ShowInfoAboutPin = false;
+        }
+
+        private void SelectSortCategory(CategoriesForPin category)
+        {
+            if (!string.IsNullOrWhiteSpace(category.Name))
             {
-                var list = _pinModelService.SearchPins(sesarchQuery)
-                    .Select(x => x.ToPin());
-                AllPins = new ObservableCollection<Pin>(list);
+                var list = _pinModelService.SearchByCategory(category.Name).Select((x) => x.ToPinViewModel());
+                AllPins = new ObservableCollection<Pin>(list.Select(x => x.ToPin()));
             }
             else
             {
-                var pins = _pinModelService.GetAllPins().Select(pinModel => pinModel.ToPin());
-                AllPins = new ObservableCollection<Pin>(pins);
+                var pins = _pinModelService.GetAllPins().Select(pinModel => pinModel.ToPinViewModel());
+                AllPins = new ObservableCollection<Pin>(pins.Select(x => x.ToPin()));
             }
         }
 
-        private void OnSettings()
+        private async void OnSettings()
         {
-            _dialogService.ShowDialog(nameof(QrCodeScanDialogView), OnDialogClosed);
+            await NavigationService.NavigateAsync(nameof(SettingsView));
+            //_dialogService.ShowDialog(nameof(QrCodeScanDialogView), OnDialogClosed);
         }
 
         private void OnDialogClosed(IDialogResult result)
         {
-            if (result.Parameters.ContainsKey(nameof(QrCodeScanDialogViewModel)))
-            {
-                var pin = new Pin();
-                pin = result.Parameters.GetValue<Pin>(nameof(QrCodeScanDialogViewModel));
-                AllPins = new ObservableCollection<Pin>();
-                AllPins.Add(pin);
-                MoveCameraToPin = MapSpan.FromCenterAndRadius(pin.Position, new Distance(10000));
-            }
         }
 
         #endregion
@@ -164,41 +209,80 @@ namespace GpsNotebook.ViewModel
 
             if (parameters.ContainsKey("Pins"))
             {
-                var list = new ObservableCollection<PinModel>();
-                list = parameters.GetValue<ObservableCollection<PinModel>>("Pins");
+                var list = new ObservableCollection<PinViewModel>();
+                list = parameters.GetValue<ObservableCollection<PinViewModel>>("Pins");
                 AllPins = new ObservableCollection<Pin>(list.Select(x => x.ToPin()));
             }
 
-            if (parameters.TryGetValue("SelectedItemFromPinTab", out PinModel pinModel))
+            if (parameters.TryGetValue("SelectedItemInListView", out PinViewModel pinViewModel))
             {
-                Position position = new Position(pinModel.Latitude, pinModel.Longitude);
-                MoveCameraToPin = MapSpan.FromCenterAndRadius(position, new Distance(10000));
+                MoveCameraToPin = MapSpan.FromCenterAndRadius(pinViewModel.ToPin().Position, new Distance(10000));
             }
+
+            if (parameters.ContainsKey(nameof(ScanningQrCodeViewModel)))
+            {
+                var pin = new Pin();
+                pin = parameters.GetValue<Pin>(nameof(ScanningQrCodeViewModel));
+                AllPins = new ObservableCollection<Pin>();
+                AllPins.Add(pin);
+                MoveCameraToPin = MapSpan.FromCenterAndRadius(pin.Position, new Distance(10000));
+            }
+
         }
 
-        protected async override void OnPropertyChanged(PropertyChangedEventArgs args)
+        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
         {
             base.OnPropertyChanged(args);
 
-            if (args.PropertyName == nameof(TapOnPin) &&
-                TapOnPin != null)
+            switch (args.PropertyName)
             {
-                var selectedPin = new DialogParameters();
-                selectedPin.Add(nameof(TapOnPin), TapOnPin);
-                await _dialogService.ShowDialogAsync(nameof(Dialogs.TapOnPin), selectedPin);
+                case nameof(SearchingText):
+                    {
+                        if (SearchingText == string.Empty)
+                        {
+                            SearchBarSpaned = false;
+
+                            ShowClearImageButtom = string.Empty;
+                            var pins = _pinModelService.GetAllPins()
+                                .Select(pinModel => pinModel.ToPinViewModel().ToPin());
+
+                            AllPins = new ObservableCollection<Pin>(pins);
+
+                        }
+                        else
+                        {
+                            SearchBarSpaned = true;
+
+                            ShowClearImageButtom = "ic_clear";
+                            var list = _pinModelService.SearchPins(SearchingText)
+                                .Select(x => x.ToPinViewModel());
+
+                            AllPins = new ObservableCollection<Pin>(list.Select(x => x.ToPin()));
+                        }
+
+                        break;
+                    }
+
+                case nameof(TapOnPin):
+                    {
+                        if (TapOnPin != null)
+                        {
+                            ShowInfoAboutPin = true;
+                        }
+                        break;
+                    }
             }
+            
         }
 
-        public async override void Initialize(INavigationParameters parameters)
+        public override void Initialize(INavigationParameters parameters)
         {
             base.Initialize(parameters);
 
             var pins = _pinModelService.GetAllPins()
-                .Select(pinModel => pinModel.ToPin());
+                .Select(pinModel => pinModel.ToPinViewModel().ToPin());
 
             AllPins = new ObservableCollection<Pin>(pins);
-
-            //PermissionStatus status = await CrossPermissions.Current.RequestPermissionAsync<CalendarPermission>();
         }
 
         #endregion

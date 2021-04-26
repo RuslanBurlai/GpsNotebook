@@ -41,5 +41,10 @@ namespace GpsNotebook.Services.PinLocationRepository
             pin.PinName.ToLower().Contains(searchQuery.ToLower()) ||
             pin.Description.ToLower().Contains(searchQuery.ToLower()));
         }
+
+        public IEnumerable<PinModel> SearchByCategory(string category)
+        {
+            return GetAllPins().Where((pin) => pin.Categories == category);
+        }
     }
 }
