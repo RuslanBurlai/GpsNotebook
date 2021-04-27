@@ -2,7 +2,7 @@
 using Plugin.Permissions.Abstractions;
 using System.Threading.Tasks;
 
-namespace GpsNotebook.Services.Permission
+namespace GpsNotebook.Services.PermissionService
 {
     public interface IPermissionService
     {

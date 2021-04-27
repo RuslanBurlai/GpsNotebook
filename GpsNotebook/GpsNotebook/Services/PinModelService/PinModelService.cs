@@ -20,19 +20,19 @@ namespace GpsNotebook.Services.PinLocationRepository
             _authorization = authorization;
         }
 
-        public void AddPinLocation(PinModel pinLocation)
+        public void AddPin(PinModel pinLocation)
         {
-            _repository.AddItem<PinModel>(pinLocation);
+            _repository.AddItemAsync<PinModel>(pinLocation);
         }
 
         public IEnumerable<PinModel> GetAllPins()
         {
-            return _repository.GetAllItems<PinModel>().Result.Where((id) => id.UserId == _authorization.GetUserId);
+            return _repository.GetAllItemsAsync<PinModel>().Result.Where((id) => id.UserId == _authorization.GetUserId);
         }
 
-        public void DeletePinLocation(PinModel pinLocation)
+        public void DeletePin(PinModel pinLocation)
         {
-            _repository.DeleteItem<PinModel>(pinLocation);
+            _repository.DeleteItemAsync<PinModel>(pinLocation);
         }
 
         public IEnumerable<PinModel> SearchPins(string searchQuery)

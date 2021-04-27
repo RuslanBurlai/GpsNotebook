@@ -130,6 +130,13 @@ namespace GpsNotebook.ViewModel
             set { SetProperty(ref _qrCodeData, value); }
         }
 
+        private bool _showDropDown;
+        public bool ShowDropDown
+        {
+            get { return _showDropDown; }
+            set { SetProperty(ref _showDropDown, value); }
+        }
+
         private ICommand _logOutCommand;
         public ICommand LogOutCommand =>
             _logOutCommand ?? (_logOutCommand = new DelegateCommand(OnLogOut));
@@ -146,13 +153,18 @@ namespace GpsNotebook.ViewModel
         public ICommand SelectSortCategoryCommand =>
             _selectSortCategoryCommand ?? (_selectSortCategoryCommand = new DelegateCommand<CategoriesForPin>(SelectSortCategory));
 
-        private ICommand _clearSearchBarCommand;
-        public ICommand ClearSearchBarCommand =>
-            _clearSearchBarCommand ?? (_clearSearchBarCommand = new DelegateCommand(OnClearSearchBar));
-
         private ICommand _sharePinCommand;
         public ICommand SharePinCommand =>
             _sharePinCommand ?? (_sharePinCommand = new DelegateCommand(OnSharePin));
+
+        private ICommand _tapOnDropDownCellCommand;
+        public ICommand TapOnDropDownCellCommand =>
+            _tapOnDropDownCellCommand ?? (_tapOnDropDownCellCommand = new DelegateCommand<Pin>(OntapOnDropDownCell));
+        private void OntapOnDropDownCell(Pin pin)
+        {
+            ShowDropDown = false;
+            MoveCameraToPin = MapSpan.FromCenterAndRadius(pin.Position, new Distance(10000));
+        }
 
         #endregion
 
@@ -162,19 +174,7 @@ namespace GpsNotebook.ViewModel
         {
             var dialogParametr = new DialogParameters();
             dialogParametr.Add(nameof(SharePinCommand), QrCodeData);
-             _dialogService.ShowDialog(nameof(SharePinViaQRDialogView), dialogParametr);
-        }
-
-        private void OnClearSearchBar()
-        {
-            SearchingText = string.Empty;
-            ShowClearImageButtom = string.Empty;
-
-            var pins = _pinModelService.GetAllPins()
-                .Select(pinModel => pinModel.ToPinViewModel().ToPin());
-
-            AllPins = new ObservableCollection<Pin>(pins);
-
+            _dialogService.ShowDialog(nameof(SharePinViaQRDialogView), dialogParametr);
         }
 
         private async void OnLogOut()
@@ -205,7 +205,6 @@ namespace GpsNotebook.ViewModel
         private async void OnSettings()
         {
             await NavigationService.NavigateAsync(nameof(SettingsView));
-            //_dialogService.ShowDialog(nameof(QrCodeScanDialogView), OnDialogClosed);
         }
 
         private void OnDialogClosed(IDialogResult result)
@@ -256,26 +255,27 @@ namespace GpsNotebook.ViewModel
             {
                 case nameof(SearchingText):
                     {
-                        if (SearchingText == string.Empty)
-                        {
-                            SearchBarSpaned = false;
-
-                            ShowClearImageButtom = string.Empty;
-                            var pins = _pinModelService.GetAllPins()
-                                .Select(pinModel => pinModel.ToPinViewModel().ToPin());
-
-                            AllPins = new ObservableCollection<Pin>(pins);
-
-                        }
-                        else
+                        if (!string.IsNullOrWhiteSpace(SearchingText))
                         {
                             SearchBarSpaned = true;
+                            ShowDropDown = true;
 
                             ShowClearImageButtom = "ic_clear";
                             var list = _pinModelService.SearchPins(SearchingText)
                                 .Select(x => x.ToPinViewModel());
 
                             AllPins = new ObservableCollection<Pin>(list.Select(x => x.ToPin()));
+                        }
+                        else
+                        {
+                            SearchBarSpaned = false;
+                            ShowDropDown = false;
+
+                            ShowClearImageButtom = string.Empty;
+                            var pins = _pinModelService.GetAllPins()
+                                .Select(pinModel => pinModel.ToPinViewModel().ToPin());
+
+                            AllPins = new ObservableCollection<Pin>(pins);
                         }
 
                         break;
@@ -286,7 +286,6 @@ namespace GpsNotebook.ViewModel
                         if (TapOnPin != null)
                         {
                             ShowInfoAboutPin = true;
-                            //var pin = new Pin();
                             string json = JsonConvert.SerializeObject(TapOnPin);
                             QrCodeData = json;
                         }
@@ -294,7 +293,7 @@ namespace GpsNotebook.ViewModel
                         break;
                     }
             }
-            
+
         }
 
         public override void Initialize(INavigationParameters parameters)

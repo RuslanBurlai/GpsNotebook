@@ -4,7 +4,7 @@ using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-namespace GpsNotebook.Services.Permission
+namespace GpsNotebook.Services.PermissionService
 {
     public class PermissionsService : IPermissionService
     {

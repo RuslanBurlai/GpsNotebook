@@ -1,7 +1,4 @@
 ﻿using Android.Content;
-using Android.Graphics;
-using Android.Graphics.Drawables;
-using Android.Widget;
 using GpsNotebook.Droid.Renderers;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;

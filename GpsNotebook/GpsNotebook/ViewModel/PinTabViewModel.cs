@@ -6,6 +6,7 @@ using GpsNotebook.Services.PinLocationRepository;
 using GpsNotebook.View;
 using Prism.Commands;
 using Prism.Navigation;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -29,6 +30,8 @@ namespace GpsNotebook.ViewModel
 
             _pinModelService = pinModelService;
             _authorizationService = authorizationService;
+
+            
         }
 
         #region -- Public properties --
@@ -61,6 +64,27 @@ namespace GpsNotebook.ViewModel
             set { SetProperty(ref _searchingText, value); }
         }
 
+        private bool _isLikedPin;
+        public bool IsLikedPin
+        {
+            get { return _isLikedPin; }
+            set { SetProperty(ref _isLikedPin, value); }
+        }
+
+        private bool _isSearchEntrySpaned;
+        public bool IsSearchEntrySpaned
+        {
+            get { return _isSearchEntrySpaned; }
+            set { SetProperty(ref _isSearchEntrySpaned, value); }
+        }
+
+        private string _showClearImageButtom;
+        public string ShowClearImageButtom
+        {
+            get { return _showClearImageButtom; }
+            set { SetProperty(ref _showClearImageButtom, value); }
+        }
+
         private ICommand _navigateToAddPin;
         public ICommand NavigateToAddPin =>
             _navigateToAddPin ?? (_navigateToAddPin = new DelegateCommand(OnNavigateToAddPin));
@@ -73,9 +97,9 @@ namespace GpsNotebook.ViewModel
         public ICommand DeletePinFromListCommand =>
             _deletePinFromListCommand ?? (_deletePinFromListCommand = new DelegateCommand<PinViewModel>(OnDeletePinFromListCommand));
 
-        private ICommand _searchPinsCommand;
-        public ICommand SearchPinsCommand =>
-            _searchPinsCommand ?? (_searchPinsCommand = new Command<string>(OnSearchPins));
+        //private ICommand _searchPinsCommand;
+        //public ICommand SearchPinsCommand =>
+        //    _searchPinsCommand ?? (_searchPinsCommand = new Command<string>(OnSearchPins));
 
         private ICommand _logOutCommand;
         public ICommand LogOutCommand =>
@@ -89,22 +113,30 @@ namespace GpsNotebook.ViewModel
         public ICommand SetFavoritPinCommand =>
             _setFavoritPinCommand ?? (_setFavoritPinCommand = new DelegateCommand<PinViewModel>(OnSetFavoritPin));
 
+        private ICommand _tapOnCellCommand;
+        public ICommand TapOnCellCommand =>
+            _tapOnCellCommand ?? (_tapOnCellCommand = new DelegateCommand<PinViewModel>(OnTapOnCell));
+
         #endregion
 
         #region -- Private Helpers --
 
+
         private void OnSetFavoritPin(PinViewModel pin)
         {
-            if (LikeImage == "ic_like_gray")
-            {
-                pin.ImageFavoritPin = "ic_like_blue";
-                LikeImage = "ic_like_blue";
-            }
-            else
-            {
-                pin.ImageFavoritPin = "ic_like_gray";
-                LikeImage = "ic_like_gray";
-            }
+
+            //if (IsLikedPin == false)
+            //{
+            //    pin.ImageFavoritPin = "ic_like_blue";
+            //    IsLikedPin = true;
+            //}
+            //else
+            //{
+            //    pin.ImageFavoritPin = "ic_like_gray";
+            //    IsLikedPin = false;
+            //}
+            LikeImage = "ic_like_blue";
+
         }
 
         private async void OnSettingsView()
@@ -129,24 +161,30 @@ namespace GpsNotebook.ViewModel
 
         private void OnDeletePinFromListCommand(PinViewModel pin)
         {
-            _pinModelService.DeletePinLocation(pin.TopPinModel());
+            _pinModelService.DeletePin(pin.TopPinModel());
             var myObservableCollection = new ObservableCollection<PinViewModel>(_pinModelService.GetAllPins().Select(x => x.ToPinViewModel()));
             Pins = myObservableCollection;
         }
-
-        private void OnSearchPins(string searchQuery)
+        private async void OnTapOnCell(PinViewModel pinViewModel)
         {
-            if (!string.IsNullOrWhiteSpace(searchQuery))
-            {
-                var searchPins = _pinModelService.SearchPins(searchQuery);
-                Pins = new ObservableCollection<PinViewModel>(searchPins.Select(x => x.ToPinViewModel()));
-            }
-            else
-            {
-                var pins = _pinModelService.GetAllPins();
-                Pins = new ObservableCollection<PinViewModel>(pins.Select(x => x.ToPinViewModel()));
-            }
+            NavigationParameters pinParametrs = new NavigationParameters();
+            pinParametrs.Add("SelectedItemInListView", pinViewModel);
+            await NavigationService.NavigateAsync(nameof(MapTabbedView), pinParametrs);
         }
+
+        //private void OnSearchPins(string searchQuery)
+        //{
+        //    if (!string.IsNullOrWhiteSpace(searchQuery))
+        //    {
+        //        var searchPins = _pinModelService.SearchPins(searchQuery);
+        //        Pins = new ObservableCollection<PinViewModel>(searchPins.Select(x => x.ToPinViewModel()));
+        //    }
+        //    else
+        //    {
+        //        var pins = _pinModelService.GetAllPins();
+        //        Pins = new ObservableCollection<PinViewModel>(pins.Select(x => x.ToPinViewModel()));
+        //    }
+        //}
 
         #endregion
 
@@ -171,33 +209,30 @@ namespace GpsNotebook.ViewModel
             Pins = new ObservableCollection<PinViewModel>(_pinModelService.GetAllPins().Select(x => x.ToPinViewModel()));
         }
 
-        protected async override void OnPropertyChanged(PropertyChangedEventArgs args)
+        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
         {
             base.OnPropertyChanged(args);
 
             switch (args.PropertyName)
             {
-                case nameof(SelectedItemInListView):
-                    {
-                        NavigationParameters pinParametrs = new NavigationParameters();
-                        pinParametrs.Add(nameof(SelectedItemInListView), SelectedItemInListView);
-                        await NavigationService.NavigateAsync(nameof(MapTabbedView), pinParametrs);
-                        break;
-                    }
-
                 case nameof(SearchingText):
                     {
                         if (!string.IsNullOrWhiteSpace(SearchingText))
                         {
                             var sortedPins = _pinModelService.SearchPins(SearchingText);
+                            ShowClearImageButtom = "ic_clear";
 
                             Pins = new ObservableCollection<PinViewModel>(sortedPins.Select(x => x.ToPinViewModel()));
-
+                            IsSearchEntrySpaned = true;
                         }
                         else
                         {
                             Pins = new ObservableCollection<PinViewModel>(_pinModelService.GetAllPins().Select(x => x.ToPinViewModel()));
+
+                            IsSearchEntrySpaned = false;
+                            ShowClearImageButtom = string.Empty;
                         }
+                        
                         break;
                     }
             }

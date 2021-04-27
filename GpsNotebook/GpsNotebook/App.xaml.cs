@@ -1,6 +1,5 @@
 ﻿using GpsNotebook.Dialogs;
 using GpsNotebook.Services.Authorization;
-using GpsNotebook.Services.Permission;
 using GpsNotebook.Services.PinLocationRepository;
 using GpsNotebook.Services.RepositoryService;
 using GpsNotebook.Services.SettingsManager;

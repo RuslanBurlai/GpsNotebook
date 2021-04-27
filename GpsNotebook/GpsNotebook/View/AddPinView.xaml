@@ -1,97 +1,67 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<baseContentPage:BaseContentPage
-    x:Class="GpsNotebook.View.AddPinView"
-    xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:baseContentPage="clr-namespace:GpsNotebook.View"
-    xmlns:control="clr-namespace:GpsNotebook.Control"
-    xmlns:googleMap="clr-namespace:GpsNotebook.Control"
-    xmlns:prism="http://prismlibrary.com">
+<baseContentPage:BaseContentPage x:Class="GpsNotebook.View.AddPinView"
+                                 xmlns="http://xamarin.com/schemas/2014/forms"
+                                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                                 xmlns:baseContentPage="clr-namespace:GpsNotebook.View"
+                                 xmlns:control="clr-namespace:GpsNotebook.Control"
+                                 xmlns:googleMap="clr-namespace:GpsNotebook.Control"
+                                 xmlns:prism="http://prismlibrary.com">
 
-    <Grid ColumnDefinitions="0.02*, 0.96*, 0.02*" RowDefinitions="0.02*, 0.07*, 0.91*">
+    <Grid ColumnDefinitions="0.02*, 0.96*, 0.02*"
+          RowDefinitions="0.02*, 0.07*, 0.4*, 0.01*, 0.5*">
 
-        <control:CustomNavigationBar
-            Grid.Row="1"
-            Grid.Column="1"
-            GoBackCommand="{Binding MapTabbedViewCommand}"
-            ImagePath="ic_left_blue"
-            NavBarTitle="{Binding Title}"
-            RightImageCommand="{Binding SavePinCommand}"
-            RightImageSource="ic_save" />
+        <control:CustomNavigationBar Grid.Row="1"
+                                     Grid.Column="1"
+                                     GoBackCommand="{Binding MapTabbedViewCommand}"
+                                     ImagePath="ic_left_blue"
+                                     NavBarTitle="{Binding Title}"
+                                     RightImageCommand="{Binding SavePinCommand}"
+                                     RightImageSource="ic_save" />
 
-        <StackLayout
-            Grid.Row="2"
-            Grid.Column="1"
-            Spacing="1">
+        <StackLayout Grid.Row="2"
+                     Grid.Column="1"
+                     Spacing="1">
 
-            <control:CustomEntryWithLabel
-                BorderColor="#C7CDF5"
-                HeaderEntry="Label"
-                ImagePath="ic_clear"
-                Placeholder="Enter the label"
-                Text="{Binding PinName}" />
+            <control:CustomEntryWithLabel BorderColor="#C7CDF5"
+                                          HeaderEntry="Label"
+                                          ImagePath="ic_clear"
+                                          Placeholder="Enter the label"
+                                          Text="{Binding PinName}" />
 
-            <control:CustomEntryWithLabel
-                BorderColor="#C7CDF5"
-                HeaderEntry="Description"
-                ImagePath="ic_clear"
-                Placeholder="Write a description"
-                Text="{Binding PinDescription}" />
+            <control:CustomEntryWithLabel BorderColor="#C7CDF5"
+                                          HeaderEntry="Description"
+                                          ImagePath="ic_clear"
+                                          Placeholder="Write a description"
+                                          Text="{Binding PinDescription}" />
 
-            <Picker
-                Title="Categories"
-                ItemDisplayBinding="{Binding Name}"
-                ItemsSource="{Binding Categories}"
-                SelectedItem="{Binding SelectedCategories, Mode=TwoWay}" />
-
-            <StackLayout Orientation="Horizontal">
-                <control:CustomEntryWithLabel
-                    Grid.Row="0"
-                    BorderColor="#C7CDF5"
-                    HeaderEntry="Coordinates"
-                    Placeholder="Longitude"
-                    Text="{Binding PinLongitude}" />
-
-                <control:CustomEntryWithLabel
-                    Grid.Row="1"
-                    BorderColor="#C7CDF5"
-                    Placeholder="Latitude"
-                    Text="{Binding PinLatitude}" />
-            </StackLayout>
-
-            <googleMap:CustomMapForAddPinViewModel GetPinPosition="{Binding GetPosition}" />
-
+            <Picker Title="Categories"
+                    ItemDisplayBinding="{Binding Name}"
+                    ItemsSource="{Binding Categories}"
+                    SelectedItem="{Binding SelectedCategories, Mode=TwoWay}" />
+            
         </StackLayout>
 
-        <!--<StackLayout>
-        -->
-        <!--  to resources  -->
-        <!--
-            <Entry Placeholder="Pin name" Text="{Binding PinName}" />
+        <StackLayout Grid.Row="4"
+                     Grid.Column="1"
+                     Spacing="1">
 
-            <Entry Placeholder="Description" Text="{Binding PinDescription}" />
+            <StackLayout Orientation="Horizontal">
 
-            <Picker
-                Title="Categories"
-                ItemDisplayBinding="{Binding Name}"
-                ItemsSource="{Binding Categories}"
-                SelectedItem="{Binding SelectedCategories, Mode=TwoWay}"
-                VerticalOptions="Center" />
+                <control:CustomEntryWithLabel Grid.Row="0"
+                                              BorderColor="#C7CDF5"
+                                              HeaderEntry="Coordinates"
+                                              Placeholder="Longitude"
+                                              Text="{Binding PinLongitude}" />
 
-            <Grid ColumnDefinitions="*, *">
-                <StackLayout Grid.Column="0" Orientation="Horizontal">
-                    <Label Text="Longitude:" />
-                    <Label Text="{Binding PinLongitude}" />
-                </StackLayout>
+                <control:CustomEntryWithLabel Grid.Row="1"
+                                              BorderColor="#C7CDF5"
+                                              Placeholder="Latitude"
+                                              Text="{Binding PinLatitude}" />
 
-                <StackLayout Grid.Column="1" Orientation="Horizontal">
-                    <Label Text="Latitude:" />
-                    <Label Text="{Binding PinLatitude}" />
-                </StackLayout>
-            </Grid>
 
-        </StackLayout>-->
+            </StackLayout>
 
+        </StackLayout>
 
     </Grid>
 

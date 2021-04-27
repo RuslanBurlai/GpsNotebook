@@ -13,85 +13,82 @@
 
     <Grid ColumnDefinitions="0.74*, 0.21*, 0.05*" RowDefinitions="0.02*, 0.06*, 0.75*, 0.14*, 0.03*">
 
-        <control:CustomSearchBar
-            Grid.Row="1"
-            Grid.Column="0"
-            Grid.ColumnSpan="3"
-            LeftSideImagePath="ic_settings"
-            RightSideImagePath="ic_exid"
-            TapOnLeftImageCommand="{Binding SettingsViewCommand}"
-            TapOnRightImageCommand="{Binding LogOutCommand}" 
-            TextQuery="{Binding SearchingText}"/>
+        <control:CustomSearchBar Grid.Row="1"
+                                 Grid.Column="0"
+                                 Grid.ColumnSpan="3"
+                                 LeftSideImagePath="ic_settings"
+                                 RightSideImagePath="ic_exid"
+                                 TapOnLeftImageCommand="{Binding SettingsViewCommand}"
+                                 TapOnRightImageCommand="{Binding LogOutCommand}" 
+                                 TextQuery="{Binding SearchingText}"
+                                 IsSearchBarSpan="{Binding IsSearchEntrySpaned}"
+                                 ClearSerchBarImage="{Binding ShowClearImageButtom}"/>
 
-        <StackLayout
-            Grid.Row="2"
-            Grid.RowSpan="3"
-            Grid.Column="0"
-            Grid.ColumnSpan="3">
+        <StackLayout Grid.Row="2"
+                     Grid.RowSpan="3"
+                     Grid.Column="0"
+                     Grid.ColumnSpan="3">
 
-            <ListView
-                x:Name="ListPinLocations"
-                HasUnevenRows="True"
-                ItemsSource="{Binding Pins}">
-                <!--SelectedItem="{Binding SelectedItemInListView}">-->
+            <ListView x:Name="ListPinLocations"
+                      HasUnevenRows="True"
+                      ItemsSource="{Binding Pins}">
+
+                <ListView.Behaviors>
+                    <prism:EventToCommandBehavior Command="{Binding TapOnCellCommand}"
+                                                  EventArgsParameterPath="Item"
+                                                  EventName="ItemTapped" />
+                </ListView.Behaviors>
 
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <ViewCell.ContextActions>
-                                <MenuItem
-                                    Command="{Binding Source={x:Reference ListPinLocations}, Path=BindingContext.EditPinInListCommand}"
-                                    CommandParameter="{Binding .}"
-                                    Text="Edit" />
-                                <MenuItem
-                                    Command="{Binding Source={x:Reference ListPinLocations}, Path=BindingContext.DeletePinFromListCommand}"
-                                    CommandParameter="{Binding .}"
-                                    Text="Delete" />
+                                
+                                <MenuItem Command="{Binding Source={x:Reference ListPinLocations}, Path=BindingContext.EditPinInListCommand}"
+                                          CommandParameter="{Binding .}"
+                                          Text="Edit" />
+                                
+                                <MenuItem Command="{Binding Source={x:Reference ListPinLocations}, Path=BindingContext.DeletePinFromListCommand}"
+                                          CommandParameter="{Binding .}"
+                                          Text="Delete" />
+                                
                             </ViewCell.ContextActions>
 
-                            <Grid
-                                ColumnDefinitions="0.01*, 0.18*, 0.8*, 0.01*"
-                                ColumnSpacing="20"
-                                RowDefinitions="0.1*, 0.40*, 0.40*, 0.1*">
-
-                                <!--<Frame
-                                    Grid.Row="1"
-                                    Grid.RowSpan="2"
-                                    Grid.Column="1"
-                                    BackgroundColor="#F1F3FD"
-                                    CornerRadius="5">
-
-                                    --><!--<Frame.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Source={x:Reference ListPinLocations}, Path=BindingContext.SetFavoritPinCommand}" 
-                                                              CommandParameter="{Binding .}"/>
-                                    </Frame.GestureRecognizers>--><!--
-
-                                </Frame>-->
-
-                                <Image
-                                    Grid.Row="1"
-                                    Grid.RowSpan="2"
-                                    Grid.Column="1"
-                                    Source="{Binding LikeImage}" >
-
-                                    <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Source={x:Reference ListPinLocations}, Path=BindingContext.SetFavoritPinCommand}" 
-                                                              CommandParameter="{Binding .}"/>
-                                    </Image.GestureRecognizers>
+                            <Grid ColumnDefinitions="0.01*, 0.18*, 0.8*, 0.01*"
+                                  ColumnSpacing="20"
+                                  RowDefinitions="0.1*, 0.40*, 0.40*, 0.1*">
 
 
-                                </Image>
+                                <Button Grid.Row="1"
+                                        Grid.Column="1"
+                                        Grid.RowSpan="2"
+                                        ImageSource="{Binding LikeImage}"
+                                        Command="{Binding BindingContext.SetFavoritPinCommand, Source={x:Reference ListPinLocations}}">
 
-                                <Label
-                                    Grid.Row="1"
-                                    Grid.Column="2"
-                                    FontAttributes="Bold"
-                                    Text="{Binding PinName}" />
+                                    <!--<Button.Triggers>
+                                        <DataTrigger TargetType="Button"
+                                                     Binding="{Binding IsLikedPin}"
+                                                     Value="true">
 
-                                <StackLayout
-                                    Grid.Row="2"
-                                    Grid.Column="2"
-                                    Orientation="Horizontal">
+                                            <Setter Property="ImageSource"
+                                                    Value="ic_like_blue" />
+
+                                        </DataTrigger>
+
+
+                                    </Button.Triggers>-->
+
+                                </Button>
+
+                                <Label Grid.Row="1"
+                                       Grid.Column="2"
+                                       FontAttributes="Bold"
+                                       Text="{Binding PinName}" />
+
+                                <StackLayout Grid.Row="2"
+                                             Grid.Column="2"
+                                             Orientation="Horizontal">
+                                    
                                     <Label Text="{Binding PinLatitude}" />
                                     <Label Text="," />
                                     <Label Text="{Binding PinLongitude}" />
@@ -107,17 +104,15 @@
 
         </StackLayout>
 
-        <Frame
-            Grid.Row="3"
-            Grid.Column="1"
-            BackgroundColor="#495CDD"
-            CornerRadius="39"
-            HasShadow="True">
+        <Frame Grid.Row="3"
+               Grid.Column="1"
+               BackgroundColor="#495CDD"
+               CornerRadius="39"
+               HasShadow="True">
 
-            <Image
-                Grid.Row="3"
-                Grid.Column="1"
-                Source="ic_plus" />
+            <Image Grid.Row="3"
+                   Grid.Column="1"
+                   Source="ic_plus" />
 
             <Frame.GestureRecognizers>
                 <TapGestureRecognizer Command="{Binding NavigateToAddPin}" />

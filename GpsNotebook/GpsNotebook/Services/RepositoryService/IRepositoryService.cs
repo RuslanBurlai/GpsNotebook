@@ -7,8 +7,8 @@ namespace GpsNotebook.Services.RepositoryService
 {
     public interface IRepositoryService
     {
-        Task<List<T>> GetAllItems<T>() where T : IEntityBaseForModel, new();
-        Task<int> AddItem<T>(T item) where T : IEntityBaseForModel, new();
-        Task<int> DeleteItem<T>(T item) where T : IEntityBaseForModel, new();
+        Task<List<T>> GetAllItemsAsync<T>() where T : IEntityBaseForModel, new();
+        Task<int> AddItemAsync<T>(T item) where T : IEntityBaseForModel, new();
+        Task<int> DeleteItemAsync<T>(T item) where T : IEntityBaseForModel, new();
     }
 }

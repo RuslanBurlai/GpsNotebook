@@ -132,7 +132,7 @@ namespace GpsNotebook.ViewModel
 
             //List<PinModel> l = _pinLocationRepository.GetAllPins().ToList();
 
-            _pinLocationRepository.AddPinLocation(newPin);
+            _pinLocationRepository.AddPin(newPin);
             var parametrs = new NavigationParameters();
             parametrs.Add(nameof(PinModel), newPin);
 

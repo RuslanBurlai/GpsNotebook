@@ -22,18 +22,18 @@ namespace GpsNotebook.Services.UserRepository
 
         public void AddUser(UserModel user)
         {
-            _repository.AddItem(user);
+            _repository.AddItemAsync(user);
         }
 
         public IEnumerable<UserModel> GetAllUser()
         {
-            return _repository.GetAllItems<UserModel>().Result;
+            return _repository.GetAllItemsAsync<UserModel>().Result;
         }
 
         public int GetUserId(string email, string password)
         {
             var userId = 0;
-            var user = _repository.GetAllItems<UserModel>().Result
+            var user = _repository.GetAllItemsAsync<UserModel>().Result
                 .FirstOrDefault((x) => x.Email == email && x.Password == password);
             if (user != null)
             {

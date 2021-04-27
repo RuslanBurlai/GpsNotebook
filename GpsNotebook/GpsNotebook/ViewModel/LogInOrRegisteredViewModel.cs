@@ -1,5 +1,4 @@
-﻿using GpsNotebook.Services.Permission;
-using GpsNotebook.View;
+﻿using GpsNotebook.View;
 using Plugin.Permissions;
 using Prism.Commands;
 using Prism.Navigation;
