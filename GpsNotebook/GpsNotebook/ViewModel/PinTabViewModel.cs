@@ -111,7 +111,7 @@ namespace GpsNotebook.ViewModel
 
         private ICommand _setFavoritPinCommand;
         public ICommand SetFavoritPinCommand =>
-            _setFavoritPinCommand ?? (_setFavoritPinCommand = new DelegateCommand<PinViewModel>(OnSetFavoritPin));
+            _setFavoritPinCommand ?? (_setFavoritPinCommand = new DelegateCommand<object>(OnSetFavoritPin));
 
         private ICommand _tapOnCellCommand;
         public ICommand TapOnCellCommand =>
@@ -122,21 +122,10 @@ namespace GpsNotebook.ViewModel
         #region -- Private Helpers --
 
 
-        private void OnSetFavoritPin(PinViewModel pin)
+        private void OnSetFavoritPin(object item)
         {
-
-            //if (IsLikedPin == false)
-            //{
-            //    pin.ImageFavoritPin = "ic_like_blue";
-            //    IsLikedPin = true;
-            //}
-            //else
-            //{
-            //    pin.ImageFavoritPin = "ic_like_gray";
-            //    IsLikedPin = false;
-            //}
-            LikeImage = "ic_like_blue";
-
+            var pin = item as PinViewModel;
+            pin.FavoritPin = pin.FavoritPin.Equals("ic_like_blue") ? "ic_like_gray" : "ic_like_blue";
         }
 
         private async void OnSettingsView()

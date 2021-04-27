@@ -19,16 +19,19 @@ namespace GpsNotebook.ViewModel
     {
         private IAuthorizationService _authorizationService;
         private IUserModelService _userModelService;
+        private IPageDialogService _pageDialogService;
         public LogInViewModel(
             IAuthorizationService authorizationService,
             INavigationService navigationService,
-            IUserModelService userModelService) :
+            IUserModelService userModelService,
+            IPageDialogService pageDialogService) :
             base(navigationService)
         {
             Title = "Log in";
 
             _authorizationService = authorizationService;
             _userModelService = userModelService;
+            _pageDialogService = pageDialogService;
         }
 
         #region -- Public properties --
@@ -90,9 +93,9 @@ namespace GpsNotebook.ViewModel
         public ICommand HidePasswordCommand =>
             _hidePasswordCommand ?? (_hidePasswordCommand = new Command(OnHidePassword));
 
-        private ICommand _onLogInOrRegisterViewCommand;
-        public ICommand OnLogInOrRegisterViewCommand =>
-            _onLogInOrRegisterViewCommand ?? (_onLogInOrRegisterViewCommand = new Command(OnShowPreviousViews));
+        private ICommand _logInOrRegisterViewCommand;
+        public ICommand LogInOrRegisterViewCommand =>
+            _logInOrRegisterViewCommand ?? (_logInOrRegisterViewCommand = new Command(OnLogInOrRegisterView));
 
         private ICommand _navigateToMapTabbedPageCommand;
         public ICommand NavigateToMapTabbedPageCommand =>
@@ -104,14 +107,21 @@ namespace GpsNotebook.ViewModel
 
         private async void OnNavigateToMapTabbedPage()
         {
-            if (_userModelService.GetUserId(UserEmail, UserPassword) != 0)
+            if (Validator.AllFieldsIsNullOrEmpty(UserEmail, UserPassword))
             {
-                await NavigationService.NavigateAsync(nameof(MapTabbedView));
+                if (_userModelService.GetUserId(UserEmail, UserPassword) != 0)
+                {
+                    await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MapTabbedView)}");
+                }
+                else
+                {
+                    EmailError = "Email incorrect";
+                    PasswordError = "Password incorrect";
+                }
             }
             else
             {
-                EmailError = "Email incorrect";
-                PasswordError = "Password incorrect";
+                await _pageDialogService.DisplayAlertAsync("Error", "Fill all fields.", "Ok");
             }
         }
 
@@ -129,9 +139,9 @@ namespace GpsNotebook.ViewModel
             }
         }
 
-        private async void OnShowPreviousViews(object obj)
+        private async void OnLogInOrRegisterView()
         {
-            await NavigationService.NavigateAsync(nameof(LogInOrRegisterView));
+            await NavigationService.GoBackAsync();
         }
 
         private void OnClearEmailEntry()

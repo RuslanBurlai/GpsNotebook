@@ -2,11 +2,16 @@
 
 namespace GpsNotebook.View
 {
-    public partial class ScanningQrCodeView : BaseContentPage
+    public partial class ScanningQrCodeView :ZXingScannerPage
     {
         public ScanningQrCodeView()
         {
             InitializeComponent();
+        }
+
+        private void ZXingScannerPage_OnScanResult(ZXing.Result result)
+        {
+            Navigation.PopAsync();
         }
     }
 }

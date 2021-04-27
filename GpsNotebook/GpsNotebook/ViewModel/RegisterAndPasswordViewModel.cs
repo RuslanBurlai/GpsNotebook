@@ -4,10 +4,8 @@ using GpsNotebook.Validators;
 using GpsNotebook.View;
 using Prism.Commands;
 using Prism.Navigation;
-using System;
-using System.Collections.Generic;
+using Prism.Services;
 using System.ComponentModel;
-using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -16,20 +14,24 @@ namespace GpsNotebook.ViewModel
     public class RegisterAndPasswordViewModel : ViewModelBase
     {
         private IUserModelService _userModelServices;
+        private IPageDialogService _pageDialogService;
+
         public RegisterAndPasswordViewModel(
             INavigationService navigationService,
-            IUserModelService userModelServices) :
+            IUserModelService userModelServices,
+            IPageDialogService pageDialogService) :
             base(navigationService)
         {
-            _userModelServices = userModelServices;
             Title = "Create an account";
+            _userModelServices = userModelServices;
+            _pageDialogService = pageDialogService;
         }
 
         #region -- Public Property --
 
-        private ICommand _onRegisterViewCommand;
-        public ICommand OnRegisterViewCommand =>
-            _onRegisterViewCommand ?? (_onRegisterViewCommand = new DelegateCommand(OnRegisterView));
+        private ICommand _registerViewCommand;
+        public ICommand RegisterViewCommand =>
+            _registerViewCommand ?? (_registerViewCommand = new DelegateCommand(OnRegisterView));
 
         private ICommand _hidePasswordCommand;
         public ICommand HidePasswordCommand =>
@@ -43,6 +45,7 @@ namespace GpsNotebook.ViewModel
         public ICommand NavigateToLoginPageCommand =>
             _navigateToLoginPageCommand ?? (_navigateToLoginPageCommand = new DelegateCommand(OnNavigateToLoginPage));
 
+        private UserModel userModel;
 
         private string _userPassword;
         public string UserPassword
@@ -97,16 +100,23 @@ namespace GpsNotebook.ViewModel
 
         #region -- Private Helpers --
 
-        private UserModel userModel;
+        
         private async void OnNavigateToLoginPage()
         {
-            if (Validator.PasswordValidator(UserPassword))
+            if (Validator.AllFieldsIsNullOrEmpty(UserPassword, ConfirmPassword))
             {
-                if (Validator.ConfirmPassowrdValidator(UserPassword, ConfirmPassword))
+                if (Validator.PasswordValidator(UserPassword))
                 {
-                    userModel.Password = UserPassword;
-                    _userModelServices.AddUser(userModel);
-                    await NavigationService.NavigateAsync(nameof(LogInView));
+                    if (Validator.ConfirmPassowrdValidator(UserPassword, ConfirmPassword))
+                    {
+                        userModel.Password = UserPassword;
+                        _userModelServices.AddUser(userModel);
+                        await NavigationService.NavigateAsync(nameof(LogInView));
+                    }
+                    else
+                    {
+                        PasswordError = "Password missmatch";
+                    }
                 }
                 else
                 {
@@ -115,14 +125,14 @@ namespace GpsNotebook.ViewModel
             }
             else
             {
-                PasswordError = "Password missmatch";
+                await _pageDialogService.DisplayAlertAsync("Error", "Fill all fields.", "Ok");
             }
-            
+
         }
 
         private async void OnRegisterView()
         {
-            await NavigationService.NavigateAsync(nameof(RegisterView));
+            await NavigationService.GoBackAsync();
         }
 
         private void OnHidePassword()

@@ -7,9 +7,10 @@
                                  xmlns:control="clr-namespace:GpsNotebook.Control"
                                  xmlns:googleMap="clr-namespace:GpsNotebook.Control"
                                  xmlns:prism="http://prismlibrary.com"
-                                 Title="{Binding Title}">
+                                 Title="{Binding Title}"
+                                 BackgroundColor="{DynamicResource Background}">
 
-    <Grid RowDefinitions="0.02*, 0.07*, 0.07*, 0.40*, 0.11*, 0.33*" 
+    <Grid RowDefinitions="0.02*, 0.06*, 0.07*, 0.40*, 0.12*, 0.33*" 
           RowSpacing="7">
 
         <control:CustomSearchBar Grid.Row="1"
@@ -27,7 +28,7 @@
             <StackLayout x:Name="ListCategory"
                          BindableLayout.ItemsSource="{Binding Categories}"
                          Orientation="Horizontal">
-
+                
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
                         <Grid RowDefinitions="1*" RowSpacing="10">

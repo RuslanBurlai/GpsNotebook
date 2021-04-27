@@ -3,7 +3,9 @@ using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Navigation;
 using System;
+using System.ComponentModel;
 using System.Windows.Input;
+using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
 using ZXing;
 
@@ -17,6 +19,15 @@ namespace GpsNotebook.ViewModel
             Title = "Scan QR code";
         }
 
+        #region -- Public property --
+
+        private bool _isScanning = true;
+        public bool IsScanning
+        {
+            get { return _isScanning; }
+            set { SetProperty(ref _isScanning, value); }
+        }
+
         private ICommand _qrScanResaltCommand;
         public ICommand QrScanResaltCommand =>
             _qrScanResaltCommand ?? (_qrScanResaltCommand = new DelegateCommand<Result>(OnQrScanResalt));
@@ -25,18 +36,38 @@ namespace GpsNotebook.ViewModel
         public ICommand MapTabCommand =>
             _mapTabCommand ?? (_mapTabCommand = new DelegateCommand(OnMapTab));
 
-        private void OnMapTab()
+        private Result _qrResult;
+        public Result QrResult
         {
-            NavigationService.NavigateAsync(nameof(MapTabView));
+            get { return _qrResult; }
+            set { SetProperty(ref _qrResult, value); }
         }
 
-        private async void OnQrScanResalt(Result resalt)
-        {
-            var pin = JsonConvert.DeserializeObject<Pin>(resalt.Text);
-            var qrResalt = new NavigationParameters();
+        #endregion
 
-            qrResalt.Add(nameof(ScanningQrCodeViewModel), pin);
-            await NavigationService.NavigateAsync(nameof(MapTabbedView), qrResalt);
+        #region -- Private Helpers --
+        private async void OnMapTab()
+        {
+           await NavigationService.GoBackAsync();
         }
+
+        private async void OnQrScanResalt(Result result)
+        {
+            //IsScanning = false;
+
+            //var pin = JsonConvert.DeserializeObject<Pin>(result.Text);
+            //var qrResalt = new NavigationParameters();
+
+            //qrResalt.Add(nameof(ScanningQrCodeViewModel), pin);
+
+            await NavigationService.GoBackAsync();
+
+            //await NavigationService.NavigateAsync(nameof(MapTabView), qrResalt);
+            //await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MapTabView)}");
+            //await NavigationService.GoBackAsync();
+            //$"/{nameof(NavigationPage)}/{nameof(MapTabbedView)}", qrResalt
+        }
+
+        #endregion
     }
 }

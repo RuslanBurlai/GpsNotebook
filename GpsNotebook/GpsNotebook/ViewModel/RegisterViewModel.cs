@@ -76,9 +76,10 @@ namespace GpsNotebook.ViewModel
         private ICommand _navigateToRegisterAndPasswordCommand;
         public ICommand NavigateToRegisterAndPasswordCommand =>
             _navigateToRegisterAndPasswordCommand ?? (_navigateToRegisterAndPasswordCommand = new DelegateCommand(OnNavigateToRegisterAndPassword));
-        private ICommand _showPreviousViewsCommand;
-        public ICommand ShowPreviousViewsCommand =>
-            _showPreviousViewsCommand ?? (_showPreviousViewsCommand = new Command(OnShowPreviousViews));
+
+        private ICommand _logInOrRegisterViewCommand;
+        public ICommand LogInOrRegisterViewCommand =>
+            _logInOrRegisterViewCommand ?? (_logInOrRegisterViewCommand = new Command(OnLogInOrRegisterView));
 
         private ICommand _clearNameEntryCommand;
         public ICommand ClearNameEntryCommand =>
@@ -87,6 +88,10 @@ namespace GpsNotebook.ViewModel
         private ICommand _clearEmailEntryCommand;
         public ICommand ClearEmailEntryCommand =>
             _clearEmailEntryCommand ?? (_clearEmailEntryCommand = new Command(OnClearEmailEntry));
+
+        #endregion
+
+        #region -- Private Helpers --
 
         private void OnClearEmailEntry()
         {
@@ -100,40 +105,48 @@ namespace GpsNotebook.ViewModel
             NameError = string.Empty;
         }
 
-        #endregion
-
-        #region -- Private Helpers --
+        private bool CanNavigateToRegisterAndPassword()
+        {
+            return Validator.AllFieldsIsNullOrEmpty(UserName, UserEmail);
+        }
 
         private async void OnNavigateToRegisterAndPassword()
         {
-            UserModel user = new UserModel
+            if (Validator.AllFieldsIsNullOrEmpty(UserName, UserEmail))
             {
-                Email = UserEmail,
-                Name = UserName,
-            };
-
-            if (Validator.NameValidator(user.Name))
-            {
-                if (Validator.EmailValidator(user.Email))
+                UserModel user = new UserModel
                 {
-                    var newUser = new NavigationParameters();
-                    newUser.Add("newUser", user);
-                    await NavigationService.NavigateAsync(nameof(RegisterAndPasswordView), newUser);
+                    Email = UserEmail,
+                    Name = UserName,
+                };
+
+                if (Validator.NameValidator(user.Name))
+                {
+                    if (Validator.EmailValidator(user.Email))
+                    {
+                        var newUser = new NavigationParameters();
+                        newUser.Add("newUser", user);
+                        await NavigationService.NavigateAsync(nameof(RegisterAndPasswordView), newUser);
+                    }
+                    else
+                    {
+                        EmailError = "Incorrect email";
+                    }
                 }
                 else
                 {
-                    EmailError = "Incorrect email";
+                    NameError = "Incorrect name";
                 }
             }
             else
             {
-                NameError = "Incorrect name";
+                await _pageDialogService.DisplayAlertAsync("Error", "Fill all fields.", "Ok");
             }
         }
 
-        private async void OnShowPreviousViews(object obj)
+        private async void OnLogInOrRegisterView()
         {
-            await NavigationService.NavigateAsync(nameof(LogInOrRegisterView));
+            await NavigationService.GoBackAsync();
         }
 
         #endregion

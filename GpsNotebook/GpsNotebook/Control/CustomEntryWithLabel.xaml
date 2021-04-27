@@ -33,7 +33,6 @@
         Grid.Row="1"
         Grid.Column="2"
         Source="{Binding ImagePath, Source={x:Reference customEntryWithLabel}}" />
-    <!--  IsVisible="{Binding IsVisibleRightImage, Source={x:Reference customEntry}}"  -->
 
 
     <BoxView

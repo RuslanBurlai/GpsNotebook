@@ -4,7 +4,8 @@
                                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                                  xmlns:baseContentPage="clr-namespace:GpsNotebook.View"
                                  xmlns:customNavBar="clr-namespace:GpsNotebook.Control"
-                                 xmlns:customEntry="clr-namespace:GpsNotebook.Control">
+                                 xmlns:customEntry="clr-namespace:GpsNotebook.Control"
+                                 BackgroundColor="{DynamicResource Background}">
 
     <Grid RowDefinitions="0.11*, 0.14*, 0.25*, 0.5*">
         
@@ -13,7 +14,7 @@
             
             <customNavBar:CustomNavigationBar ImagePath="ic_left_blue" 
                                               NavBarTitle="{Binding Title}" 
-                                              GoBackCommand="{Binding ShowPreviousViewsCommand}"/>
+                                              GoBackCommand="{Binding LogInOrRegisterViewCommand}"/>
         </StackLayout>
 
         <StackLayout Grid.Row="1" 

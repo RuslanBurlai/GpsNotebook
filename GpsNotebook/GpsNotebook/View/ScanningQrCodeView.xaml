@@ -1,20 +1,40 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<basePage:BaseContentPage
+<!--<basePage:BaseContentPage
     x:Class="GpsNotebook.View.ScanningQrCodeView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:basePage="clr-namespace:GpsNotebook.View"
     xmlns:control="clr-namespace:GpsNotebook.Control"
-    xmlns:zxing="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms">
+    xmlns:zxing="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
+    xmlns:prism="http://prismlibrary.com"
+    BackgroundColor="{DynamicResource Background}"
+   >
+
     <Grid RowDefinitions="0.02*, 0.06*, 0.98*">
         <control:CustomNavigationBar
             Grid.Row="1"
             GoBackCommand="{Binding MapTabCommand}"
             ImagePath="ic_left_blue"
             NavBarTitle="{Binding Title}" />
+        
         <zxing:ZXingScannerView
             Grid.Row="2"
-            IsScanning="true"
-            ScanResultCommand="{Binding QrScanResaltCommand}" />
+            IsScanning="True"
+            Result="{Binding QrResult}"/>
     </Grid>
-</basePage:BaseContentPage>
+    </basePage:BaseContentPage>-->
+
+
+<zxing:ZXingScannerPage
+    x:Class="GpsNotebook.View.ScanningQrCodeView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:basePage="clr-namespace:GpsNotebook.View"
+    xmlns:zxing="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
+    IsScanning="True" 
+    xmlns:prism="http://prismlibrary.com"
+    OnScanResult="ZXingScannerPage_OnScanResult">
+    
+    
+
+</zxing:ZXingScannerPage>

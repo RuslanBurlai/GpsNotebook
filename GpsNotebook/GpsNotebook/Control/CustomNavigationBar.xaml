@@ -31,7 +31,7 @@
         FontSize="20"
         HorizontalOptions="Center"
         Text="{Binding NavBarTitle, Source={x:Reference customNavigationBar}}"
-        TextColor="Black"
+        TextColor="{DynamicResource NavBarText}"
         VerticalOptions="Center" />
 
     <Image

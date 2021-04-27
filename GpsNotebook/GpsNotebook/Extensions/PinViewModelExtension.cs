@@ -28,7 +28,7 @@ namespace GpsNotebook.Extensions
                 Latitude = pinViewModel.PinLatitude,
                 Longitude = pinViewModel.PinLongitude,
                 Categories = pinViewModel.PinCategories,
-                FavoritPin = pinViewModel.ImageFavoritPin,
+                FavoritPin = pinViewModel.FavoritPin,
             };
         }
 

@@ -5,7 +5,8 @@
                                  xmlns:baseContentPage="clr-namespace:GpsNotebook.View"
                                  xmlns:control="clr-namespace:GpsNotebook.Control"
                                  xmlns:googleMap="clr-namespace:GpsNotebook.Control"
-                                 xmlns:prism="http://prismlibrary.com">
+                                 xmlns:prism="http://prismlibrary.com"
+                                 BackgroundColor="{DynamicResource Background}">
 
     <Grid ColumnDefinitions="0.02*, 0.96*, 0.02*"
           RowDefinitions="0.02*, 0.07*, 0.4*, 0.01*, 0.5*">
@@ -47,19 +48,17 @@
 
             <StackLayout Orientation="Horizontal">
 
-                <control:CustomEntryWithLabel Grid.Row="0"
-                                              BorderColor="#C7CDF5"
+                <control:CustomEntryWithLabel BorderColor="#C7CDF5"
                                               HeaderEntry="Coordinates"
                                               Placeholder="Longitude"
                                               Text="{Binding PinLongitude}" />
 
-                <control:CustomEntryWithLabel Grid.Row="1"
-                                              BorderColor="#C7CDF5"
+                <control:CustomEntryWithLabel BorderColor="#C7CDF5"
                                               Placeholder="Latitude"
                                               Text="{Binding PinLatitude}" />
-
-
             </StackLayout>
+
+            <control:CustomMapForAddPinViewModel GetPinPosition="{Binding GetPosition}"/>
 
         </StackLayout>
 

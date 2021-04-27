@@ -2,6 +2,7 @@
 using GpsNotebook.Services.Authorization;
 using GpsNotebook.Services.PinLocationRepository;
 using GpsNotebook.Validators;
+using GpsNotebook.View;
 using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services;
@@ -77,16 +78,15 @@ namespace GpsNotebook.ViewModel
             set { SetProperty(ref _pinLongitude, value); }
         }
 
-        private string _favoritPin;
-        public string FavoritPin
-        {
-            get { return _favoritPin; }
-            set { SetProperty(ref _favoritPin, value); }
-        }
-
         private ICommand _savePinCommand;
         public ICommand SavePinCommand =>
-            _savePinCommand ?? (_savePinCommand = new DelegateCommand(OnSavePin));
+            _savePinCommand ?? (_savePinCommand = new DelegateCommand(OnSavePin, CanSavePin));
+
+        private bool CanSavePin()
+        {
+            return Validator.AllFieldsIsNullOrEmpty(PinName, PinDescription, PinLatitude, PinLongitude) &&
+                SelectedCategories != null;
+        }
 
         public ICommand GetPosition => new Command<Position>(ExecuteGetPosition);
 
@@ -114,7 +114,7 @@ namespace GpsNotebook.ViewModel
 
         private async void OnMapTabbedView()
         {
-            await NavigationService.GoBackAsync();
+            await NavigationService.NavigateAsync(nameof(MapTabbedView));
         }
 
         private async void OnSavePin()
@@ -127,10 +127,8 @@ namespace GpsNotebook.ViewModel
                 PinName = PinName,
                 Categories = SelectedCategories.Name,
                 UserId = _authorization.GetUserId,
-                FavoritPin = "ic_like_grey"
+                FavoritPin = "ic_like_gray"
             };
-
-            //List<PinModel> l = _pinLocationRepository.GetAllPins().ToList();
 
             _pinLocationRepository.AddPin(newPin);
             var parametrs = new NavigationParameters();

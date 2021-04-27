@@ -57,7 +57,7 @@ namespace GpsNotebook
             //add IsAuthorized property to AuthService
             if (_authorization.GetUserId != 0)
             {
-                await NavigationService.NavigateAsync(nameof(MapTabbedView));
+                await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(MapTabbedView)}");
             }
             else
             {

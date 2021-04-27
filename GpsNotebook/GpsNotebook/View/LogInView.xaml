@@ -7,55 +7,52 @@
     xmlns:customEntry="clr-namespace:GpsNotebook.Control"
     xmlns:navBar="clr-namespace:GpsNotebook.Control"
     xmlns:prism="http://prismlibrary.com"
-    prism:ViewModelLocator.AutowireViewModel="True">
+    prism:ViewModelLocator.AutowireViewModel="True"
+    BackgroundColor="{DynamicResource Background}">
 
     <Grid RowDefinitions="0.11*, 0.14*, 0.25*, 0.5*">
 
-        <StackLayout Grid.Row="0" VerticalOptions="Center">
+        <StackLayout Grid.Row="0" 
+                     VerticalOptions="Center">
 
-            <navBar:CustomNavigationBar
-                GoBackCommand="{Binding OnLogInOrRegisterViewCommand}"
-                ImagePath="ic_left_blue"
-                NavBarTitle="{Binding Title}" />
+            <navBar:CustomNavigationBar GoBackCommand="{Binding LogInOrRegisterViewCommand}"
+                                        ImagePath="ic_left_blue"
+                                        NavBarTitle="{Binding Title}" />
         </StackLayout>
 
         <StackLayout Grid.Row="1">
 
-            <customEntry:CustomEntryWithLabel
-                Grid.Row="1"
-                Margin="15,0,15,0"
-                BorderColor="Gray"
-                ClearOrHideText="{Binding ClearEmailEntryCommand}"
-                FooterEntry="{Binding EmailError}"
-                HeaderEntry="Email"
-                ImagePath="{Binding EmailEntryRightImage}"
-                Placeholder="Enter email"
-                Text="{Binding UserEmail}" />
+            <customEntry:CustomEntryWithLabel Grid.Row="1"
+                                              Margin="15,0,15,0"
+                                              BorderColor="Gray"
+                                              ClearOrHideText="{Binding ClearEmailEntryCommand}"
+                                              FooterEntry="{Binding EmailError}"
+                                              HeaderEntry="Email"
+                                              ImagePath="{Binding EmailEntryRightImage}"
+                                              Placeholder="Enter email"
+                                              Text="{Binding UserEmail}" />
         </StackLayout>
 
-        <StackLayout
-            Grid.Row="2"
-            Margin="15,0,15,0"
-            Spacing="20">
+        <StackLayout Grid.Row="2"
+                     Margin="15,0,15,0"
+                     Spacing="20">
 
-            <customEntry:CustomEntryWithLabel
-                BorderColor="Gray"
-                ClearOrHideText="{Binding HidePasswordCommand}"
-                FooterEntry="{Binding PasswordError}"
-                HeaderEntry="Password"
-                ImagePath="{Binding PasswordEntryRightImage}"
-                IsPassword="{Binding ShowPassword}"
-                Placeholder="Enter password"
-                Text="{Binding UserPassword}" />
+            <customEntry:CustomEntryWithLabel BorderColor="Gray"
+                                              ClearOrHideText="{Binding HidePasswordCommand}"
+                                              FooterEntry="{Binding PasswordError}"
+                                              HeaderEntry="Password"
+                                              ImagePath="{Binding PasswordEntryRightImage}"
+                                              IsPassword="{Binding ShowPassword}"
+                                              Placeholder="Enter password"
+                                              Text="{Binding UserPassword}" />
 
 
-            <Button
-                BackgroundColor="RoyalBlue"
-                Command="{Binding NavigateToMapTabbedPageCommand}"
-                FontSize="20"
-                Text="Log in"
-                TextColor="White"
-                VerticalOptions="End" />
+            <Button BackgroundColor="RoyalBlue"
+                    Command="{Binding NavigateToMapTabbedPageCommand}"
+                    FontSize="20"
+                    Text="Log in"
+                    TextColor="White"
+                    VerticalOptions="End" />
 
         </StackLayout>
 

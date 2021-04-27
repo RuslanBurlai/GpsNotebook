@@ -87,6 +87,9 @@
            Source="{Binding RightSideImagePath, Source={x:Reference customSearchBar}}"
            IsVisible="True">
 
+        <Image.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding TapOnRightImageCommand, Source={x:Reference customSearchBar}}"/>
+        </Image.GestureRecognizers>
         <Image.Triggers>
             
             <DataTrigger Binding="{Binding IsSearchBarSpan, Source={x:Reference customSearchBar}}"

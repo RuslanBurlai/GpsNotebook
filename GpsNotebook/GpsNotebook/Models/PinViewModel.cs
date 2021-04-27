@@ -52,11 +52,11 @@ namespace GpsNotebook.Models
             set { SetProperty(ref _pinCategories, value); }
         }
 
-        private string _imageFavoritPin;
-        public string ImageFavoritPin
+        private string _favoritPin;
+        public string FavoritPin
         {
-            get { return _imageFavoritPin; }
-            set { SetProperty(ref _imageFavoritPin, value); }
+            get { return _favoritPin; }
+            set { SetProperty(ref _favoritPin, value); }
         }
 
         #endregion

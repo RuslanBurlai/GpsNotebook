@@ -160,15 +160,16 @@ namespace GpsNotebook.ViewModel
         private ICommand _tapOnDropDownCellCommand;
         public ICommand TapOnDropDownCellCommand =>
             _tapOnDropDownCellCommand ?? (_tapOnDropDownCellCommand = new DelegateCommand<Pin>(OntapOnDropDownCell));
+
+        #endregion
+
+        #region -- Private Helpers --
+
         private void OntapOnDropDownCell(Pin pin)
         {
             ShowDropDown = false;
             MoveCameraToPin = MapSpan.FromCenterAndRadius(pin.Position, new Distance(10000));
         }
-
-        #endregion
-
-        #region -- Private Helpers --
 
         private void OnSharePin()
         {
@@ -229,11 +230,6 @@ namespace GpsNotebook.ViewModel
                 var list = new ObservableCollection<PinViewModel>();
                 list = parameters.GetValue<ObservableCollection<PinViewModel>>("Pins");
                 AllPins = new ObservableCollection<Pin>(list.Select(x => x.ToPin()));
-            }
-
-            if (parameters.TryGetValue("SelectedItemInListView", out PinViewModel pinViewModel))
-            {
-                MoveCameraToPin = MapSpan.FromCenterAndRadius(pinViewModel.ToPin().Position, new Distance(10000));
             }
 
             if (parameters.ContainsKey(nameof(ScanningQrCodeViewModel)))

@@ -22,9 +22,9 @@ namespace GpsNotebook.ViewModel
         public ICommand MapTabbedCommand =>
             _mapTabbedCommand ?? (_mapTabbedCommand = new DelegateCommand(OnMapTabbed));
 
-        private ICommand _scanQrCode;
-        public ICommand ScanQrCode =>
-            _scanQrCode ?? (_scanQrCode = new DelegateCommand(OnScanQrCode));
+        private ICommand _scanQrCodeCommand;
+        public ICommand ScanQrCodeCommand =>
+            _scanQrCodeCommand ?? (_scanQrCodeCommand = new DelegateCommand(OnScanQrCode));
 
 
         #endregion
