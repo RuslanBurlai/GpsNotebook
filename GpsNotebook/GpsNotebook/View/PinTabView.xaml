@@ -66,7 +66,8 @@
                                              Grid.RowSpan="2"
                                              Source="{Binding FavoritPin}"
                                              Command="{Binding BindingContext.SetFavoritPinCommand, Source={x:Reference ListPinLocations}}"
-                                             CommandParameter="{Binding .}">
+                                             CommandParameter="{Binding .}"
+                                             BackgroundColor="{DynamicResource VariantColor}">
 
                                 </ImageButton>
 

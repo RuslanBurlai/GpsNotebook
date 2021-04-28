@@ -58,6 +58,18 @@ namespace GpsNotebook.ViewModel
             }
         }
 
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+
+            if (parameters.TryGetValue<string>(nameof(ScanningQrCodeViewModel), out string pin))
+            {
+                var qrResult = new NavigationParameters();
+                qrResult.Add(nameof(SettingsView), pin);
+                NavigationService.NavigateAsync(nameof(MapTabbedView), qrResult);
+            }
+        }
+
         #endregion
 
         #region -- Private Helpers --

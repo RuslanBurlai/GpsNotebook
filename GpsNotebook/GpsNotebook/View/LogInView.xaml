@@ -23,7 +23,7 @@
 
             <customEntry:CustomEntryWithLabel Grid.Row="1"
                                               Margin="15,0,15,0"
-                                              BorderColor="Gray"
+                                              BorderColor="{Binding ErrorBorderColor}"
                                               ClearOrHideText="{Binding ClearEmailEntryCommand}"
                                               FooterEntry="{Binding EmailError}"
                                               HeaderEntry="Email"
@@ -36,7 +36,7 @@
                      Margin="15,0,15,0"
                      Spacing="20">
 
-            <customEntry:CustomEntryWithLabel BorderColor="Gray"
+            <customEntry:CustomEntryWithLabel BorderColor="{Binding ErrorEntryBorderColor}"
                                               ClearOrHideText="{Binding HidePasswordCommand}"
                                               FooterEntry="{Binding PasswordError}"
                                               HeaderEntry="Password"

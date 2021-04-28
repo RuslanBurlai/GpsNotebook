@@ -25,15 +25,17 @@
 
             <control:CustomEntryWithLabel BorderColor="#C7CDF5"
                                           HeaderEntry="Label"
-                                          ImagePath="ic_clear"
+                                          ImagePath="{Binding ClearButtonImagePath}"
                                           Placeholder="Enter the label"
-                                          Text="{Binding PinName}" />
+                                          Text="{Binding PinName}" 
+                                          ClearOrHideText="{Binding ClearLabelEntryTextCommand}"/>
 
             <control:CustomEntryWithLabel BorderColor="#C7CDF5"
                                           HeaderEntry="Description"
-                                          ImagePath="ic_clear"
+                                          ImagePath="{Binding ClearDescriptionImagePath}"
                                           Placeholder="Write a description"
-                                          Text="{Binding PinDescription}" />
+                                          Text="{Binding PinDescription}" 
+                                          ClearOrHideText="{Binding ClearDescriptionEntryCommand}"/>
 
             <Picker Title="Categories"
                     ItemDisplayBinding="{Binding Name}"
@@ -58,7 +60,7 @@
                                               Text="{Binding PinLatitude}" />
             </StackLayout>
 
-            <control:CustomMapForAddPinViewModel GetPinPosition="{Binding GetPosition}"/>
+            <control:CustomMapForAddPinViewModel GetPinPosition="{Binding GetPositionCommand}"/>
 
         </StackLayout>
 

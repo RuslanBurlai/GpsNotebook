@@ -10,6 +10,8 @@ namespace GpsNotebook.Control
             InitializeComponent();
         }
 
+        #region -- Public Property --
+
         public static readonly BindableProperty HeaderEntryProperty = BindableProperty.Create(
             propertyName: nameof(HeaderEntry),
             returnType: typeof(string),
@@ -69,7 +71,8 @@ namespace GpsNotebook.Control
         public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(
             propertyName: nameof(BorderColor),
             returnType: typeof(Color),
-            declaringType: typeof(CustomEntryWithLabel));
+            declaringType: typeof(CustomEntryWithLabel),
+            defaultValue: Color.Gray);
 
         public Color BorderColor
         {
@@ -98,5 +101,7 @@ namespace GpsNotebook.Control
             get { return (bool)GetValue(IsPasswordProperty); }
             set { SetValue(IsPasswordProperty, value); }
         }
+
+        #endregion
     }
 }

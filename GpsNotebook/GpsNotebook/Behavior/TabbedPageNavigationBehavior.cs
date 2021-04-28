@@ -17,7 +17,7 @@ namespace GpsNotebook.Behavior
         {
             var newPage = this.AssociatedObject.CurrentPage;
 
-            if (this.CurrentPage != null)
+            //if (this.CurrentPage != null)
             {
                 var parameters = new NavigationParameters();
                 PageUtilities.OnNavigatedFrom(this.CurrentPage, parameters);

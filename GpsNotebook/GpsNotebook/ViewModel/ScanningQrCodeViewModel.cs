@@ -2,8 +2,12 @@
 using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Navigation;
+//using Prism.Navigation.Xaml;
+using Prism.Services;
+using Prism.Services.Dialogs;
 using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
@@ -13,28 +17,26 @@ namespace GpsNotebook.ViewModel
 {
     public class ScanningQrCodeViewModel : ViewModelBase
     {
-        public ScanningQrCodeViewModel(INavigationService naviagtionService) :
+        private IPageDialogService _pageDialogService;
+
+        public ScanningQrCodeViewModel(
+            INavigationService naviagtionService,
+            IPageDialogService pageDialogService) :
             base(naviagtionService)
         {
             Title = "Scan QR code";
+            _pageDialogService = pageDialogService;
         }
 
         #region -- Public property --
 
-        private bool _isScanning = true;
-        public bool IsScanning
-        {
-            get { return _isScanning; }
-            set { SetProperty(ref _isScanning, value); }
-        }
+        private ICommand _qrScanResultCommand;
+        public ICommand QrScanResultCommand =>
+            _qrScanResultCommand ?? (_qrScanResultCommand = new Command<Result>(OnQrScanResult));
 
-        private ICommand _qrScanResaltCommand;
-        public ICommand QrScanResaltCommand =>
-            _qrScanResaltCommand ?? (_qrScanResaltCommand = new DelegateCommand<Result>(OnQrScanResalt));
-
-        private ICommand _mapTabCommand;
-        public ICommand MapTabCommand =>
-            _mapTabCommand ?? (_mapTabCommand = new DelegateCommand(OnMapTab));
+        private ICommand _mapTabbedCommand;
+        public ICommand MapTabbedCommand =>
+            _mapTabbedCommand ?? (_mapTabbedCommand = new DelegateCommand(OnMapTab));
 
         private Result _qrResult;
         public Result QrResult
@@ -46,26 +48,23 @@ namespace GpsNotebook.ViewModel
         #endregion
 
         #region -- Private Helpers --
+
         private async void OnMapTab()
         {
            await NavigationService.GoBackAsync();
         }
 
-        private async void OnQrScanResalt(Result result)
+        private void OnQrScanResult(Result result)
         {
-            //IsScanning = false;
-
-            //var pin = JsonConvert.DeserializeObject<Pin>(result.Text);
-            //var qrResalt = new NavigationParameters();
-
-            //qrResalt.Add(nameof(ScanningQrCodeViewModel), pin);
-
-            await NavigationService.GoBackAsync();
-
-            //await NavigationService.NavigateAsync(nameof(MapTabView), qrResalt);
-            //await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MapTabView)}");
-            //await NavigationService.GoBackAsync();
-            //$"/{nameof(NavigationPage)}/{nameof(MapTabbedView)}", qrResalt
+            Device.BeginInvokeOnMainThread(async () =>
+            {
+                var q = QrResult;
+                var pin = JsonConvert.SerializeObject(result.Text);
+                var qrResalt = new NavigationParameters();
+                qrResalt.Add(nameof(ScanningQrCodeViewModel), pin);
+                //await NavigationService.NavigateAsync(nameof(MapTabbedView), qrResalt);
+                await NavigationService.GoBackAsync(qrResalt);
+            });
         }
 
         #endregion

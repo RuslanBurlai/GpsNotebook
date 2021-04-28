@@ -10,7 +10,7 @@
        xmlns:zxing="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
        CornerRadius="20">
 
-    <!--<Grid RowDefinitions="0.15*, 0.7*, 0.15*">
+    <Grid RowDefinitions="0.15*, 0.7*, 0.15*">
         
             <zxing:ZXingBarcodeImageView
                 Grid.Row="1"
@@ -18,6 +18,6 @@
                 BarcodeFormat="QR_CODE" 
                 VerticalOptions="Fill"
                 HorizontalOptions="Fill" />
-    </Grid>-->
+    </Grid>
 
 </Frame>

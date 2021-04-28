@@ -1,16 +1,7 @@
-﻿using Prism.Commands;
-using Prism.Mvvm;
-using Prism.Services.Dialogs;
+﻿using Prism.Services.Dialogs;
 using System;
-using System.Windows.Input;
-using Xamarin.Forms.GoogleMaps;
-using Newtonsoft.Json;
 using GpsNotebook.ViewModel;
 using Prism.Navigation;
-using GpsNotebook.View;
-using Xamarin.Forms;
-using ZXing;
-using ZXing.Net.Mobile.Forms;
 
 namespace GpsNotebook.Dialogs
 {

@@ -85,6 +85,20 @@ namespace GpsNotebook.ViewModel
             set { SetProperty(ref _emailEntryRightImage, value); }
         }
 
+        private Color _errorBorderColor;
+        public Color ErrorBorderColor
+        {
+            get { return _errorBorderColor; }
+            set { SetProperty(ref _errorBorderColor, value); }
+        }
+
+        private Color _errorEntryBorderColor;
+        public Color ErrorEntryBorderColor
+        {
+            get { return _errorEntryBorderColor; }
+            set { SetProperty(ref _errorEntryBorderColor, value); }
+        }
+
         private ICommand _clearEmailEntryCommand;
         public ICommand ClearEmailEntryCommand =>
             _clearEmailEntryCommand ?? (_clearEmailEntryCommand = new Command(OnClearEmailEntry));
@@ -116,7 +130,9 @@ namespace GpsNotebook.ViewModel
                 else
                 {
                     EmailError = "Email incorrect";
+                    ErrorBorderColor = Color.Red;
                     PasswordError = "Password incorrect";
+                    ErrorEntryBorderColor = Color.Red;
                 }
             }
             else
@@ -168,6 +184,8 @@ namespace GpsNotebook.ViewModel
                         else
                         {
                             EmailEntryRightImage = string.Empty;
+                            ErrorBorderColor = Color.Gray;
+                            EmailError = string.Empty;
                         }
                          break; 
                     }
@@ -180,6 +198,8 @@ namespace GpsNotebook.ViewModel
                         else
                         {
                             PasswordEntryRightImage = string.Empty;
+                            ErrorEntryBorderColor = Color.Gray;
+                            PasswordError = string.Empty;
                         }
                         break; 
                     }

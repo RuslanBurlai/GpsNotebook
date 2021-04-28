@@ -1,12 +1,10 @@
-﻿using GpsNotebook.Dialogs;
-using GpsNotebook.Extensions;
+﻿using GpsNotebook.Extensions;
 using GpsNotebook.Models;
 using GpsNotebook.Services.Authorization;
 using GpsNotebook.Services.PinLocationRepository;
 using GpsNotebook.View;
 using Prism.Commands;
 using Prism.Navigation;
-using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -30,8 +28,6 @@ namespace GpsNotebook.ViewModel
 
             _pinModelService = pinModelService;
             _authorizationService = authorizationService;
-
-            
         }
 
         #region -- Public properties --
@@ -97,10 +93,6 @@ namespace GpsNotebook.ViewModel
         public ICommand DeletePinFromListCommand =>
             _deletePinFromListCommand ?? (_deletePinFromListCommand = new DelegateCommand<PinViewModel>(OnDeletePinFromListCommand));
 
-        //private ICommand _searchPinsCommand;
-        //public ICommand SearchPinsCommand =>
-        //    _searchPinsCommand ?? (_searchPinsCommand = new Command<string>(OnSearchPins));
-
         private ICommand _logOutCommand;
         public ICommand LogOutCommand =>
             _logOutCommand ?? (_logOutCommand = new DelegateCommand(OnLogOut));
@@ -160,20 +152,6 @@ namespace GpsNotebook.ViewModel
             pinParametrs.Add("SelectedItemInListView", pinViewModel);
             await NavigationService.NavigateAsync(nameof(MapTabbedView), pinParametrs);
         }
-
-        //private void OnSearchPins(string searchQuery)
-        //{
-        //    if (!string.IsNullOrWhiteSpace(searchQuery))
-        //    {
-        //        var searchPins = _pinModelService.SearchPins(searchQuery);
-        //        Pins = new ObservableCollection<PinViewModel>(searchPins.Select(x => x.ToPinViewModel()));
-        //    }
-        //    else
-        //    {
-        //        var pins = _pinModelService.GetAllPins();
-        //        Pins = new ObservableCollection<PinViewModel>(pins.Select(x => x.ToPinViewModel()));
-        //    }
-        //}
 
         #endregion
 

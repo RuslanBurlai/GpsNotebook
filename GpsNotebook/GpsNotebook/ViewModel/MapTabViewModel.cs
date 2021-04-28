@@ -143,7 +143,7 @@ namespace GpsNotebook.ViewModel
 
         private ICommand _mapClickCommand;
         public ICommand MapClickCommand =>
-            _mapClickCommand ?? (_mapClickCommand = new Command<string>(OnMapClick));
+            _mapClickCommand ?? (_mapClickCommand = new Command(OnMapClick));
 
         private ICommand _settingsCommand;
         public ICommand SettingsCommand =>
@@ -163,57 +163,6 @@ namespace GpsNotebook.ViewModel
 
         #endregion
 
-        #region -- Private Helpers --
-
-        private void OntapOnDropDownCell(Pin pin)
-        {
-            ShowDropDown = false;
-            MoveCameraToPin = MapSpan.FromCenterAndRadius(pin.Position, new Distance(10000));
-        }
-
-        private void OnSharePin()
-        {
-            var dialogParametr = new DialogParameters();
-            dialogParametr.Add(nameof(SharePinCommand), QrCodeData);
-            _dialogService.ShowDialog(nameof(SharePinViaQRDialogView), dialogParametr);
-        }
-
-        private async void OnLogOut()
-        {
-            _authorizationService.LogOut();
-            await NavigationService.NavigateAsync($"/{ nameof(NavigationPage)}/{ nameof(LogInView)}");
-        }
-
-        private void OnMapClick(string sesarchQuery)
-        {
-            ShowInfoAboutPin = false;
-        }
-
-        private void SelectSortCategory(CategoriesForPin category)
-        {
-            if (!string.IsNullOrWhiteSpace(category.Name))
-            {
-                var list = _pinModelService.SearchByCategory(category.Name).Select((x) => x.ToPinViewModel());
-                AllPins = new ObservableCollection<Pin>(list.Select(x => x.ToPin()));
-            }
-            else
-            {
-                var pins = _pinModelService.GetAllPins().Select(pinModel => pinModel.ToPinViewModel());
-                AllPins = new ObservableCollection<Pin>(pins.Select(x => x.ToPin()));
-            }
-        }
-
-        private async void OnSettings()
-        {
-            await NavigationService.NavigateAsync(nameof(SettingsView));
-        }
-
-        private void OnDialogClosed(IDialogResult result)
-        {
-        }
-
-        #endregion
-
         #region -- Overrides --
 
         public override void OnNavigatedFrom(INavigationParameters parameters)
@@ -225,6 +174,12 @@ namespace GpsNotebook.ViewModel
         {
             base.OnNavigatedTo(parameters);
 
+            if (parameters.TryGetValue<PinViewModel>("SelectedItemInListView", out PinViewModel pinViewModel))
+            {
+                var pin = pinViewModel.ToPin();
+                MoveCameraToPin = MapSpan.FromCenterAndRadius(pin.Position, new Distance(10000));
+            }
+
             if (parameters.ContainsKey("Pins"))
             {
                 var list = new ObservableCollection<PinViewModel>();
@@ -232,14 +187,18 @@ namespace GpsNotebook.ViewModel
                 AllPins = new ObservableCollection<Pin>(list.Select(x => x.ToPin()));
             }
 
-            if (parameters.ContainsKey(nameof(ScanningQrCodeViewModel)))
+            if (parameters.TryGetValue<string>(nameof(SettingsView), out string qrResult))
             {
-                var pin = new Pin();
-                pin = parameters.GetValue<Pin>(nameof(ScanningQrCodeViewModel));
-                AllPins = new ObservableCollection<Pin>();
-                AllPins.Add(pin);
-                MoveCameraToPin = MapSpan.FromCenterAndRadius(pin.Position, new Distance(10000));
+                var qrPin = new Pin();
+                qrPin = JsonConvert.DeserializeObject<Pin>(qrResult);
+
+                //AllPins = new ObservableCollection<Pin>();
+                AllPins.Add(qrPin);
+
+                MoveCameraToPin = MapSpan.FromCenterAndRadius(qrPin.Position, new Distance(10000));
             }
+
+
 
         }
 
@@ -281,9 +240,9 @@ namespace GpsNotebook.ViewModel
                     {
                         if (TapOnPin != null)
                         {
-                            ShowInfoAboutPin = true;
                             string json = JsonConvert.SerializeObject(TapOnPin);
                             QrCodeData = json;
+                            ShowInfoAboutPin = true;
                         }
 
                         break;
@@ -300,6 +259,58 @@ namespace GpsNotebook.ViewModel
                 .Select(pinModel => pinModel.ToPinViewModel().ToPin());
 
             AllPins = new ObservableCollection<Pin>(pins);
+        }
+
+        #endregion
+
+        #region -- Private Helpers --
+
+        private void OntapOnDropDownCell(Pin pin)
+        {
+            SearchingText = string.Empty;
+            ShowDropDown = false;
+            MoveCameraToPin = MapSpan.FromCenterAndRadius(pin.Position, new Distance(10000));
+        }
+
+        private void OnSharePin()
+        {
+            var dialogParametr = new DialogParameters();
+            dialogParametr.Add(nameof(SharePinCommand), QrCodeData);
+            _dialogService.ShowDialog(nameof(SharePinViaQRDialogView), dialogParametr);
+        }
+
+        private async void OnLogOut()
+        {
+            _authorizationService.LogOut();
+            await NavigationService.NavigateAsync($"/{ nameof(NavigationPage)}/{ nameof(LogInView)}");
+        }
+
+        private void OnMapClick()
+        {
+            ShowInfoAboutPin = false;
+        }
+
+        private void SelectSortCategory(CategoriesForPin category)
+        {
+            if (!string.IsNullOrWhiteSpace(category.Name))
+            {
+                var list = _pinModelService.SearchByCategory(category.Name).Select((x) => x.ToPinViewModel());
+                AllPins = new ObservableCollection<Pin>(list.Select(x => x.ToPin()));
+            }
+            else
+            {
+                var pins = _pinModelService.GetAllPins().Select(pinModel => pinModel.ToPinViewModel());
+                AllPins = new ObservableCollection<Pin>(pins.Select(x => x.ToPin()));
+            }
+        }
+
+        private async void OnSettings()
+        {
+            await NavigationService.NavigateAsync(nameof(SettingsView));
+        }
+
+        private void OnDialogClosed(IDialogResult result)
+        {
         }
 
         #endregion
