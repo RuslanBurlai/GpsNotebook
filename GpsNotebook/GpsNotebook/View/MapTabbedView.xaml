@@ -6,8 +6,8 @@
             xmlns:pages="clr-namespace:GpsNotebook.View;assembly=GpsNotebook"
             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
             android:TabbedPage.ToolbarPlacement="Bottom" 
-            NavigationPage.HasNavigationBar="False" 
-            BackgroundColor="{DynamicResource Background}">
+            NavigationPage.HasNavigationBar="False"
+            BackgroundColor="{DynamicResource PageBackgroundColor}">
 
     <TabbedPage.Behaviors>
         <behaviors:TabbedPageNavigationBehavior />

@@ -8,7 +8,7 @@
                                  xmlns:googleMap="clr-namespace:GpsNotebook.Control"
                                  xmlns:prism="http://prismlibrary.com"
                                  Title="{Binding Title}"
-                                 BackgroundColor="{DynamicResource Background}">
+                                 BackgroundColor="{DynamicResource PageBackgroundColor}">
 
     <Grid RowDefinitions="0.02*, 0.06*, 0.07*, 0.40*, 0.12*, 0.33*" 
           RowSpacing="7">
@@ -27,14 +27,15 @@
 
             <StackLayout x:Name="ListCategory"
                          BindableLayout.ItemsSource="{Binding Categories}"
-                         Orientation="Horizontal">
+                         Orientation="Horizontal"
+                         BackgroundColor="{DynamicResource PageBackgroundColor}">
                 
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
                         <Grid RowDefinitions="1*" RowSpacing="10">
                             <Frame Grid.Row="0"
                                    Padding="8"
-                                   BackgroundColor="#F1F3FD"
+                                   BackgroundColor="{DynamicResource VariantColor}"
                                    CornerRadius="25"
                                    HasShadow="False"
                                    HorizontalOptions="FillAndExpand"
@@ -58,7 +59,8 @@
                                                CameraOnSelectedPin="{Binding MoveCameraToPin}"
                                                ListOfPins="{Binding AllPins}"
                                                MyLocationEnabled="True"
-                                               SelectedPin="{Binding TapOnPin}">
+                                               SelectedPin="{Binding TapOnPin}"
+                                               MapStyle="{Binding }">
 
             <googleMap:CustomMapForMapTabViewModel.Behaviors>
                 

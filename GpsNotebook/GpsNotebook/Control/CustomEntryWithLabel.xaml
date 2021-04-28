@@ -12,14 +12,16 @@
         Grid.Column="1"
         Grid.ColumnSpan="2"
         FontAttributes="Bold"
-        Text="{Binding HeaderEntry, Source={x:Reference customEntryWithLabel}}" />
+        Text="{Binding HeaderEntry, Source={x:Reference customEntryWithLabel}}"
+        TextColor="{DynamicResource TextColor}"/>
 
     <Frame
         Grid.Row="1"
         Grid.Column="0"
         Grid.ColumnSpan="3"
         BorderColor="{Binding BorderColor, Source={x:Reference customEntryWithLabel}}"
-        HasShadow="False" />
+        HasShadow="False"
+        BackgroundColor="{DynamicResource PageBackgroundColor}"/>
 
     <Entry
         Grid.Row="1"
@@ -27,7 +29,8 @@
         FontSize="20"
         IsPassword="{Binding IsPassword, Source={x:Reference customEntryWithLabel}}"
         Placeholder="{Binding Placeholder, Source={x:Reference customEntryWithLabel}}"
-        Text="{Binding Text, Source={x:Reference customEntryWithLabel}}" />
+        Text="{Binding Text, Source={x:Reference customEntryWithLabel}}"
+        BackgroundColor="{DynamicResource PageBackgroundColor}"/>
 
     <Image
         Grid.Row="1"

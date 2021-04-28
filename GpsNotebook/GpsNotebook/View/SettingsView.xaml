@@ -1,26 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<contetPage:BaseContentPage
-    x:Class="GpsNotebook.View.SettingsView"
-    xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:contetPage="clr-namespace:GpsNotebook.View"
-    xmlns:controls="clr-namespace:GpsNotebook.Control"
-    BackgroundColor="{DynamicResource Background}">
+<contetPage:BaseContentPage x:Class="GpsNotebook.View.SettingsView"
+                            xmlns:prism="http://prismlibrary.com"
+                            xmlns="http://xamarin.com/schemas/2014/forms"
+                            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                            xmlns:contetPage="clr-namespace:GpsNotebook.View"
+                            xmlns:controls="clr-namespace:GpsNotebook.Control"
+                            BackgroundColor="{DynamicResource PageBackgroundColor}">
 
     <Grid RowDefinitions="0.02*, 0.98*">
 
         <StackLayout Grid.Row="1">
 
-            <controls:CustomNavigationBar
-                GoBackCommand="{Binding MapTabbedCommand}"
-                ImagePath="ic_left_blue"
-                NavBarTitle="{Binding Title}" />
-            <BoxView BackgroundColor="{DynamicResource Background}" HeightRequest="1" />
+            <controls:CustomNavigationBar GoBackCommand="{Binding MapTabbedCommand}"
+                                          ImagePath="ic_left_blue"
+                                          NavBarTitle="{Binding Title}" />
+            <BoxView BackgroundColor="{DynamicResource Background}" 
+                     HeightRequest="1" />
 
-            <TableView HasUnevenRows="True" Intent="Settings" >
+            <TableView HasUnevenRows="True" 
+                       Intent="Settings" >
+
                 <TableSection>
-                    <SwitchCell Text="Dark Theme" />
-                    <TextCell Command="{Binding ScanQrCodeCommand}" Text="Scan the QR code" />
+                    <SwitchCell Text="Dark Theme"
+                                On="{Binding IsDarkTheme}" />
+
+                    <TextCell Command="{Binding ScanQrCodeCommand}"
+                              Text="Scan the QR code" />
                 </TableSection>
             </TableView>
 

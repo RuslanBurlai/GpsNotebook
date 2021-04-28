@@ -5,7 +5,7 @@
                                  xmlns:baseContentPage="clr-namespace:GpsNotebook.View"
                                  xmlns:customNavBar="clr-namespace:GpsNotebook.Control"
                                  xmlns:customEntry="clr-namespace:GpsNotebook.Control"
-                                 BackgroundColor="{DynamicResource Background}">
+                                 BackgroundColor="{DynamicResource PageBackgroundColor}">
 
     <Grid RowDefinitions="0.11*, 0.14*, 0.25*, 0.5*">
         

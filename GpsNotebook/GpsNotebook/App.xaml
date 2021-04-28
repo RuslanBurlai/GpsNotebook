@@ -6,6 +6,11 @@
     
     <prism:PrismApplication.Resources>
         
+        <Style TargetType="Label">
+            <Setter Property="FontFamily"
+                    Value="MontserratRegular"/>
+        </Style>
+        
     </prism:PrismApplication.Resources>
     
 </prism:PrismApplication>
