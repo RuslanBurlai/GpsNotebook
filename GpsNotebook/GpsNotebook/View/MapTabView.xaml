@@ -59,7 +59,8 @@
                                                CameraOnSelectedPin="{Binding MoveCameraToPin}"
                                                ListOfPins="{Binding AllPins}"
                                                MyLocationEnabled="True"
-                                               SelectedPin="{Binding TapOnPin}">
+                                               SelectedPin="{Binding TapOnPin}"
+                                               MapStyle="{Binding MapStyle}">
 
             <googleMap:CustomMapForMapTabViewModel.Behaviors>
                 

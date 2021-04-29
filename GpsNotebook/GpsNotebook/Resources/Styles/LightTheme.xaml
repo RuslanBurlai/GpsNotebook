@@ -13,6 +13,7 @@
     <Color x:Key="NavigationBarColor">#FEFEFD</Color>
     <Color x:Key="NavBarText">#1E242B</Color>
     <Color x:Key="TextColor">#858E9E</Color>
+    <Color x:Key="ListLabel">#1E242B</Color>
 
     <!--Text and Background-->
     <Color x:Key="White">#FEFEFD</Color>

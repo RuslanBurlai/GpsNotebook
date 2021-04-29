@@ -32,7 +32,8 @@
 
             <ListView x:Name="ListPinLocations"
                       HasUnevenRows="True"
-                      ItemsSource="{Binding Pins}">
+                      ItemsSource="{Binding Pins}"
+                      SelectionMode="None">
 
                 <ListView.Behaviors>
                     <prism:EventToCommandBehavior Command="{Binding TapOnCellCommand}"
@@ -73,16 +74,18 @@
 
                                 <Label Grid.Row="1"
                                        Grid.Column="2"
-                                       FontAttributes="Bold"
+                                       Style="{StaticResource label3}"
                                        Text="{Binding PinName}" />
 
                                 <StackLayout Grid.Row="2"
                                              Grid.Column="2"
                                              Orientation="Horizontal">
-                                    
-                                    <Label Text="{Binding PinLatitude}" />
+
+                                    <Label Style="{StaticResource label4}" 
+                                           Text="{Binding PinLatitude}" />
                                     <Label Text="," />
-                                    <Label Text="{Binding PinLongitude}" />
+                                    <Label Style="{StaticResource label4}" 
+                                           Text="{Binding PinLongitude}" />
 
                                 </StackLayout>
 

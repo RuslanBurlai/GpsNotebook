@@ -137,6 +137,13 @@ namespace GpsNotebook.ViewModel
             set { SetProperty(ref _showDropDown, value); }
         }
 
+        private MapStyle _mapStyle;
+        public MapStyle MapStyle
+        {
+            get { return _mapStyle; }
+            set { SetProperty(ref _mapStyle, value); }
+        }
+
         private ICommand _logOutCommand;
         public ICommand LogOutCommand =>
             _logOutCommand ?? (_logOutCommand = new DelegateCommand(OnLogOut));
@@ -288,6 +295,26 @@ namespace GpsNotebook.ViewModel
         private void OnMapClick()
         {
             ShowInfoAboutPin = false;
+
+            MapStyle = MapStyle.FromJson("[\n" +
+                "  {\n" +
+                "    \"elementType\": \"labels\",\n" +
+                "    \"stylers\": [\n" +
+                "      {\n" +
+                "        \"visibility\": \"off\"\n" +
+                "      }\n" +
+                "    ]\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"featureType\": \"water\",\n" +
+                "    \"elementType\": \"geometry.fill\",\n" +
+                "    \"stylers\": [\n" +
+                "      {\n" +
+                "        \"color\": \"#4c4c4c\"\n" +
+                "      }\n" +
+                "    ]\n" +
+                "  }" +
+                "]");
         }
 
         private void SelectSortCategory(CategoriesForPin category)
