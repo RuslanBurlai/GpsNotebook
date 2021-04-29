@@ -1,15 +1,15 @@
 ﻿using GpsNotebook.Models;
+using GpsNotebook.Services.AppThemeService;
 using GpsNotebook.Services.Authorization;
 using GpsNotebook.Services.PinLocationRepository;
+using GpsNotebook.Styles;
 using GpsNotebook.Validators;
 using GpsNotebook.View;
 using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
@@ -21,11 +21,13 @@ namespace GpsNotebook.ViewModel
         private IPinModelService _pinLocationRepository;
         private IAuthorizationService _authorization;
         private IPageDialogService _pageDialogService;
+        private IAppThemeService _appThemeService;
         public AddPinViewModel(
             INavigationService navigationService,
             IPinModelService pinLocationRepository,
             IAuthorizationService authorization,
-            IPageDialogService pageDialogService) :
+            IPageDialogService pageDialogService,
+            IAppThemeService appThemeService) :
             base(navigationService)
         {
             Title = "Add pin";
@@ -33,6 +35,7 @@ namespace GpsNotebook.ViewModel
             _pinLocationRepository = pinLocationRepository;
             _authorization = authorization;
             _pageDialogService = pageDialogService;
+            _appThemeService = appThemeService;
 
             Categories = new List<CategoriesForPin>
             {
@@ -117,6 +120,13 @@ namespace GpsNotebook.ViewModel
                 SelectedCategories != null;
         }
 
+        private MapStyle _customMapStyle;
+        public MapStyle CustomMapStyle
+        {
+            get { return _customMapStyle; }
+            set { SetProperty(ref _customMapStyle, value); }
+        }
+
         private ICommand _getPositionCommand;
         public ICommand GetPositionCommand => 
             _getPositionCommand ??(_getPositionCommand = new Command<Position>(OnGetPosition));
@@ -136,6 +146,18 @@ namespace GpsNotebook.ViewModel
         #endregion
 
         #region -- Overrides --
+
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            if (_appThemeService.IsDarkTheme)
+            {
+                CustomMapStyle = _appThemeService.SetMapTheme(nameof(DarkTheme));
+            }
+            else
+            {
+                CustomMapStyle = _appThemeService.SetMapTheme(nameof(LightTheme));
+            }
+        }
 
         protected override void OnPropertyChanged(PropertyChangedEventArgs args)
         {

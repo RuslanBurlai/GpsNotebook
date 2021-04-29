@@ -14,12 +14,16 @@
     <None Remove="Resources\Fonts\Montserrat-Bold.ttf" />
     <None Remove="Resources\Fonts\Montserrat-Regular.ttf" />
     <None Remove="Resources\Fonts\Montserrat-SemiBold.ttf" />
+    <None Remove="Resources\MapStyles\DarkTheme.json" />
+    <None Remove="Resources\MapStyles\LightTheme.json" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\Fonts\Montserrat-Bold.ttf" />
     <EmbeddedResource Include="Resources\Fonts\Montserrat-Regular.ttf" />
     <EmbeddedResource Include="Resources\Fonts\Montserrat-SemiBold.ttf" />
+    <EmbeddedResource Include="Resources\MapStyles\DarkTheme.json" />
+    <EmbeddedResource Include="Resources\MapStyles\LightTheme.json" />
   </ItemGroup>
 
   <ItemGroup>

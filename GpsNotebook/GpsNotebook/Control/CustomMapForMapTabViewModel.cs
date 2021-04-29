@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
@@ -75,11 +76,6 @@ namespace GpsNotebook.Control
                 {
                     Pins.Add(item);
                 }
-            }
-
-            if (propertyName == nameof(SelectedPin))
-            {
-
             }
         }
     }

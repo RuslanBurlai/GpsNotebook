@@ -9,12 +9,14 @@
     <Color x:Key="PressedColor">#3953FE</Color>
     <Color x:Key="VariantColor">#33374E</Color>
 
-    <Color x:Key="PageBackgroundColor">#3D4E61</Color>
+    <Color x:Key="PageBackgroundColor">#1E242B</Color>
     <Color x:Key="NavigationBarColor">#3D4E61</Color>
     <Color x:Key="NavBarText">#FEFEFD</Color>
     <Color x:Key="TextColor">#FEFEFD</Color>
     <Color x:Key="ListLabel">#FEFEFD</Color>
-
+    <Color x:Key="LabelError">#FA545F</Color>
+    <Color x:Key="EntryBorder">#D7DDe8</Color>
+    <Color x:Key="EntryPlaceholder">#858E9E</Color>
 
 
     <!--Text and Background-->

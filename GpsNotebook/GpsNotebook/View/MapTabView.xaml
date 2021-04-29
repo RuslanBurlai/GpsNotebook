@@ -60,7 +60,7 @@
                                                ListOfPins="{Binding AllPins}"
                                                MyLocationEnabled="True"
                                                SelectedPin="{Binding TapOnPin}"
-                                               MapStyle="{Binding MapStyle}">
+                                               MapStyle="{Binding CustomMapStyle}" >
 
             <googleMap:CustomMapForMapTabViewModel.Behaviors>
                 

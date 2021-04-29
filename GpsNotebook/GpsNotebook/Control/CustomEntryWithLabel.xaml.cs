@@ -71,8 +71,7 @@ namespace GpsNotebook.Control
         public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(
             propertyName: nameof(BorderColor),
             returnType: typeof(Color),
-            declaringType: typeof(CustomEntryWithLabel),
-            defaultValue: Color.Gray);
+            declaringType: typeof(CustomEntryWithLabel));
 
         public Color BorderColor
         {

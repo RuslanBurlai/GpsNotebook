@@ -60,7 +60,8 @@
                                               Text="{Binding PinLatitude}" />
             </StackLayout>
 
-            <control:CustomMapForAddPinViewModel GetPinPosition="{Binding GetPositionCommand}"/>
+            <control:CustomMapForAddPinViewModel GetPinPosition="{Binding GetPositionCommand}"
+                                                 MapStyle="{Binding CustomMapStyle}"/>
 
         </StackLayout>
 

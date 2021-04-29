@@ -46,6 +46,14 @@
                     Value="MontserratRegular" />
             <Setter Property="TextColor"
                     Value="{DynamicResource ListLabel}" />
+        </Style>
+
+        <Style TargetType="Label" x:Key="label5">
+            <Setter Property="FontFamily"
+                    Value="MontserratBold" />
+            <Setter Property="TextColor"
+                    Value="{DynamicResource DynamicResource LabelError}" />
+
 
         </Style>
     </prism:PrismApplication.Resources>

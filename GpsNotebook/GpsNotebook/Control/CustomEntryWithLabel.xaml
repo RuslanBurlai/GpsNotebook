@@ -11,14 +11,15 @@
            Grid.Column="1"
            Grid.ColumnSpan="2"
            Text="{Binding HeaderEntry, Source={x:Reference customEntryWithLabel}}"
-           TextColor="{DynamicResource TextColor}"/>
+           TextColor="{DynamicResource TextColor}"
+           LineBreakMode="TailTruncation"/>
 
     <Frame Grid.Row="1"
            Grid.Column="0"
            Grid.ColumnSpan="3"
            BorderColor="{Binding BorderColor, Source={x:Reference customEntryWithLabel}}"
            HasShadow="False"
-           BackgroundColor="{DynamicResource PageBackgroundColor}"/>
+           BackgroundColor="{DynamicResource PageBackgroundColor}" />
 
     <Entry Grid.Row="1"
            Grid.Column="1"
@@ -26,7 +27,9 @@
            IsPassword="{Binding IsPassword, Source={x:Reference customEntryWithLabel}}"
            Placeholder="{Binding Placeholder, Source={x:Reference customEntryWithLabel}}"
            Text="{Binding Text, Source={x:Reference customEntryWithLabel}}"
-           BackgroundColor="{DynamicResource PageBackgroundColor}" />
+           BackgroundColor="Transparent"
+           PlaceholderColor="{DynamicResource EntryPlaceholder}"
+           />
 
     <Image Grid.Row="1"
            Grid.Column="2"
@@ -44,9 +47,9 @@
 
     </BoxView>
 
-    <Label Grid.Row="2"
+    <Label Style="{StaticResource label5}"
+           Grid.Row="2"
            Grid.Column="0"
            Grid.ColumnSpan="2"
-           Text="{Binding FooterEntry, Source={x:Reference customEntryWithLabel}}"
-           TextColor="Red" />
+           Text="{Binding FooterEntry, Source={x:Reference customEntryWithLabel}}" />
 </Grid>

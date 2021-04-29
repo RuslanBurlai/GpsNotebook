@@ -17,9 +17,8 @@
             <BoxView BackgroundColor="{DynamicResource Background}" 
                      HeightRequest="1" />
 
-            <TableView HasUnevenRows="True" 
-                       Intent="Settings" >
-
+            <TableView HasUnevenRows="True"
+                       Intent="Settings">
                 <TableSection>
                     <SwitchCell Text="Dark Theme"
                                 On="{Binding IsDarkTheme}" />

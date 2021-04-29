@@ -1,4 +1,5 @@
-﻿using Xamarin.Essentials;
+﻿using GpsNotebook.Styles;
+using Xamarin.Essentials;
 
 namespace GpsNotebook.Services.SettingsManager
 {
@@ -9,5 +10,12 @@ namespace GpsNotebook.Services.SettingsManager
             get => Preferences.Get(nameof(UserId), 0);
             set => Preferences.Set(nameof(UserId), value);
         }
+
+        public string ApplicationTheme
+        {
+            get { return Preferences.Get(nameof(ApplicationTheme), nameof(LightTheme)); }
+            set { Preferences.Set(nameof(ApplicationTheme), value); }
+        }
+
     }
 }

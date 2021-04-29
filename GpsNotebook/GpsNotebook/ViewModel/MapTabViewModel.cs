@@ -18,6 +18,9 @@ using Plugin.Permissions.Abstractions;
 using Plugin.Permissions;
 using System.Collections.Generic;
 using System;
+using System.Reflection;
+using GpsNotebook.Services.AppThemeService;
+using GpsNotebook.Styles;
 
 namespace GpsNotebook.ViewModel
 {
@@ -26,12 +29,14 @@ namespace GpsNotebook.ViewModel
         private IPinModelService _pinModelService;
         private IDialogService _dialogService;
         private IAuthorizationService _authorizationService;
+        private IAppThemeService _appThemeService;
 
         public MapTabViewModel(
             INavigationService navigationService,
             IPinModelService pinModelService,
             IDialogService dialogService,
-            IAuthorizationService authorizationService) :
+            IAuthorizationService authorizationService,
+            IAppThemeService appThemeService) :
             base(navigationService)
         {
             Title = "Map";
@@ -39,6 +44,7 @@ namespace GpsNotebook.ViewModel
             _pinModelService = pinModelService;
             _dialogService = dialogService;
             _authorizationService = authorizationService;
+            _appThemeService = appThemeService;
 
             AllPins = new ObservableCollection<Pin>();
 
@@ -137,11 +143,11 @@ namespace GpsNotebook.ViewModel
             set { SetProperty(ref _showDropDown, value); }
         }
 
-        private MapStyle _mapStyle;
-        public MapStyle MapStyle
+        private MapStyle _customMapStyle;
+        public MapStyle CustomMapStyle
         {
-            get { return _mapStyle; }
-            set { SetProperty(ref _mapStyle, value); }
+            get { return _customMapStyle; }
+            set { SetProperty(ref _customMapStyle, value); }
         }
 
         private ICommand _logOutCommand;
@@ -181,6 +187,15 @@ namespace GpsNotebook.ViewModel
         {
             base.OnNavigatedTo(parameters);
 
+            if (_appThemeService.IsDarkTheme)
+            {
+                CustomMapStyle = _appThemeService.SetMapTheme(nameof(DarkTheme));
+            }
+            else
+            {
+                CustomMapStyle = _appThemeService.SetMapTheme(nameof(LightTheme));
+            }
+            
             if (parameters.TryGetValue<PinViewModel>("SelectedItemInListView", out PinViewModel pinViewModel))
             {
                 var pin = pinViewModel.ToPin();
@@ -197,16 +212,21 @@ namespace GpsNotebook.ViewModel
             if (parameters.TryGetValue<string>(nameof(SettingsView), out string qrResult))
             {
                 var qrPin = new Pin();
-                qrPin = JsonConvert.DeserializeObject<Pin>(qrResult);
+                try
+                {
+                    qrPin = JsonConvert.DeserializeObject<Pin>(qrResult);
 
-                //AllPins = new ObservableCollection<Pin>();
-                AllPins.Add(qrPin);
+                    AllPins = new ObservableCollection<Pin>();
+                    AllPins.Add(qrPin);
 
-                MoveCameraToPin = MapSpan.FromCenterAndRadius(qrPin.Position, new Distance(10000));
+                    MoveCameraToPin = MapSpan.FromCenterAndRadius(qrPin.Position, new Distance(10000));
+
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
-
-
-
         }
 
         protected override void OnPropertyChanged(PropertyChangedEventArgs args)
@@ -295,26 +315,6 @@ namespace GpsNotebook.ViewModel
         private void OnMapClick()
         {
             ShowInfoAboutPin = false;
-
-            MapStyle = MapStyle.FromJson("[\n" +
-                "  {\n" +
-                "    \"elementType\": \"labels\",\n" +
-                "    \"stylers\": [\n" +
-                "      {\n" +
-                "        \"visibility\": \"off\"\n" +
-                "      }\n" +
-                "    ]\n" +
-                "  },\n" +
-                "  {\n" +
-                "    \"featureType\": \"water\",\n" +
-                "    \"elementType\": \"geometry.fill\",\n" +
-                "    \"stylers\": [\n" +
-                "      {\n" +
-                "        \"color\": \"#4c4c4c\"\n" +
-                "      }\n" +
-                "    ]\n" +
-                "  }" +
-                "]");
         }
 
         private void SelectSortCategory(CategoriesForPin category)

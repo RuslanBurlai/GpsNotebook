@@ -1,11 +1,11 @@
-﻿using GpsNotebook.Styles;
+﻿using GpsNotebook.Services.AppThemeService;
+using GpsNotebook.Styles;
 using GpsNotebook.View;
 using Prism.Commands;
 using Prism.Navigation;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
+using System.Reflection;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -13,10 +13,14 @@ namespace GpsNotebook.ViewModel
 {
     public class SettingsViewModel : ViewModelBase
     {
-        public SettingsViewModel(INavigationService navigationService) :
+        private IAppThemeService _appThemeService;
+        public SettingsViewModel(
+            INavigationService navigationService,
+            IAppThemeService appThemeService) :
             base(navigationService)
         {
             Title = "Settings";
+            _appThemeService = appThemeService;
         }
 
         #region -- Public Property --
@@ -46,14 +50,16 @@ namespace GpsNotebook.ViewModel
 
             if (args.PropertyName == nameof(IsDarkTheme))
             {
-                ICollection<ResourceDictionary> mergedDictionaries = Application.Current.Resources.MergedDictionaries;
-                if (mergedDictionaries != null)
+                if (IsDarkTheme)
                 {
-                    mergedDictionaries.Clear();
-                    if (IsDarkTheme == true)
-                    {
-                        mergedDictionaries.Add(new DarkTheme());
-                    }
+                    _appThemeService.SetUIAppTheme(nameof(DarkTheme));
+                    _appThemeService.SetMapTheme(nameof(DarkTheme));
+
+                }
+                else
+                {
+                    _appThemeService.SetMapTheme(nameof(LightTheme));
+                    _appThemeService.SetUIAppTheme(nameof(LightTheme));
                 }
             }
         }
@@ -70,13 +76,20 @@ namespace GpsNotebook.ViewModel
             }
         }
 
+        public override void Initialize(INavigationParameters parameters)
+        {
+            base.Initialize(parameters);
+
+            IsDarkTheme = _appThemeService.IsDarkTheme;
+        }
+
         #endregion
 
         #region -- Private Helpers --
 
         private async void OnMapTabbed()
         {
-            await NavigationService.GoBackAsync();
+            await NavigationService.NavigateAsync(nameof(MapTabbedView));
         }
 
         private async void OnScanQrCode()
