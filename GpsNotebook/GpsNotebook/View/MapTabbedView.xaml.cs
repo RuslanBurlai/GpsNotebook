@@ -2,7 +2,7 @@
 
 namespace GpsNotebook.View
 {
-    public partial class MapTabbedView : TabbedPage
+    public partial class MapTabbedView : BaseTabbedPage
     {
         public MapTabbedView()
         {

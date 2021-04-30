@@ -72,7 +72,9 @@
         </googleMap:CustomMapForMapTabViewModel>
 
         <Frame Grid.Row="3" 
-               IsVisible="{Binding ShowDropDown}">
+               IsVisible="{Binding ShowDropDown}"
+               HasShadow="False"
+               BackgroundColor="{DynamicResource PageBackgroundColor}">
 
             <ListView ItemsSource="{Binding AllPins}">
                 
@@ -106,18 +108,18 @@
 
         <Frame Grid.Row="5"
                CornerRadius="7"
-               IsVisible="{Binding ShowInfoAboutPin}">
-
+               IsVisible="True"
+               HasShadow="False"
+               BackgroundColor="{DynamicResource PageBackgroundColor}">
+            <!--Binding ShowInfoAboutPin-->
             <Grid ColumnDefinitions="0.02*, 0.89*, 0.07*, 0.02*"
                   RowDefinitions="0.02*, 0.2*, 0.78*"
                   VerticalOptions="Center">
 
-                <Label Grid.Row="1"
+                <Label Style="{StaticResource label7}"
+                       Grid.Row="1"
                        Grid.Column="1"
-                       FontAttributes="Bold"
-                       FontSize="18"
-                       Text="{Binding TapOnPin.Label}"
-                       TextColor="Black" />
+                       Text="{Binding TapOnPin.Label}"/>
 
                 <ImageButton Grid.Row="1"
                              Grid.Column="2"
@@ -132,20 +134,23 @@
 
                     <StackLayout Orientation="Horizontal">
 
-                        <Label FontSize="18" 
-                               Text="{Binding TapOnPin.Position.Latitude}" />
-                        
-                        <Label FontSize="18" 
-                               Text="{Binding TapOnPin.Position.Longitude}" />
+                        <Label Style="{StaticResource label8}"
+                               Text="{Binding TapOnPin.Position.Latitude}"
+                               LineBreakMode="TailTruncation" />
+
+                        <Label Style="{StaticResource label8}"
+                               Text="{Binding TapOnPin.Position.Longitude}"
+                               LineBreakMode="TailTruncation" />
 
                     </StackLayout>
 
                     <StackLayout Spacing="18">
-                        
-                        <BoxView BackgroundColor="#F1F3FD" 
+
+                        <BoxView BackgroundColor="{DynamicResource VariantColor}" 
                                  HeightRequest="1" />
-                        
-                        <Label FontSize="18" Text="{Binding TapOnPin.Tag}" />
+
+                        <Label Style="{StaticResource label8}" 
+                               Text="{Binding TapOnPin.Tag}" />
                         
                     </StackLayout>
 

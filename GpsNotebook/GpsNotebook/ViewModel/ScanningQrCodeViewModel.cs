@@ -2,12 +2,7 @@
 using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Navigation;
-//using Prism.Navigation.Xaml;
 using Prism.Services;
-using Prism.Services.Dialogs;
-using System;
-using System.ComponentModel;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
@@ -58,10 +53,11 @@ namespace GpsNotebook.ViewModel
         {
             Device.BeginInvokeOnMainThread(async () =>
             {
-                var q = QrResult;
-                var pin = JsonConvert.SerializeObject(result.Text);
+                //var q = QrResult;
+
+                var qrPin = JsonConvert.DeserializeObject<Pin>(result.Text);
                 var qrResalt = new NavigationParameters();
-                qrResalt.Add(nameof(ScanningQrCodeViewModel), pin);
+                qrResalt.Add(nameof(ScanningQrCodeViewModel), qrPin);
                 //await NavigationService.NavigateAsync(nameof(MapTabbedView), qrResalt);
                 await NavigationService.GoBackAsync(qrResalt);
             });

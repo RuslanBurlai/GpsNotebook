@@ -9,22 +9,27 @@
 
     <Grid RowDefinitions="0.02*, 0.98*">
 
-        <StackLayout Grid.Row="1">
+        <StackLayout Grid.Row="1" >
 
             <controls:CustomNavigationBar GoBackCommand="{Binding MapTabbedCommand}"
                                           ImagePath="ic_left_blue"
                                           NavBarTitle="{Binding Title}" />
-            <BoxView BackgroundColor="{DynamicResource Background}" 
+
+            <BoxView BackgroundColor="{DynamicResource VariantColor}" 
                      HeightRequest="1" />
 
             <TableView HasUnevenRows="True"
-                       Intent="Settings">
-                <TableSection>
+                       Intent="Settings"
+                       BackgroundColor="{DynamicResource PageBackgroundColor}" >
+                
+                <TableSection >
+                    
                     <SwitchCell Text="Dark Theme"
                                 On="{Binding IsDarkTheme}" />
 
                     <TextCell Command="{Binding ScanQrCodeCommand}"
                               Text="Scan the QR code" />
+                    
                 </TableSection>
             </TableView>
 

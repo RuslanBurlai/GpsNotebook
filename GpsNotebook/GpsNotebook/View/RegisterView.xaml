@@ -4,9 +4,10 @@
                                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                                  xmlns:baseContentPage="clr-namespace:GpsNotebook.View"
                                  xmlns:customNavBar="clr-namespace:GpsNotebook.Control"
-                                 xmlns:customEntry="clr-namespace:GpsNotebook.Control" >
+                                 xmlns:customEntry="clr-namespace:GpsNotebook.Control"
+                                 BackgroundColor="{DynamicResource PageBackgroundColor}">
 
-    <Grid RowDefinitions="0.02*, 0.06*, 0.02*, 0.92*"
+    <Grid RowDefinitions="0.02*, 0.06*, 0.02*, 0.9*"
           ColumnDefinitions="0.03*, 0.94*, 0.03*">
 
             <customNavBar:CustomNavigationBar Grid.Row="1"
@@ -36,13 +37,9 @@
                                               Text="{Binding UserEmail}" />
 
 
-            <Button BackgroundColor="RoyalBlue"
+            <Button Style="{StaticResource button1}"
                     Command="{Binding NavigateToRegisterAndPasswordCommand}"
-                    FontSize="20"
-                    Text="Next"
-                    TextColor="White"
-                    VerticalOptions="End" 
-                    FontAttributes="Bold"/>
+                    Text="Next" />
 
         </StackLayout>
 

@@ -37,11 +37,13 @@
                                           Text="{Binding PinDescription}" 
                                           ClearOrHideText="{Binding ClearDescriptionEntryCommand}"/>
 
-            <Picker Title="Categories"
+            <Picker Style="{StaticResource picker1}"
+                    Title="Categories"
                     ItemDisplayBinding="{Binding Name}"
                     ItemsSource="{Binding Categories}"
                     SelectedItem="{Binding SelectedCategories, Mode=TwoWay}" />
             
+            <!--<control:PickerWithBackground />-->
         </StackLayout>
 
         <StackLayout Grid.Row="4"

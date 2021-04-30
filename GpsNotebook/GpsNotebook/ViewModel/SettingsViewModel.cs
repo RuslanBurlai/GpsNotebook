@@ -1,6 +1,7 @@
 ﻿using GpsNotebook.Services.AppThemeService;
 using GpsNotebook.Styles;
 using GpsNotebook.View;
+using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Navigation;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Windows.Input;
 using Xamarin.Forms;
+using Xamarin.Forms.GoogleMaps;
 
 namespace GpsNotebook.ViewModel
 {
@@ -68,7 +70,7 @@ namespace GpsNotebook.ViewModel
         {
             base.OnNavigatedTo(parameters);
 
-            if (parameters.TryGetValue<string>(nameof(ScanningQrCodeViewModel), out string pin))
+            if (parameters.TryGetValue<Pin>(nameof(ScanningQrCodeViewModel), out Pin pin))
             {
                 var qrResult = new NavigationParameters();
                 qrResult.Add(nameof(SettingsView), pin);

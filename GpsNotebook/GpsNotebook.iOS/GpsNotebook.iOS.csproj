@@ -72,6 +72,7 @@
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Renderers\CustomTabbedPageRenderer.cs" />
     <Compile Include="Renderers\NoUnderlineEntry.cs" />
+    <Compile Include="Renderers\PickerCustomRender.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />

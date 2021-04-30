@@ -11,8 +11,7 @@
            Grid.Column="1"
            Grid.ColumnSpan="2"
            Text="{Binding HeaderEntry, Source={x:Reference customEntryWithLabel}}"
-           TextColor="{DynamicResource TextColor}"
-           LineBreakMode="TailTruncation"/>
+           TextColor="{DynamicResource TextColor}" /> 
 
     <Frame Grid.Row="1"
            Grid.Column="0"

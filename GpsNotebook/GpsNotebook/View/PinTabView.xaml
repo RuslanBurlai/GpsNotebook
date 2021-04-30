@@ -33,7 +33,8 @@
             <ListView x:Name="ListPinLocations"
                       HasUnevenRows="True"
                       ItemsSource="{Binding Pins}"
-                      SelectionMode="None">
+                      SelectionMode="None"
+                      BackgroundColor="{DynamicResource PageBackgroundColor}">
 
                 <ListView.Behaviors>
                     <prism:EventToCommandBehavior Command="{Binding TapOnCellCommand}"
@@ -75,17 +76,20 @@
                                 <Label Grid.Row="1"
                                        Grid.Column="2"
                                        Style="{StaticResource label3}"
-                                       Text="{Binding PinName}" />
+                                       Text="{Binding PinName}" 
+                                       LineBreakMode="TailTruncation"/>
 
                                 <StackLayout Grid.Row="2"
                                              Grid.Column="2"
                                              Orientation="Horizontal">
 
                                     <Label Style="{StaticResource label4}" 
-                                           Text="{Binding PinLatitude}" />
+                                           Text="{Binding PinLatitude}" 
+                                           LineBreakMode="TailTruncation"/>
                                     <Label Text="," />
                                     <Label Style="{StaticResource label4}" 
-                                           Text="{Binding PinLongitude}" />
+                                           Text="{Binding PinLongitude}" 
+                                           LineBreakMode="TailTruncation"/>
 
                                 </StackLayout>
 

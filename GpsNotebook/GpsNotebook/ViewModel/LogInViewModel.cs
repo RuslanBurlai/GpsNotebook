@@ -117,6 +117,64 @@ namespace GpsNotebook.ViewModel
 
         #endregion
 
+        #region -- Overrides --
+
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+
+            if (parameters.TryGetValue<string>("UserEmail", out string newUserEmail))
+            {
+                UserEmail = newUserEmail;
+            }
+        }
+
+        public override void Initialize(INavigationParameters parameters)
+        {
+            base.Initialize(parameters);
+
+            ErrorBorderColor = Color.FromHex("#D7DDe8");
+            ErrorEntryBorderColor = Color.FromHex("#D7DDe8");
+        }
+
+        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+        {
+            base.OnPropertyChanged(args);
+
+            switch (args.PropertyName)
+            {
+                case nameof(UserEmail):
+                    {
+                        if (UserEmail != string.Empty)
+                        {
+                            EmailEntryRightImage = "ic_clear";
+                        }
+                        else
+                        {
+                            EmailEntryRightImage = string.Empty;
+                            ErrorBorderColor = Color.FromHex("#D7DDe8");
+                            EmailError = string.Empty;
+                        }
+                        break;
+                    }
+                case nameof(UserPassword):
+                    {
+                        if (UserPassword != string.Empty)
+                        {
+                            PasswordEntryRightImage = "ic_eye";
+                        }
+                        else
+                        {
+                            PasswordEntryRightImage = string.Empty;
+                            ErrorEntryBorderColor = Color.FromHex("#D7DDe8");
+                            PasswordError = string.Empty;
+                        }
+                        break;
+                    }
+            }
+        }
+        #endregion
+
         #region -- Private Helpers --
 
         private async void OnNavigateToMapTabbedPage()
@@ -165,54 +223,6 @@ namespace GpsNotebook.ViewModel
             UserEmail = string.Empty;
         }
 
-        #endregion
-
-        #region -- Overrides --
-
-        public override void Initialize(INavigationParameters parameters)
-        {
-            base.Initialize(parameters);
-
-            ErrorBorderColor = Color.FromHex("#858E9E");
-            ErrorEntryBorderColor = Color.FromHex("#858E9E");
-        }
-
-        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
-        {
-            base.OnPropertyChanged(args);
-
-            switch (args.PropertyName)
-            {
-                case nameof(UserEmail): 
-                    {
-                        if (UserEmail != string.Empty)
-                        {
-                            EmailEntryRightImage = "ic_clear";
-                        }
-                        else
-                        {
-                            EmailEntryRightImage = string.Empty;
-                            ErrorBorderColor = Color.FromHex("#858E9E");
-                            EmailError = string.Empty;
-                        }
-                         break; 
-                    }
-                case nameof(UserPassword): 
-                    {
-                        if (UserPassword != string.Empty)
-                        {
-                            PasswordEntryRightImage = "ic_eye";
-                        }
-                        else
-                        {
-                            PasswordEntryRightImage = string.Empty;
-                            ErrorEntryBorderColor = Color.FromHex("#858E9E");
-                            PasswordError = string.Empty;
-                        }
-                        break; 
-                    }
-            }
-        }
         #endregion
     }
 }

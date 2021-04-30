@@ -105,6 +105,54 @@ namespace GpsNotebook.ViewModel
 
         #endregion
 
+        #region -- Overrides --
+        public override void Initialize(INavigationParameters parameters)
+        {
+            base.Initialize(parameters);
+
+            EntryEmailColor = Color.FromHex("#D7DDe8");
+            EntryNameColor = Color.FromHex("#D7DDe8");
+        }
+
+        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+        {
+            base.OnPropertyChanged(args);
+
+            switch (args.PropertyName)
+            {
+                case nameof(UserName):
+                    {
+                        if (UserName != string.Empty)
+                        {
+                            EntryNameRightImage = "ic_clear";
+                        }
+                        else
+                        {
+                            EntryNameRightImage = string.Empty;
+                            NameError = string.Empty;
+                            EntryNameColor = Color.FromHex("#D7DDe8");
+                        }
+                        break;
+                    }
+                case nameof(UserEmail):
+                    {
+                        if (UserEmail != string.Empty)
+                        {
+                            EntryEmailRightImage = "ic_clear";
+                        }
+                        else
+                        {
+                            EntryEmailRightImage = string.Empty;
+                            EmailError = string.Empty;
+                            EntryEmailColor = Color.FromHex("#D7DDe8");
+                        }
+                        break;
+                    }
+            }
+        }
+
+        #endregion
+
         #region -- Private Helpers --
 
         private void OnClearEmailEntry()
@@ -169,48 +217,5 @@ namespace GpsNotebook.ViewModel
 
         #endregion
 
-        #region -- Overrides --
-        public override void Initialize(INavigationParameters parameters)
-        {
-            base.Initialize(parameters);
-
-            EntryEmailColor = Color.FromHex("#D7DDe8");
-            EntryNameColor = Color.FromHex("#D7DDe8");
-        }
-
-        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
-        {
-            base.OnPropertyChanged(args);
-
-            switch (args.PropertyName)
-            {
-                case nameof(UserName):
-                    {
-                        if (UserName != string.Empty)
-                        {
-                            EntryNameRightImage = "ic_clear";
-                        }
-                        else
-                        {
-                            EntryNameRightImage = string.Empty;
-                        }
-                        break;
-                    }
-                case nameof(UserEmail):
-                    {
-                        if (UserEmail != string.Empty)
-                        {
-                            EntryEmailRightImage = "ic_clear";
-                        }
-                        else
-                        {
-                            EntryEmailRightImage = string.Empty;
-                        }
-                        break;
-                    }
-            }
-        }
-
-        #endregion
     }
 }

@@ -18,6 +18,10 @@
     <Color x:Key="EntryBorder">#D7DDe8</Color>
     <Color x:Key="EntryPlaceholder">#858E9E</Color>
     <Color x:Key="PrimaryButton">#7485FB</Color>
+    <Color x:Key="TextColor2">#FEFEFD</Color>
+    <Color x:Key="TextColor3">#FEFEFD</Color>
+    
+
 
 
     <!--Text and Background-->

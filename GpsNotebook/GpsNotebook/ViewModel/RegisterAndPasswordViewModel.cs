@@ -75,6 +75,13 @@ namespace GpsNotebook.ViewModel
             set { SetProperty(ref _entryConfirmPasswordRightIcon, value); }
         }
 
+        private string _confirmPasswordError;
+        public string ConfirmPasswordError
+        {
+            get { return _confirmPasswordError; }
+            set { SetProperty(ref _confirmPasswordError, value); }
+        }
+
         private string _passwordError;
         public string PasswordError
         {
@@ -103,6 +110,72 @@ namespace GpsNotebook.ViewModel
             set { SetProperty(ref _errorColorBorder, value); }
         }
 
+        private Color _entryPasswordBorder;
+        public Color EntryPasswordBorder
+        {
+            get { return _entryPasswordBorder; }
+            set { SetProperty(ref _entryPasswordBorder, value); }
+        }
+
+        #endregion
+
+        #region -- Overrides --
+
+        public override void Initialize(INavigationParameters parameters)
+        {
+            base.Initialize(parameters);
+
+            ErrorColorBorder = Color.FromHex("#D7DDE8");
+            EntryPasswordBorder = Color.FromHex("#D7DDE8");
+        }
+
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+
+            if (parameters.TryGetValue<UserModel>("newUser", out UserModel newUser))
+            {
+                userModel = newUser;
+            }
+        }
+        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+        {
+            base.OnPropertyChanged(args);
+
+            switch (args.PropertyName)
+            {
+                case nameof(UserPassword):
+                    {
+                        if (UserPassword != string.Empty)
+                        {
+                            EntryPasswordRightIcon = "ic_eye";
+                        }
+                        else
+                        {
+                            EntryPasswordRightIcon = string.Empty;
+                            PasswordError = string.Empty;
+                            EntryPasswordBorder = Color.FromHex("#D7DDe8");
+                        }
+                        break;
+                    }
+
+                case nameof(ConfirmPassword):
+                    {
+                        if (ConfirmPassword != string.Empty)
+                        {
+                            EntryConfirmPasswordRightIcon = "ic_eye";
+                        }
+                        else
+                        {
+                            EntryConfirmPasswordRightIcon = string.Empty;
+                            ConfirmPasswordError = string.Empty;
+                            ErrorColorBorder = Color.FromHex("#D7DDe8");
+                        }
+                        break;
+                    }
+            }
+        }
+
         #endregion
 
         #region -- Private Helpers --
@@ -118,18 +191,20 @@ namespace GpsNotebook.ViewModel
                     {
                         userModel.Password = UserPassword;
                         _userModelServices.AddUser(userModel);
-                        await NavigationService.NavigateAsync(nameof(LogInView));
+                        NavigationParameters userEmail = new NavigationParameters();
+                        userEmail.Add("UserEmail", userModel.Email);
+                        await NavigationService.NavigateAsync(nameof(LogInView), userEmail);
                     }
                     else
                     {
-                        PasswordError = "Password missmatch";
+                        ConfirmPasswordError = "Password missmatch";
                         ErrorColorBorder = Color.FromHex("#F24545");
                     }
                 }
                 else
                 {
                     PasswordError = "Password not correct";
-                    ErrorColorBorder = Color.FromHex("#F24545");
+                    EntryPasswordBorder = Color.FromHex("#F24545");
                 }
             }
             else
@@ -169,53 +244,6 @@ namespace GpsNotebook.ViewModel
             {
                 EntryConfirmPasswordRightIcon = "ic_eye";
                 IsConfirmPasswordHiding = false;
-            }
-        }
-
-        #endregion
-
-        #region -- Overrides --
-
-        public override void OnNavigatedTo(INavigationParameters parameters)
-        {
-            base.OnNavigatedTo(parameters);
-
-            if (parameters.TryGetValue<UserModel>("newUser", out UserModel newUser))
-            {
-                userModel = newUser;
-            }
-        }
-        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
-        {
-            base.OnPropertyChanged(args);
-
-            switch (args.PropertyName)
-            {
-                case nameof(UserPassword):
-                    {
-                        if (UserPassword != string.Empty)
-                        {
-                            EntryPasswordRightIcon = "ic_eye";
-                        }
-                        else
-                        {
-                            EntryPasswordRightIcon = string.Empty;
-                        }
-                        break;
-                    }
-
-                case nameof(ConfirmPassword):
-                    {
-                        if (ConfirmPassword != string.Empty)
-                        {
-                            EntryConfirmPasswordRightIcon = "ic_eye";
-                        }
-                        else
-                        {
-                            EntryConfirmPasswordRightIcon = string.Empty;
-                        }
-                        break;
-                    }
             }
         }
 

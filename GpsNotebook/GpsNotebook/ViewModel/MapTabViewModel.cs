@@ -14,14 +14,9 @@ using GpsNotebook.Services.Authorization;
 using GpsNotebook.View;
 using Newtonsoft.Json;
 using GpsNotebook.Dialogs;
-using Plugin.Permissions.Abstractions;
-using Plugin.Permissions;
 using System.Collections.Generic;
-using System;
-using System.Reflection;
 using GpsNotebook.Services.AppThemeService;
 using GpsNotebook.Styles;
-using GpsNotebook.Services.PermissionService;
 
 namespace GpsNotebook.ViewModel
 {
@@ -31,15 +26,14 @@ namespace GpsNotebook.ViewModel
         private IDialogService _dialogService;
         private IAuthorizationService _authorizationService;
         private IAppThemeService _appThemeService;
-        private IPermissionService _permissionService;
+        //private IPermissionService _permissionService;
 
         public MapTabViewModel(
             INavigationService navigationService,
             IPinModelService pinModelService,
             IDialogService dialogService,
             IAuthorizationService authorizationService,
-            IAppThemeService appThemeService,
-            IPermissionService permissionService) :
+            IAppThemeService appThemeService) :
             base(navigationService)
         {
             Title = "Map";
@@ -48,7 +42,7 @@ namespace GpsNotebook.ViewModel
             _dialogService = dialogService;
             _authorizationService = authorizationService;
             _appThemeService = appThemeService;
-            _permissionService = permissionService;
+            //IPermissionService permissionService_permissionService = permissionService;
 
             AllPins = new ObservableCollection<Pin>();
 
@@ -191,7 +185,7 @@ namespace GpsNotebook.ViewModel
         {
             base.OnNavigatedTo(parameters);
 
-            _permissionService.CheckPermission<LocationPermission>();
+            //_permissionService.CheckPermission<LocationPermission>();
 
             if (_appThemeService.IsDarkTheme)
             {
@@ -201,7 +195,7 @@ namespace GpsNotebook.ViewModel
             {
                 CustomMapStyle = _appThemeService.SetMapTheme(nameof(LightTheme));
             }
-            
+
             if (parameters.TryGetValue<PinViewModel>("SelectedItemInListView", out PinViewModel pinViewModel))
             {
                 var pin = pinViewModel.ToPin();
@@ -215,23 +209,12 @@ namespace GpsNotebook.ViewModel
                 AllPins = new ObservableCollection<Pin>(list.Select(x => x.ToPin()));
             }
 
-            if (parameters.TryGetValue<string>(nameof(SettingsView), out string qrResult))
+            if (parameters.TryGetValue<Pin>(nameof(SettingsView), out Pin qrResult))
             {
-                var qrPin = new Pin();
-                try
-                {
-                    qrPin = JsonConvert.DeserializeObject<Pin>(qrResult);
+                AllPins = new ObservableCollection<Pin>();
+                AllPins.Add(qrResult);
 
-                    AllPins = new ObservableCollection<Pin>();
-                    AllPins.Add(qrPin);
-
-                    MoveCameraToPin = MapSpan.FromCenterAndRadius(qrPin.Position, new Distance(10000));
-
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                }
+                MoveCameraToPin = MapSpan.FromCenterAndRadius(qrResult.Position, new Distance(10000));
             }
         }
 
@@ -271,11 +254,19 @@ namespace GpsNotebook.ViewModel
 
                 case nameof(TapOnPin):
                     {
-                        if (TapOnPin != null)
+                        try
                         {
-                            string json = JsonConvert.SerializeObject(TapOnPin);
-                            QrCodeData = json;
-                            ShowInfoAboutPin = true;
+                            if (TapOnPin != null)
+                            {
+                                string json = JsonConvert.SerializeObject(TapOnPin);
+                                QrCodeData = json;
+                                ShowInfoAboutPin = true;
+                            }
+
+                        }
+                        catch (System.Exception e)
+                        {
+                            System.Console.WriteLine(e.Message);
                         }
 
                         break;
