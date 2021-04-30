@@ -7,39 +7,26 @@
 
     <Grid RowDefinitions="0.2*, 0.2*, 0.2*, 0.1*, 0.1*">
 
-        <Image 
-            Source="pic_enter_page.png" 
-            Grid.Row="1"/>
-        
-        <Label 
-            Grid.Row="2"
-            Text="MapNotepad" 
-            TextColor="RoyalBlue" 
-            HorizontalOptions="Center" 
-            FontSize="25" 
-            FontAttributes="Bold"/>
+        <Image Source="pic_enter_page.png" 
+               Grid.Row="1"/>
 
-        <Button 
-            Grid.Row="3"
-            Text="Log in"
-            TextColor="White"
-            Margin="15,10,15,10" 
-            BackgroundColor="RoyalBlue" 
-            FontSize="20"
-            FontAttributes="Bold"
-            Command="{Binding LoginCommand}" />
-        
-        <Button
-            Grid.Row="4" 
-            Text="Create account" 
-            TextColor="RoyalBlue"
-            Margin="15,10,15,15" 
-            BackgroundColor="Transparent" 
-            BorderColor="RoyalBlue"
-            BorderWidth="1"
-            FontSize="20"
-            FontAttributes="Bold"
-            Command="{Binding RegisterCommand}"/>
+        <Label Style="{StaticResource label6}"
+               Grid.Row="2"
+               Text="MapNotepad" 
+               HorizontalOptions="Center" 
+/>
+
+        <Button Style="{StaticResource button1}"
+                Grid.Row="3"
+                Text="Log in"
+                Margin="15,10,15,10" 
+                Command="{Binding LoginCommand}" />
+
+        <Button Style="{StaticResource button2}"
+                Grid.Row="4" 
+                Text="Create account" 
+                Margin="15,10,15,15" 
+                Command="{Binding RegisterCommand}"/>
         
     </Grid>
 </BaseContentPage:BaseContentPage>

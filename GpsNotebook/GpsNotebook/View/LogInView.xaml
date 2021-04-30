@@ -9,32 +9,27 @@
                                  prism:ViewModelLocator.AutowireViewModel="True"
                                  BackgroundColor="{DynamicResource PageBackgroundColor}">
 
-    <Grid RowDefinitions="0.11*, 0.14*, 0.25*, 0.5*">
+    <Grid RowDefinitions="0.02*, 0.06*, 0.02*, 0.9*"
+          ColumnDefinitions="0.03*, 0.94*, 0.03*">
+          
 
-        <StackLayout Grid.Row="0" 
-                     VerticalOptions="Center">
-
-            <navBar:CustomNavigationBar GoBackCommand="{Binding LogInOrRegisterViewCommand}"
+            <navBar:CustomNavigationBar Grid.Row="1"
+                                        Grid.Column="1"
+                                        GoBackCommand="{Binding 
+                                        LogInOrRegisterViewCommand}"
                                         ImagePath="ic_left_blue"
                                         NavBarTitle="{Binding Title}" />
-        </StackLayout>
 
-        <StackLayout Grid.Row="1">
+        <StackLayout Grid.Row="3"
+                     Grid.Column="1">
 
-            <customEntry:CustomEntryWithLabel Grid.Row="1"
-                                              Margin="15,0,15,0"
-                                              BorderColor="{Binding ErrorBorderColor}"
+            <customEntry:CustomEntryWithLabel BorderColor="{Binding ErrorBorderColor}"
                                               ClearOrHideText="{Binding ClearEmailEntryCommand}"
                                               FooterEntry="{Binding EmailError}"
                                               HeaderEntry="Email"
                                               ImagePath="{Binding EmailEntryRightImage}"
                                               Placeholder="Enter email"
                                               Text="{Binding UserEmail}" />
-        </StackLayout>
-
-        <StackLayout Grid.Row="2"
-                     Margin="15,0,15,0"
-                     Spacing="20">
 
             <customEntry:CustomEntryWithLabel BorderColor="{Binding ErrorEntryBorderColor}"
                                               ClearOrHideText="{Binding HidePasswordCommand}"
@@ -46,12 +41,9 @@
                                               Text="{Binding UserPassword}" />
 
 
-            <Button BackgroundColor="RoyalBlue"
+            <Button Style="{StaticResource button1}"
                     Command="{Binding NavigateToMapTabbedPageCommand}"
-                    FontSize="20"
-                    Text="Log in"
-                    TextColor="White"
-                    VerticalOptions="End" />
+                    Text="Log in"/>
 
         </StackLayout>
 

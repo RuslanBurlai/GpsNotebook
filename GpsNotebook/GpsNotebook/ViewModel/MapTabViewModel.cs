@@ -21,6 +21,7 @@ using System;
 using System.Reflection;
 using GpsNotebook.Services.AppThemeService;
 using GpsNotebook.Styles;
+using GpsNotebook.Services.PermissionService;
 
 namespace GpsNotebook.ViewModel
 {
@@ -30,13 +31,15 @@ namespace GpsNotebook.ViewModel
         private IDialogService _dialogService;
         private IAuthorizationService _authorizationService;
         private IAppThemeService _appThemeService;
+        private IPermissionService _permissionService;
 
         public MapTabViewModel(
             INavigationService navigationService,
             IPinModelService pinModelService,
             IDialogService dialogService,
             IAuthorizationService authorizationService,
-            IAppThemeService appThemeService) :
+            IAppThemeService appThemeService,
+            IPermissionService permissionService) :
             base(navigationService)
         {
             Title = "Map";
@@ -45,6 +48,7 @@ namespace GpsNotebook.ViewModel
             _dialogService = dialogService;
             _authorizationService = authorizationService;
             _appThemeService = appThemeService;
+            _permissionService = permissionService;
 
             AllPins = new ObservableCollection<Pin>();
 
@@ -186,6 +190,8 @@ namespace GpsNotebook.ViewModel
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
+
+            _permissionService.CheckPermission<LocationPermission>();
 
             if (_appThemeService.IsDarkTheme)
             {

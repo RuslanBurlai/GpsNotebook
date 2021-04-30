@@ -17,6 +17,7 @@
     <Color x:Key="LabelError">#FA545F</Color>
     <Color x:Key="EntryBorder">#D7DDe8</Color>
     <Color x:Key="EntryPlaceholder">#858E9E</Color>
+    <Color x:Key="PrimaryButton">#7485FB</Color>
 
 
     <!--Text and Background-->

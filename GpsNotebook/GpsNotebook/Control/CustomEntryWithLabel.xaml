@@ -3,7 +3,7 @@
       xmlns="http://xamarin.com/schemas/2014/forms"
       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
       x:Name="customEntryWithLabel"
-      ColumnDefinitions="0.01*, 0.9*, 0.1*"
+      ColumnDefinitions="0.03*, 0.87*, 0.1*"
       RowDefinitions="0.2*, 0.6*, 0.2*">
 
     <Label Style="{StaticResource label2}"
@@ -21,15 +21,12 @@
            HasShadow="False"
            BackgroundColor="{DynamicResource PageBackgroundColor}" />
 
-    <Entry Grid.Row="1"
+    <Entry Style="{StaticResource entry1}"
+           Grid.Row="1"
            Grid.Column="1"
-           FontSize="20"
            IsPassword="{Binding IsPassword, Source={x:Reference customEntryWithLabel}}"
            Placeholder="{Binding Placeholder, Source={x:Reference customEntryWithLabel}}"
-           Text="{Binding Text, Source={x:Reference customEntryWithLabel}}"
-           BackgroundColor="Transparent"
-           PlaceholderColor="{DynamicResource EntryPlaceholder}"
-           />
+           Text="{Binding Text, Source={x:Reference customEntryWithLabel}}" />
 
     <Image Grid.Row="1"
            Grid.Column="2"

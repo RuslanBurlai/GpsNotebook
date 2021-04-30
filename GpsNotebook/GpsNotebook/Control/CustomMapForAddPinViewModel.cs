@@ -10,7 +10,7 @@ namespace GpsNotebook.Control
         public CustomMapForAddPinViewModel()
         {
             UiSettings.MyLocationButtonEnabled = true;
-            //this.MapClicked += CustomMap_MapClicked;
+            this.MapClicked += CustomMap_MapClicked;
         }
 
         public static readonly BindableProperty GetPinPositionProperty = BindableProperty.Create(

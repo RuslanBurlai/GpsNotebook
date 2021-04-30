@@ -4,7 +4,8 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
       x:Name="customSearchBar"
       ColumnDefinitions="0.18*, 0.03*, 0.52*, 0.07*, 0.15*, 0.05*"
-      ColumnSpacing="1">
+      ColumnSpacing="1"
+      Background="{DynamicResource PageBackgroundColor}">
 
     <Image Grid.Column="0" 
            Source="{Binding LeftSideImagePath, Source={x:Reference customSearchBar}}" />

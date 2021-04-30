@@ -130,9 +130,9 @@ namespace GpsNotebook.ViewModel
                 else
                 {
                     EmailError = "Email incorrect";
-                    ErrorBorderColor = Color.Red;
+                    ErrorBorderColor = Color.FromHex("#F24545");
                     PasswordError = "Password incorrect";
-                    ErrorEntryBorderColor = Color.Red;
+                    ErrorEntryBorderColor = Color.FromHex("#F24545");
                 }
             }
             else
@@ -169,6 +169,14 @@ namespace GpsNotebook.ViewModel
 
         #region -- Overrides --
 
+        public override void Initialize(INavigationParameters parameters)
+        {
+            base.Initialize(parameters);
+
+            ErrorBorderColor = Color.FromHex("#858E9E");
+            ErrorEntryBorderColor = Color.FromHex("#858E9E");
+        }
+
         protected override void OnPropertyChanged(PropertyChangedEventArgs args)
         {
             base.OnPropertyChanged(args);
@@ -184,7 +192,7 @@ namespace GpsNotebook.ViewModel
                         else
                         {
                             EmailEntryRightImage = string.Empty;
-                            ErrorBorderColor = Color.Gray;
+                            ErrorBorderColor = Color.FromHex("#858E9E");
                             EmailError = string.Empty;
                         }
                          break; 
@@ -198,7 +206,7 @@ namespace GpsNotebook.ViewModel
                         else
                         {
                             PasswordEntryRightImage = string.Empty;
-                            ErrorEntryBorderColor = Color.Gray;
+                            ErrorEntryBorderColor = Color.FromHex("#858E9E");
                             PasswordError = string.Empty;
                         }
                         break; 

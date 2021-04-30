@@ -96,11 +96,18 @@ namespace GpsNotebook.ViewModel
             set { SetProperty(ref _isConfirmPasswordHiding, value); }
         }
 
+        private Color _errorColorBorder;
+        public Color ErrorColorBorder 
+        {
+            get { return _errorColorBorder; }
+            set { SetProperty(ref _errorColorBorder, value); }
+        }
+
         #endregion
 
         #region -- Private Helpers --
 
-        
+
         private async void OnNavigateToLoginPage()
         {
             if (Validator.AllFieldsIsNullOrEmpty(UserPassword, ConfirmPassword))
@@ -116,11 +123,13 @@ namespace GpsNotebook.ViewModel
                     else
                     {
                         PasswordError = "Password missmatch";
+                        ErrorColorBorder = Color.FromHex("#F24545");
                     }
                 }
                 else
                 {
-                    PasswordError = "Password missmatch";
+                    PasswordError = "Password not correct";
+                    ErrorColorBorder = Color.FromHex("#F24545");
                 }
             }
             else

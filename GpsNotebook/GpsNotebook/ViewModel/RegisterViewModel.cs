@@ -73,6 +73,20 @@ namespace GpsNotebook.ViewModel
             set { SetProperty(ref _entryNameRightImage, value); }
         }
 
+        private Color _entryNameColor;
+        public Color EntryNameColor
+        {
+            get { return _entryNameColor; }
+            set { SetProperty(ref _entryNameColor, value); }
+        }
+
+        private Color _entryEmailColor;
+        public Color EntryEmailColor
+        {
+            get { return _entryEmailColor; }
+            set { SetProperty(ref _entryEmailColor, value); }
+        }
+
         private ICommand _navigateToRegisterAndPasswordCommand;
         public ICommand NavigateToRegisterAndPasswordCommand =>
             _navigateToRegisterAndPasswordCommand ?? (_navigateToRegisterAndPasswordCommand = new DelegateCommand(OnNavigateToRegisterAndPassword));
@@ -97,12 +111,14 @@ namespace GpsNotebook.ViewModel
         {
             UserEmail = string.Empty;
             EmailError = string.Empty;
+            EntryEmailColor = Color.FromHex("#D7DDe8");
         }
 
         private void OnClearNameEntry()
         {
             UserName = string.Empty;
             NameError = string.Empty;
+            EntryNameColor = Color.FromHex("#D7DDe8");
         }
 
         private bool CanNavigateToRegisterAndPassword()
@@ -130,11 +146,13 @@ namespace GpsNotebook.ViewModel
                     }
                     else
                     {
+                        EntryEmailColor = Color.FromHex("#F24545");
                         EmailError = "Incorrect email";
                     }
                 }
                 else
                 {
+                    EntryNameColor = Color.FromHex("#F24545");
                     NameError = "Incorrect name";
                 }
             }
@@ -152,6 +170,13 @@ namespace GpsNotebook.ViewModel
         #endregion
 
         #region -- Overrides --
+        public override void Initialize(INavigationParameters parameters)
+        {
+            base.Initialize(parameters);
+
+            EntryEmailColor = Color.FromHex("#D7DDe8");
+            EntryNameColor = Color.FromHex("#D7DDe8");
+        }
 
         protected override void OnPropertyChanged(PropertyChangedEventArgs args)
         {

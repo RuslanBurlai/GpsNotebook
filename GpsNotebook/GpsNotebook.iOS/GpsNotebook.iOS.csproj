@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="Renderers\CustomTabbedPageRenderer.cs" />
     <Compile Include="Renderers\NoUnderlineEntry.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />

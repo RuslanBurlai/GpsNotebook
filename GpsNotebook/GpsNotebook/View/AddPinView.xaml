@@ -23,14 +23,14 @@
                      Grid.Column="1"
                      Spacing="1">
 
-            <control:CustomEntryWithLabel BorderColor="#C7CDF5"
+            <control:CustomEntryWithLabel BorderColor="{DynamicResource EntryBorder}"
                                           HeaderEntry="Label"
                                           ImagePath="{Binding ClearButtonImagePath}"
                                           Placeholder="Enter the label"
                                           Text="{Binding PinName}" 
                                           ClearOrHideText="{Binding ClearLabelEntryTextCommand}"/>
 
-            <control:CustomEntryWithLabel BorderColor="#C7CDF5"
+            <control:CustomEntryWithLabel BorderColor="{DynamicResource EntryBorder}"
                                           HeaderEntry="Description"
                                           ImagePath="{Binding ClearDescriptionImagePath}"
                                           Placeholder="Write a description"

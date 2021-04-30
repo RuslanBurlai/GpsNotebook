@@ -14,6 +14,7 @@ using Prism.Ioc;
 using Prism.Unity;
 using Xamarin.Forms;
 using GpsNotebook.Styles;
+using GpsNotebook.Services.PermissionService;
 
 namespace GpsNotebook
 {
