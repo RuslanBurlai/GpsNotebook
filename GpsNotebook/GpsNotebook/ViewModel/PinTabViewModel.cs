@@ -136,15 +136,18 @@ namespace GpsNotebook.ViewModel
             await NavigationService.NavigateAsync($"/{ nameof(NavigationPage)}/{ nameof(LogInView)}");
         }
 
-        private void OnEditPinInList(PinViewModel pin)
+        private async void OnEditPinInList(PinViewModel pin)
         {
+            NavigationParameters pinForEdit = new NavigationParameters();
+            pinForEdit.Add("PinForEdit", pin);
+            await NavigationService.NavigateAsync(nameof(AddPinView), pinForEdit);
         }
 
         private void OnDeletePinFromListCommand(PinViewModel pin)
         {
-            _pinModelService.DeletePin(pin.TopPinModel());
-            var myObservableCollection = new ObservableCollection<PinViewModel>(_pinModelService.GetAllPins().Select(x => x.ToPinViewModel()));
-            Pins = myObservableCollection;
+            _pinModelService.DeletePin(pin.ToPinModel());
+            var newList = _pinModelService.GetAllPins();
+            Pins = new ObservableCollection<PinViewModel>(newList.Select(x => x.ToPinViewModel()));
         }
         private async void OnTapOnCell(PinViewModel pinViewModel)
         {
@@ -160,7 +163,7 @@ namespace GpsNotebook.ViewModel
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
 
-            if(parameters.TryGetValue(nameof(PinModel),out PinModel newPin))
+            if (parameters.TryGetValue(nameof(PinModel), out PinModel newPin))
             {
                 Pins = new ObservableCollection<PinViewModel>(_pinModelService.GetAllPins().Select(x => x.ToPinViewModel()));
             }

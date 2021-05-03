@@ -3,7 +3,6 @@ using Prism.Navigation;
 using System;
 using Xamarin.Forms;
 using Prism.Behaviors;
-using GpsNotebook.ViewModel;
 
 
 namespace GpsNotebook.Behavior

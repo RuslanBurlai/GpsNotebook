@@ -14,7 +14,7 @@ namespace GpsNotebook.iOS.Renderers
             base.OnElementChanged(e);
             UITextField textField = Control;
             UIPickerView pickerView = textField.InputView as UIPickerView;
-            pickerView.BackgroundColor = UIColor.Red;
+            //pickerView.BackgroundColor = 
         }
     }
 }

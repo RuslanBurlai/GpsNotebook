@@ -18,7 +18,7 @@ namespace GpsNotebook.Extensions
             };
         }
 
-        public static PinModel TopPinModel(this PinViewModel pinViewModel)
+        public static PinModel ToPinModel(this PinViewModel pinViewModel)
         {
             return new PinModel
             {
@@ -31,6 +31,5 @@ namespace GpsNotebook.Extensions
                 FavoritPin = pinViewModel.FavoritPin,
             };
         }
-
     }
 }

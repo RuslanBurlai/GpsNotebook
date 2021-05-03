@@ -26,6 +26,7 @@
            BackgroundColor="{DynamicResource VariantColor}"
            CornerRadius="5"
            HasShadow="False">
+        
         <Frame.Triggers>
             
             <DataTrigger Binding="{Binding IsSearchBarSpan, Source={x:Reference customSearchBar}}"
@@ -45,7 +46,7 @@
            Placeholder="Search"
            x:Name="searchEntry"
            Text="{Binding TextQuery, Source={x:Reference customSearchBar}}"
-           TextColor="{DynamicResource TextColor}">
+           TextColor="{DynamicResource TextColor}" >
 
         <Entry.Triggers>
             

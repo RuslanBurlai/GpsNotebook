@@ -31,20 +31,19 @@ namespace GpsNotebook.Services.RepositoryService
         {
             if (item.Id != 0)
             {
-                await _dataBase.Value.UpdateAsync(item);
-                return item.Id;
+                return await _dataBase.Value.UpdateAsync(item);
+                //return item.Id;
             }
             else
             {
-                await _dataBase.Value.InsertAsync(item);
-                return item.Id;
+                return await _dataBase.Value.InsertAsync(item);
+                //return item.Id;
             }
         }
 
         public async Task<int> DeleteItemAsync<T>(T item) where T : IEntityBaseForModel, new()
         {
-            await _dataBase.Value.DeleteAsync(item);
-            return item.Id;
+            return await _dataBase.Value.DeleteAsync(item);
         }
 
         public Task<List<T>> GetAllItemsAsync<T>() where T : IEntityBaseForModel, new()

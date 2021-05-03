@@ -17,10 +17,8 @@
         <zxing:ZXingScannerView
             x:Name="_scanner"
             Grid.Row="2"
-            Result="{Binding QrResult, Mode=TwoWay}"
             IsScanning="True"
             ScanResultCommand="{Binding QrScanResultCommand}"/>
-
 
         <BoxView BackgroundColor="red" 
                  HeightRequest="1" 

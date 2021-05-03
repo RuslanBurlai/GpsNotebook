@@ -13,8 +13,7 @@
         <Label Style="{StaticResource label6}"
                Grid.Row="2"
                Text="MapNotepad" 
-               HorizontalOptions="Center" 
-/>
+               HorizontalOptions="Center" />
 
         <Button Style="{StaticResource button1}"
                 Grid.Row="3"

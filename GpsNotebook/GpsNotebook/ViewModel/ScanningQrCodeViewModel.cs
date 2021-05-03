@@ -1,4 +1,7 @@
-﻿using GpsNotebook.View;
+﻿using GpsNotebook.Models;
+using GpsNotebook.Services.Authorization;
+using GpsNotebook.Services.PinLocationRepository;
+using GpsNotebook.View;
 using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Navigation;
@@ -12,15 +15,17 @@ namespace GpsNotebook.ViewModel
 {
     public class ScanningQrCodeViewModel : ViewModelBase
     {
-        private IPageDialogService _pageDialogService;
-
+        private IPinModelService _pinModelService;
+        private IAuthorizationService _authorization;
         public ScanningQrCodeViewModel(
             INavigationService naviagtionService,
-            IPageDialogService pageDialogService) :
+            IPinModelService pinModelService,
+            IAuthorizationService authorization) :
             base(naviagtionService)
         {
             Title = "Scan QR code";
-            _pageDialogService = pageDialogService;
+            _pinModelService = pinModelService;
+            _authorization = authorization;
         }
 
         #region -- Public property --
@@ -32,13 +37,6 @@ namespace GpsNotebook.ViewModel
         private ICommand _mapTabbedCommand;
         public ICommand MapTabbedCommand =>
             _mapTabbedCommand ?? (_mapTabbedCommand = new DelegateCommand(OnMapTab));
-
-        private Result _qrResult;
-        public Result QrResult
-        {
-            get { return _qrResult; }
-            set { SetProperty(ref _qrResult, value); }
-        }
 
         #endregion
 
@@ -53,14 +51,26 @@ namespace GpsNotebook.ViewModel
         {
             Device.BeginInvokeOnMainThread(async () =>
             {
-                //var q = QrResult;
-
                 var qrPin = JsonConvert.DeserializeObject<Pin>(result.Text);
+
+                _pinModelService.AddPin(CreatePin(qrPin));
+
                 var qrResalt = new NavigationParameters();
                 qrResalt.Add(nameof(ScanningQrCodeViewModel), qrPin);
-                //await NavigationService.NavigateAsync(nameof(MapTabbedView), qrResalt);
                 await NavigationService.GoBackAsync(qrResalt);
             });
+        }
+
+        private PinModel CreatePin(Pin pin)
+        {
+            var newPin = new PinModel
+            {
+                Latitude = pin.Position.Latitude,
+                Longitude = pin.Position.Longitude,
+                PinName = pin.Label,
+                UserId = _authorization.GetUserId,
+            };
+            return newPin;
         }
 
         #endregion

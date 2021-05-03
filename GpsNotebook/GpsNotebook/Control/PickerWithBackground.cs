@@ -18,16 +18,5 @@ namespace GpsNotebook.Control
             get { return (Color)GetValue(SelectedBackGroundProperty); }
             set { SetValue(SelectedBackGroundProperty, value); }
         }
-
-        public static readonly BindableProperty SelectedThemeProperty = BindableProperty.Create(
-            propertyName: nameof(SelectedTheme),
-            returnType: typeof(string),
-            declaringType: typeof(PickerWithBackground));
-
-        public string SelectedTheme
-        {
-            get { return (string)GetValue(SelectedThemeProperty); }
-            set { SetValue(SelectedThemeProperty, value); }
-        }
     }
 }

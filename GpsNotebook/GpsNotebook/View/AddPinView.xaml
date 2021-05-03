@@ -9,16 +9,21 @@
                                  BackgroundColor="{DynamicResource PageBackgroundColor}">
 
     <Grid ColumnDefinitions="0.02*, 0.96*, 0.02*"
-          RowDefinitions="0.02*, 0.07*, 0.4*, 0.01*, 0.5*">
+          RowDefinitions="0.02*, 0.07*, 0.57*, 0.34*">
 
-        <control:CustomNavigationBar Grid.Row="1"
-                                     Grid.Column="1"
-                                     GoBackCommand="{Binding MapTabbedViewCommand}"
-                                     ImagePath="ic_left_blue"
-                                     NavBarTitle="{Binding Title}"
-                                     RightImageCommand="{Binding SavePinCommand}"
-                                     RightImageSource="ic_save" />
+        <StackLayout Grid.Row="1"
+                     Grid.Column="1">
+            
+            <control:CustomNavigationBar GoBackCommand="{Binding MapTabbedViewCommand}"
+                                         ImagePath="ic_left_blue"
+                                         NavBarTitle="{Binding Title}"
+                                         RightImageCommand="{Binding SavePinCommand}"
+                                         RightImageSource="ic_save" />
 
+            <BoxView HeightRequest="1"
+                     BackgroundColor="{DynamicResource EntryBorder}"/>
+        </StackLayout>
+        
         <StackLayout Grid.Row="2"
                      Grid.Column="1"
                      Spacing="1">
@@ -44,26 +49,28 @@
                     SelectedItem="{Binding SelectedCategories, Mode=TwoWay}" />
             
             <!--<control:PickerWithBackground />-->
-        </StackLayout>
 
-        <StackLayout Grid.Row="4"
-                     Grid.Column="1"
-                     Spacing="1">
+            <StackLayout Orientation="Horizontal" >
 
-            <StackLayout Orientation="Horizontal">
-
-                <control:CustomEntryWithLabel BorderColor="#C7CDF5"
+                <control:CustomEntryWithLabel BorderColor="{DynamicResource EntryBorder}"
                                               HeaderEntry="Coordinates"
                                               Placeholder="Longitude"
                                               Text="{Binding PinLongitude}" />
 
-                <control:CustomEntryWithLabel BorderColor="#C7CDF5"
+                <control:CustomEntryWithLabel BorderColor="{DynamicResource EntryBorder}"
                                               Placeholder="Latitude"
                                               Text="{Binding PinLatitude}" />
             </StackLayout>
 
+        </StackLayout>
+        
+        <StackLayout Grid.Row="3"
+                     Grid.Column="0"
+                     Grid.ColumnSpan="3">
+
             <control:CustomMapForAddPinViewModel GetPinPosition="{Binding GetPositionCommand}"
-                                                 MapStyle="{Binding CustomMapStyle}"/>
+                                                 MapStyle="{Binding CustomMapStyle}" />
+
 
         </StackLayout>
 

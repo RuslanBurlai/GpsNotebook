@@ -34,8 +34,9 @@ namespace GpsNotebook.iOS.Renderers
             base.ViewWillAppear(animated);
 
             var p = Element as BaseTabbedPage;
+            var bottom = UIApplication.SharedApplication.KeyWindow.SafeAreaInsets.Bottom;
 
-            CGSize size = new CGSize(TabBar.Frame.Width / TabBar.Items.Length, TabBar.Frame.Height);
+            CGSize size = new CGSize(TabBar.Frame.Width * TabBar.Items.Length, TabBar.Frame.Height - bottom);
             //Background Color
             UITabBar.Appearance.SelectionIndicatorImage = imageWithColor(size);
             //Normal title Color

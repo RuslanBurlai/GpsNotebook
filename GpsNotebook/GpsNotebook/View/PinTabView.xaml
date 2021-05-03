@@ -58,9 +58,9 @@
                                 
                             </ViewCell.ContextActions>
 
-                            <Grid ColumnDefinitions="0.01*, 0.18*, 0.8*, 0.01*"
+                            <Grid ColumnDefinitions="0.01*, 0.18*, 0.75*, 0.05*, 0.01*"
                                   ColumnSpacing="20"
-                                  RowDefinitions="0.1*, 0.40*, 0.40*, 0.1*">
+                                  RowDefinitions="0.1*, 0.4*, 0.4*, 0.1*">
 
 
                                 <ImageButton Grid.Row="1"
@@ -92,6 +92,12 @@
                                            LineBreakMode="TailTruncation"/>
 
                                 </StackLayout>
+
+                                <Image Source="ic_left_gray" 
+                                       Grid.Column="3" 
+                                       Grid.Row="1" 
+                                       Grid.RowSpan="2"
+                                       VerticalOptions="CenterAndExpand"/>
 
                             </Grid>
                         </ViewCell>

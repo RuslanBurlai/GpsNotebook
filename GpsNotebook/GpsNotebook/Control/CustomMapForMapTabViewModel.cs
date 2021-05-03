@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
@@ -17,8 +18,7 @@ namespace GpsNotebook.Control
         public static readonly BindableProperty ListOfPinsProperty = BindableProperty.Create(
             propertyName: nameof(ListOfPins),
             returnType: typeof(IEnumerable<Pin>),
-            declaringType: typeof(CustomMapForAddPinViewModel),
-            propertyChanged: OnListOfPinsChanged);
+            declaringType: typeof(CustomMapForAddPinViewModel));
 
         public IEnumerable<Pin> ListOfPins
         {
@@ -49,26 +49,12 @@ namespace GpsNotebook.Control
             set { SetValue(CameraOnSelectedPinProperty, value); }
         }
 
-        private static void OnListOfPinsChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            //var map = bindable as CustomMapForMapTabViewModel;
-
-            //if (newValue != null)
-            //{
-            //    map.ListOfPins = (IList<Pin>)newValue;
-            //}
-            //else
-            //{
-            //    map.ListOfPins = (IList<Pin>)oldValue;
-            //}
-        }
-
         //use OnListOfPinsChanged and remove OnPropertyChanged
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             if (propertyName == nameof(ListOfPins))
             {
-                if(ListOfPins != null)
+                if (ListOfPins != null)
                 {
                     Pins.Clear();
                 }

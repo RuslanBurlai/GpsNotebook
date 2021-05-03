@@ -32,7 +32,9 @@
                 
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
-                        <Grid RowDefinitions="1*" RowSpacing="10">
+                        <Grid RowDefinitions="1*" 
+                              RowSpacing="10">
+                            
                             <Frame Grid.Row="0"
                                    Padding="8"
                                    BackgroundColor="{DynamicResource VariantColor}"
@@ -41,13 +43,14 @@
                                    HorizontalOptions="FillAndExpand"
                                    VerticalOptions="FillAndExpand">
                                    <Label Text="{Binding Name}" />
-
+                                
                                 <Frame.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding Source={x:Reference ListCategory}, Path=BindingContext.SelectSortCategoryCommand}" 
                                                           CommandParameter="{Binding .}" />
                                 </Frame.GestureRecognizers>
 
                             </Frame>
+                            
                         </Grid>
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
@@ -57,7 +60,7 @@
         <googleMap:CustomMapForMapTabViewModel Grid.Row="3"
                                                Grid.RowSpan="3"
                                                CameraOnSelectedPin="{Binding MoveCameraToPin}"
-                                               ListOfPins="{Binding AllPins}"
+                                               ListOfPins="{Binding Pins}"
                                                MyLocationEnabled="True"
                                                SelectedPin="{Binding TapOnPin}"
                                                MapStyle="{Binding CustomMapStyle}" >
@@ -76,7 +79,7 @@
                HasShadow="False"
                BackgroundColor="{DynamicResource PageBackgroundColor}">
 
-            <ListView ItemsSource="{Binding AllPins}">
+            <ListView ItemsSource="{Binding Pins}">
                 
                 <ListView.Behaviors>
                     <prism:EventToCommandBehavior Command="{Binding TapOnDropDownCellCommand}"
@@ -90,7 +93,7 @@
 
                             <StackLayout Orientation="Horizontal">
 
-                                <Image  Source="ic_pin_gray" />
+                                <Image Source="ic_pin_gray" />
 
                                 <StackLayout Orientation="Vertical">
 
@@ -108,10 +111,10 @@
 
         <Frame Grid.Row="5"
                CornerRadius="7"
-               IsVisible="True"
+               IsVisible="{Binding ShowInfoAboutPin}"
                HasShadow="False"
                BackgroundColor="{DynamicResource PageBackgroundColor}">
-            <!--Binding ShowInfoAboutPin-->
+            
             <Grid ColumnDefinitions="0.02*, 0.89*, 0.07*, 0.02*"
                   RowDefinitions="0.02*, 0.2*, 0.78*"
                   VerticalOptions="Center">
@@ -119,7 +122,8 @@
                 <Label Style="{StaticResource label7}"
                        Grid.Row="1"
                        Grid.Column="1"
-                       Text="{Binding TapOnPin.Label}"/>
+                       Text="{Binding TapOnPin.Label}"
+                       LineBreakMode="TailTruncation"/>
 
                 <ImageButton Grid.Row="1"
                              Grid.Column="2"
@@ -135,12 +139,10 @@
                     <StackLayout Orientation="Horizontal">
 
                         <Label Style="{StaticResource label8}"
-                               Text="{Binding TapOnPin.Position.Latitude}"
-                               LineBreakMode="TailTruncation" />
+                               Text="{Binding TapOnPin.Position.Latitude}" />
 
                         <Label Style="{StaticResource label8}"
-                               Text="{Binding TapOnPin.Position.Longitude}"
-                               LineBreakMode="TailTruncation" />
+                               Text="{Binding TapOnPin.Position.Longitude}" />
 
                     </StackLayout>
 

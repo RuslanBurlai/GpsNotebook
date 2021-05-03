@@ -18,13 +18,13 @@ namespace GpsNotebook.ViewModel
 {
     public class AddPinViewModel : ViewModelBase
     {
-        private IPinModelService _pinLocationRepository;
+        private IPinModelService _pinModelService;
         private IAuthorizationService _authorization;
         private IPageDialogService _pageDialogService;
         private IAppThemeService _appThemeService;
         public AddPinViewModel(
             INavigationService navigationService,
-            IPinModelService pinLocationRepository,
+            IPinModelService pinModelService,
             IAuthorizationService authorization,
             IPageDialogService pageDialogService,
             IAppThemeService appThemeService) :
@@ -32,7 +32,7 @@ namespace GpsNotebook.ViewModel
         {
             Title = "Add pin";
 
-            _pinLocationRepository = pinLocationRepository;
+            _pinModelService = pinModelService;
             _authorization = authorization;
             _pageDialogService = pageDialogService;
             _appThemeService = appThemeService;
@@ -146,9 +146,10 @@ namespace GpsNotebook.ViewModel
         #endregion
 
         #region -- Overrides --
-
-        public override void OnNavigatedTo(INavigationParameters parameters)
+        public override void Initialize(INavigationParameters parameters)
         {
+            base.Initialize(parameters);
+
             if (_appThemeService.IsDarkTheme)
             {
                 CustomMapStyle = _appThemeService.SetMapTheme(nameof(DarkTheme));
@@ -156,6 +157,17 @@ namespace GpsNotebook.ViewModel
             else
             {
                 CustomMapStyle = _appThemeService.SetMapTheme(nameof(LightTheme));
+            }
+
+        }
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            if (parameters.TryGetValue<PinViewModel>("PinForEdit", out PinViewModel EditingPin))
+            {
+                PinName = EditingPin.PinName;
+                PinLatitude = EditingPin.PinLatitude.ToString();
+                PinLongitude = EditingPin.PinLongitude.ToString();
+                PinDescription = EditingPin.PinDescription;
             }
         }
 
@@ -220,7 +232,7 @@ namespace GpsNotebook.ViewModel
                 FavoritPin = "ic_like_gray"
             };
 
-            _pinLocationRepository.AddPin(newPin);
+            _pinModelService.AddPin(newPin);
             var parametrs = new NavigationParameters();
             parametrs.Add(nameof(PinModel), newPin);
 

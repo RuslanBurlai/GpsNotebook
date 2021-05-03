@@ -44,7 +44,7 @@ namespace GpsNotebook.ViewModel
             _appThemeService = appThemeService;
             //IPermissionService permissionService_permissionService = permissionService;
 
-            AllPins = new ObservableCollection<Pin>();
+            Pins = new ObservableCollection<Pin>();
 
             Categories = new List<CategoriesForPin>
             {
@@ -65,17 +65,10 @@ namespace GpsNotebook.ViewModel
         #region -- Public properties --
 
         private ObservableCollection<Pin> _allPins;
-        public ObservableCollection<Pin> AllPins
+        public ObservableCollection<Pin> Pins
         {
             get { return _allPins; }
             set { SetProperty(ref _allPins, value); }
-        }
-
-        private string _selectedCategories;
-        public string SelectedCategories
-        {
-            get { return _selectedCategories; }
-            set { SetProperty(ref _selectedCategories, value); }
         }
 
         private List<CategoriesForPin> _categories;
@@ -148,6 +141,13 @@ namespace GpsNotebook.ViewModel
             set { SetProperty(ref _customMapStyle, value); }
         }
 
+        private bool _isSelecletCategory;
+        public bool IsSelecletCategory
+        {
+            get { return _isSelecletCategory; }
+            set { SetProperty(ref _isSelecletCategory, value); }
+        }
+
         private ICommand _logOutCommand;
         public ICommand LogOutCommand =>
             _logOutCommand ?? (_logOutCommand = new DelegateCommand(OnLogOut));
@@ -170,7 +170,7 @@ namespace GpsNotebook.ViewModel
 
         private ICommand _tapOnDropDownCellCommand;
         public ICommand TapOnDropDownCellCommand =>
-            _tapOnDropDownCellCommand ?? (_tapOnDropDownCellCommand = new DelegateCommand<Pin>(OntapOnDropDownCell));
+            _tapOnDropDownCellCommand ?? (_tapOnDropDownCellCommand = new DelegateCommand<Pin>(OnTapOnDropDownCell));
 
         #endregion
 
@@ -187,33 +187,19 @@ namespace GpsNotebook.ViewModel
 
             //_permissionService.CheckPermission<LocationPermission>();
 
-            if (_appThemeService.IsDarkTheme)
-            {
-                CustomMapStyle = _appThemeService.SetMapTheme(nameof(DarkTheme));
-            }
-            else
-            {
-                CustomMapStyle = _appThemeService.SetMapTheme(nameof(LightTheme));
-            }
-
-            if (parameters.TryGetValue<PinViewModel>("SelectedItemInListView", out PinViewModel pinViewModel))
+            if (parameters.TryGetValue("SelectedItemInListView", out PinViewModel pinViewModel))
             {
                 var pin = pinViewModel.ToPin();
                 MoveCameraToPin = MapSpan.FromCenterAndRadius(pin.Position, new Distance(10000));
             }
 
-            if (parameters.ContainsKey("Pins"))
+            if (parameters.TryGetValue(nameof(Pins), out ObservableCollection<PinViewModel> pins))
             {
-                var list = new ObservableCollection<PinViewModel>();
-                list = parameters.GetValue<ObservableCollection<PinViewModel>>("Pins");
-                AllPins = new ObservableCollection<Pin>(list.Select(x => x.ToPin()));
+                Pins = new ObservableCollection<Pin>(pins.Select(x => x.ToPin()));
             }
 
-            if (parameters.TryGetValue<Pin>(nameof(SettingsView), out Pin qrResult))
+            if (parameters.TryGetValue(nameof(SettingsView), out Pin qrResult))
             {
-                AllPins = new ObservableCollection<Pin>();
-                AllPins.Add(qrResult);
-
                 MoveCameraToPin = MapSpan.FromCenterAndRadius(qrResult.Position, new Distance(10000));
             }
         }
@@ -232,10 +218,11 @@ namespace GpsNotebook.ViewModel
                             ShowDropDown = true;
 
                             ShowClearImageButtom = "ic_clear";
+
                             var list = _pinModelService.SearchPins(SearchingText)
                                 .Select(x => x.ToPinViewModel());
 
-                            AllPins = new ObservableCollection<Pin>(list.Select(x => x.ToPin()));
+                            Pins = new ObservableCollection<Pin>(list.Select(x => x.ToPin()));
                         }
                         else
                         {
@@ -243,10 +230,10 @@ namespace GpsNotebook.ViewModel
                             ShowDropDown = false;
 
                             ShowClearImageButtom = string.Empty;
+
                             var pins = _pinModelService.GetAllPins()
                                 .Select(pinModel => pinModel.ToPinViewModel().ToPin());
-
-                            AllPins = new ObservableCollection<Pin>(pins);
+                            Pins = new ObservableCollection<Pin>(pins);
                         }
 
                         break;
@@ -282,14 +269,24 @@ namespace GpsNotebook.ViewModel
             var pins = _pinModelService.GetAllPins()
                 .Select(pinModel => pinModel.ToPinViewModel().ToPin());
 
-            AllPins = new ObservableCollection<Pin>(pins);
+            Pins = new ObservableCollection<Pin>(pins);
+
+            if (_appThemeService.IsDarkTheme)
+            {
+                CustomMapStyle = _appThemeService.SetMapTheme(nameof(DarkTheme));
+            }
+            else
+            {
+                CustomMapStyle = _appThemeService.SetMapTheme(nameof(LightTheme));
+            }
+
         }
 
         #endregion
 
         #region -- Private Helpers --
 
-        private void OntapOnDropDownCell(Pin pin)
+        private void OnTapOnDropDownCell(Pin pin)
         {
             SearchingText = string.Empty;
             ShowDropDown = false;
@@ -311,30 +308,22 @@ namespace GpsNotebook.ViewModel
 
         private void OnMapClick()
         {
+            IsSelecletCategory = false;
             ShowInfoAboutPin = false;
+            var pins = _pinModelService.GetAllPins().Select(pinModel => pinModel.ToPinViewModel());
+            Pins = new ObservableCollection<Pin>(pins.Select(x => x.ToPin()));
         }
 
         private void SelectSortCategory(CategoriesForPin category)
         {
-            if (!string.IsNullOrWhiteSpace(category.Name))
-            {
-                var list = _pinModelService.SearchByCategory(category.Name).Select((x) => x.ToPinViewModel());
-                AllPins = new ObservableCollection<Pin>(list.Select(x => x.ToPin()));
-            }
-            else
-            {
-                var pins = _pinModelService.GetAllPins().Select(pinModel => pinModel.ToPinViewModel());
-                AllPins = new ObservableCollection<Pin>(pins.Select(x => x.ToPin()));
-            }
+            IsSelecletCategory = true;
+            var list = _pinModelService.SearchByCategory(category.Name).Select((x) => x.ToPinViewModel());
+            Pins = new ObservableCollection<Pin>(list.Select(x => x.ToPin()));
         }
 
         private async void OnSettings()
         {
             await NavigationService.NavigateAsync(nameof(SettingsView));
-        }
-
-        private void OnDialogClosed(IDialogResult result)
-        {
         }
 
         #endregion
