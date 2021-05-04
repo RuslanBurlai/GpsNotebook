@@ -9,7 +9,7 @@
                                  BackgroundColor="{DynamicResource PageBackgroundColor}">
 
     <Grid ColumnDefinitions="0.02*, 0.96*, 0.02*"
-          RowDefinitions="0.02*, 0.07*, 0.57*, 0.34*">
+          RowDefinitions="0.02*, 0.07*, 0.91*">
 
         <StackLayout Grid.Row="1"
                      Grid.Column="1">
@@ -62,15 +62,8 @@
                                               Text="{Binding PinLatitude}" />
             </StackLayout>
 
-        </StackLayout>
-        
-        <StackLayout Grid.Row="3"
-                     Grid.Column="0"
-                     Grid.ColumnSpan="3">
-
             <control:CustomMapForAddPinViewModel GetPinPosition="{Binding GetPositionCommand}"
                                                  MapStyle="{Binding CustomMapStyle}" />
-
 
         </StackLayout>
 

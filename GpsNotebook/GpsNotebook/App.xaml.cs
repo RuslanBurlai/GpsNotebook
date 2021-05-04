@@ -20,8 +20,6 @@ namespace GpsNotebook
 {
     public partial class App : PrismApplication
     {
-        private IAuthorizationService _authorization => Container.Resolve<IAuthorizationService>();
-        private IAppThemeService _appThemeService => Container.Resolve<IAppThemeService>();
         public App(IPlatformInitializer initializer = null) : base (initializer)
         {
         }
@@ -91,6 +89,12 @@ namespace GpsNotebook
         protected override void OnResume()
         {
         }
+
+        #endregion
+
+        #region -- Private Helpers --
+        private IAuthorizationService _authorization => Container.Resolve<IAuthorizationService>();
+        private IAppThemeService _appThemeService => Container.Resolve<IAppThemeService>();
 
         #endregion
     }

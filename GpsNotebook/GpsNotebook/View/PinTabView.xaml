@@ -86,7 +86,10 @@
                                     <Label Style="{StaticResource label4}" 
                                            Text="{Binding PinLatitude}" 
                                            LineBreakMode="TailTruncation"/>
-                                    <Label Text="," />
+                                    
+                                    <Label Text=","
+                                           Style="{StaticResource label4}"/>
+                                    
                                     <Label Style="{StaticResource label4}" 
                                            Text="{Binding PinLongitude}" 
                                            LineBreakMode="TailTruncation"/>

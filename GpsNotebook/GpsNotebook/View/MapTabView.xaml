@@ -49,6 +49,15 @@
                                                           CommandParameter="{Binding .}" />
                                 </Frame.GestureRecognizers>
 
+                                <Frame.Triggers>
+                                    <DataTrigger TargetType="Frame"
+                                                 Binding="{Binding IsSelecletCategory, Source={x:Reference ListCategory}}"
+                                                 Value="true">
+                                        <Setter Property="BorderColor"
+                                                Value="Red" />
+                                    </DataTrigger>
+                                </Frame.Triggers>
+
                             </Frame>
                             
                         </Grid>

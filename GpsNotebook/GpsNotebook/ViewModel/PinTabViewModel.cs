@@ -118,6 +118,7 @@ namespace GpsNotebook.ViewModel
         {
             var pin = item as PinViewModel;
             pin.FavoritPin = pin.FavoritPin.Equals("ic_like_blue") ? "ic_like_gray" : "ic_like_blue";
+
         }
 
         private async void OnSettingsView()
@@ -149,6 +150,7 @@ namespace GpsNotebook.ViewModel
             var newList = _pinModelService.GetAllPins();
             Pins = new ObservableCollection<PinViewModel>(newList.Select(x => x.ToPinViewModel()));
         }
+
         private async void OnTapOnCell(PinViewModel pinViewModel)
         {
             NavigationParameters pinParametrs = new NavigationParameters();

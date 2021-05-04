@@ -5,7 +5,7 @@
                             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                             xmlns:contetPage="clr-namespace:GpsNotebook.View"
                             xmlns:controls="clr-namespace:GpsNotebook.Control"
-                            BackgroundColor="{DynamicResource PageBackgroundColor}">
+                            BackgroundColor="{DynamicResource PageBackgroundColor}" >
 
     <Grid RowDefinitions="0.02*, 0.98*">
 
@@ -28,8 +28,9 @@
                                 On="{Binding IsDarkTheme}" />
 
                     <TextCell Command="{Binding ScanQrCodeCommand}"
-                              Text="Scan the QR code" />
-                    
+                              Text="Scan the QR code"
+                              TextColor="{DynamicResource TextColor2}" />
+
                 </TableSection>
             </TableView>
 

@@ -245,7 +245,11 @@ namespace GpsNotebook.ViewModel
                         {
                             if (TapOnPin != null)
                             {
-                                string json = JsonConvert.SerializeObject(TapOnPin);
+                                string json = JsonConvert.SerializeObject(TapOnPin, Formatting.Indented,
+                                new JsonSerializerSettings
+                                {
+                                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                                });
                                 QrCodeData = json;
                                 ShowInfoAboutPin = true;
                             }
@@ -253,6 +257,7 @@ namespace GpsNotebook.ViewModel
                         }
                         catch (System.Exception e)
                         {
+                            ShowInfoAboutPin = true;
                             System.Console.WriteLine(e.Message);
                         }
 
