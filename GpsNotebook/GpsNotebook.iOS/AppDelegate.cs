@@ -26,8 +26,9 @@ namespace GpsNotebook.iOS
         {
             global::Xamarin.Forms.Forms.Init();
             Xamarin.FormsGoogleMaps.Init("AIzaSyDDcMTw9jxaNEBnQSZruPW-41PJaXfImAY");
-            LoadApplication(new App(new iOSInitializer()));
             ZXing.Net.Mobile.Forms.iOS.Platform.Init();
+
+            LoadApplication(new App(new iOSInitializer()));
 
             return base.FinishedLaunching(app, options);
         }
