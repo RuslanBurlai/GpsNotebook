@@ -60,13 +60,6 @@ namespace GpsNotebook.ViewModel
             set { SetProperty(ref _searchingText, value); }
         }
 
-        private bool _isLikedPin;
-        public bool IsLikedPin
-        {
-            get { return _isLikedPin; }
-            set { SetProperty(ref _isLikedPin, value); }
-        }
-
         private bool _isSearchEntrySpaned;
         public bool IsSearchEntrySpaned
         {
@@ -91,7 +84,7 @@ namespace GpsNotebook.ViewModel
 
         private ICommand _deletePinFromListCommand;
         public ICommand DeletePinFromListCommand =>
-            _deletePinFromListCommand ?? (_deletePinFromListCommand = new DelegateCommand<PinViewModel>(OnDeletePinFromListCommand));
+            _deletePinFromListCommand ?? (_deletePinFromListCommand = new DelegateCommand<PinViewModel>(OnDeletePinFromList));
 
         private ICommand _logOutCommand;
         public ICommand LogOutCommand =>
@@ -113,12 +106,11 @@ namespace GpsNotebook.ViewModel
 
         #region -- Private Helpers --
 
-
         private void OnSetFavoritPin(object item)
         {
             var pin = item as PinViewModel;
             pin.FavoritPin = pin.FavoritPin.Equals("ic_like_blue") ? "ic_like_gray" : "ic_like_blue";
-
+            _pinModelService.AddPin(pin.ToPinModel());
         }
 
         private async void OnSettingsView()
@@ -144,7 +136,7 @@ namespace GpsNotebook.ViewModel
             await NavigationService.NavigateAsync(nameof(AddPinView), pinForEdit);
         }
 
-        private void OnDeletePinFromListCommand(PinViewModel pin)
+        private void OnDeletePinFromList(PinViewModel pin)
         {
             _pinModelService.DeletePin(pin.ToPinModel());
             var newList = _pinModelService.GetAllPins();

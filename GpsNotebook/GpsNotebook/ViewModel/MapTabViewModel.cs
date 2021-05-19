@@ -195,7 +195,9 @@ namespace GpsNotebook.ViewModel
 
             if (parameters.TryGetValue(nameof(Pins), out ObservableCollection<PinViewModel> pins))
             {
-                Pins = new ObservableCollection<Pin>(pins.Where(p => p.FavoritPin == "ic_like_blue").Select(x => x.ToPin()));
+                Pins = new ObservableCollection<Pin>(pins
+                    .Where(p => p.FavoritPin == "ic_like_blue")
+                    .Select(x => x.ToPin()));
             }
 
             if (parameters.TryGetValue(nameof(SettingsView), out Pin qrResult))
@@ -318,14 +320,18 @@ namespace GpsNotebook.ViewModel
         {
             IsSelecletCategory = false;
             ShowInfoAboutPin = false;
-            var pins = _pinModelService.GetAllPins()/*.Where(p => p.FavoritPin == "ic_like_blue")*/.Select(pinModel => pinModel.ToPinViewModel());
+            var pins = _pinModelService.GetAllPins()
+                .Where(p => p.FavoritPin == "ic_like_blue")
+                .Select(pinModel => pinModel.ToPinViewModel());
             Pins = new ObservableCollection<Pin>(pins.Select(x => x.ToPin()));
         }
 
         private void SelectSortCategory(CategoriesForPin category)
         {
             IsSelecletCategory = true;
-            var list = _pinModelService.SearchByCategory(category.Name)/*.Where(p => p.FavoritPin == "ic_like_blue")*/.Select((x) => x.ToPinViewModel());
+            var list = _pinModelService.SearchByCategory(category.Name)
+                .Where(p => p.FavoritPin == "ic_like_blue")
+                .Select((x) => x.ToPinViewModel());
             Pins = new ObservableCollection<Pin>(list.Select(x => x.ToPin()));
         }
 

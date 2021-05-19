@@ -23,6 +23,7 @@ namespace GpsNotebook.Extensions
             return new PinModel
             {
                 Id = pinViewModel.Id,
+                UserId = pinViewModel.UserId,
                 PinName = pinViewModel.PinName,
                 Description = pinViewModel.PinDescription,
                 Latitude = pinViewModel.PinLatitude,

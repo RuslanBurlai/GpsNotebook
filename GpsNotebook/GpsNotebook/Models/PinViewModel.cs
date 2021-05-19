@@ -17,6 +17,14 @@ namespace GpsNotebook.Models
             set { SetProperty(ref _id, value); }
         }
 
+        private int _userid;
+        public int UserId
+        {
+            get { return _userid; }
+            set { SetProperty(ref _userid, value); }
+        }
+
+
         private string _pinName;
         public string PinName
         {
