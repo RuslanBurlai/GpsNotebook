@@ -1,4 +1,5 @@
-﻿using GpsNotebook.Models;
+﻿using GpsNotebook.Extensions;
+using GpsNotebook.Models;
 using GpsNotebook.Services.AppThemeService;
 using GpsNotebook.Services.Authorization;
 using GpsNotebook.Services.PinLocationRepository;
@@ -10,6 +11,7 @@ using Prism.Navigation;
 using Prism.Services;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
@@ -168,6 +170,9 @@ namespace GpsNotebook.ViewModel
                 PinLatitude = EditingPin.PinLatitude.ToString();
                 PinLongitude = EditingPin.PinLongitude.ToString();
                 PinDescription = EditingPin.PinDescription;
+                SelectedCategories = Categories.FirstOrDefault(c => c.Name == EditingPin.PinCategories);
+
+                _editPin = EditingPin;
             }
         }
 
@@ -209,6 +214,7 @@ namespace GpsNotebook.ViewModel
 
         #region -- Private Helpers --
 
+        private PinViewModel _editPin;
         private void OnClearLabelEntryText()
         {
             PinName = string.Empty;
@@ -221,22 +227,40 @@ namespace GpsNotebook.ViewModel
 
         private async void OnSavePin()
         {
-            var newPin = new PinModel
+            if (_editPin == null)
             {
-                Description = PinDescription,
-                Latitude = double.Parse(PinLatitude),
-                Longitude = double.Parse(PinLongitude),
-                PinName = PinName,
-                Categories = SelectedCategories.Name,
-                UserId = _authorization.GetUserId,
-                FavoritPin = "ic_like_gray"
-            };
+                var newPin = new PinModel
+                {
+                    Description = PinDescription,
+                    Latitude = double.Parse(PinLatitude),
+                    Longitude = double.Parse(PinLongitude),
+                    PinName = PinName,
+                    Categories = SelectedCategories.Name,
+                    UserId = _authorization.GetUserId,
+                    FavoritPin = "ic_like_gray"
+                };
 
-            _pinModelService.AddPin(newPin);
-            var parametrs = new NavigationParameters();
-            parametrs.Add(nameof(PinModel), newPin);
+                _pinModelService.AddPin(newPin);
+                var parametrs = new NavigationParameters();
+                parametrs.Add(nameof(PinModel), newPin);
 
-            await NavigationService.GoBackAsync(parametrs);
+                await NavigationService.GoBackAsync(parametrs);
+            }
+            else
+            {
+                _editPin.PinDescription = PinDescription;
+                _editPin.PinLatitude = double.Parse(PinLatitude);
+                _editPin.PinLongitude = double.Parse(PinLongitude);
+                _editPin.PinName = PinName;
+                _editPin.PinCategories = SelectedCategories.Name;
+                _editPin.UserId = _authorization.GetUserId;
+
+                _pinModelService.AddPin(_editPin.ToPinModel());
+                var parametrs = new NavigationParameters();
+                parametrs.Add(nameof(PinModel), _editPin);
+
+                await NavigationService.GoBackAsync(parametrs);
+            }
         }
 
         private void OnGetPosition(Position position)
