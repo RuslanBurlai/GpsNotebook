@@ -5,6 +5,7 @@ using GpsNotebook.Services.PinLocationRepository;
 using GpsNotebook.View;
 using Prism.Commands;
 using Prism.Navigation;
+using Prism.Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -17,17 +18,20 @@ namespace GpsNotebook.ViewModel
     {
         private IPinModelService _pinModelService;
         private IAuthorizationService _authorizationService;
+        private IPageDialogService _pageDialogService;
 
         public PinTabViewModel(
             INavigationService navigationPage,
             IPinModelService pinModelService,
-            IAuthorizationService authorizationService) :
+            IAuthorizationService authorizationService,
+            IPageDialogService pageDialogService) :
             base(navigationPage)
         {
             Title = "Pins";
 
             _pinModelService = pinModelService;
             _authorizationService = authorizationService;
+            _pageDialogService = pageDialogService;
         }
 
         #region -- Public properties --
@@ -136,11 +140,15 @@ namespace GpsNotebook.ViewModel
             await NavigationService.NavigateAsync(nameof(AddPinView), pinForEdit);
         }
 
-        private void OnDeletePinFromList(PinViewModel pin)
+        private async void OnDeletePinFromList(PinViewModel pin)
         {
-            _pinModelService.DeletePin(pin.ToPinModel());
-            var newList = _pinModelService.GetAllPins();
-            Pins = new ObservableCollection<PinViewModel>(newList.Select(x => x.ToPinViewModel()));
+            var userAnsver = await _pageDialogService.DisplayAlertAsync("Delete","Do you want delete pin?", "Yes", "No");
+            if (userAnsver)
+            {
+                _pinModelService.DeletePin(pin.ToPinModel());
+                var newList = _pinModelService.GetAllPins();
+                Pins = new ObservableCollection<PinViewModel>(newList.Select(x => x.ToPinViewModel()));
+            }
         }
 
         private async void OnTapOnCell(PinViewModel pinViewModel)
@@ -196,7 +204,7 @@ namespace GpsNotebook.ViewModel
                             IsSearchEntrySpaned = false;
                             ShowClearImageButtom = string.Empty;
                         }
-                        
+
                         break;
                     }
             }
