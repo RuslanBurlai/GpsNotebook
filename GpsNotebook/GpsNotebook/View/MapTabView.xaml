@@ -23,7 +23,8 @@
                                  TextQuery="{Binding SearchingText}" />
 
         <ScrollView Grid.Row="2" 
-                    Orientation="Horizontal">
+                    Orientation="Horizontal"
+                    HorizontalScrollBarVisibility="Never" >
 
             <StackLayout x:Name="ListCategory"
                          BindableLayout.ItemsSource="{Binding Categories}"
@@ -35,14 +36,20 @@
                         <Grid RowDefinitions="1*" 
                               RowSpacing="10">
                             
-                            <Frame Grid.Row="0"
-                                   Padding="8"
+                            <Frame x:Name="frame" 
+                                   Grid.Row="0"
                                    BackgroundColor="{DynamicResource VariantColor}"
                                    CornerRadius="25"
                                    HasShadow="False"
                                    HorizontalOptions="FillAndExpand"
-                                   VerticalOptions="FillAndExpand">
-                                   <Label Text="{Binding Name}" />
+                                   VerticalOptions="FillAndExpand"
+                                   BorderColor="Transparent" 
+                                   Padding="5">
+                                
+                                   <Label Text="{Binding Name}"
+                                          TextColor="{DynamicResource TextColor2}"
+                                          VerticalOptions="Center"
+                                          FontFamily="MontserratRegular"/>
                                 
                                 <Frame.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding Source={x:Reference ListCategory}, Path=BindingContext.SelectSortCategoryCommand}" 
@@ -88,7 +95,8 @@
                HasShadow="False"
                BackgroundColor="{DynamicResource PageBackgroundColor}">
 
-            <ListView ItemsSource="{Binding Pins}">
+            <ListView ItemsSource="{Binding Pins}"
+                      HasUnevenRows="True">
                 
                 <ListView.Behaviors>
                     <prism:EventToCommandBehavior Command="{Binding TapOnDropDownCellCommand}"
@@ -104,10 +112,13 @@
 
                                 <Image Source="ic_pin_gray" />
 
-                                <StackLayout Orientation="Vertical">
+                                <StackLayout Orientation="Vertical"
+                                             Spacing="0">
 
-                                    <Label Text="{Binding Label}" />
-                                    <Label Text="{Binding Tag}" />
+                                    <Label Text="{Binding Label}"
+                                           Style="{StaticResource label3}"/>
+                                    <Label Text="{Binding Tag}"
+                                           Style="{StaticResource label4}" />
 
                                 </StackLayout>
                             </StackLayout>

@@ -4,6 +4,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
       x:Name="customSearchBar"
       ColumnDefinitions="0.18*, 0.03*, 0.52*, 0.07*, 0.15*, 0.05*"
+      RowDefinitions="1*"
       ColumnSpacing="1"
       Background="{DynamicResource PageBackgroundColor}">
 
@@ -23,6 +24,7 @@
 
     <Frame Grid.Column="1"
            Grid.ColumnSpan="3"
+           Grid.Row="0"
            BackgroundColor="{DynamicResource VariantColor}"
            CornerRadius="5"
            HasShadow="False">
@@ -42,9 +44,10 @@
     </Frame>
 
     <Entry Grid.Column="2"
-           FontSize="14"
+           FontSize="16"
            Placeholder="Search"
            x:Name="searchEntry"
+           FontFamily="MontserratMedium"
            Text="{Binding TextQuery, Source={x:Reference customSearchBar}}"
            TextColor="{DynamicResource TextColor}" >
 
@@ -92,6 +95,7 @@
         <Image.GestureRecognizers>
             <TapGestureRecognizer Command="{Binding TapOnRightImageCommand, Source={x:Reference customSearchBar}}"/>
         </Image.GestureRecognizers>
+        
         <Image.Triggers>
             
             <DataTrigger Binding="{Binding IsSearchBarSpan, Source={x:Reference customSearchBar}}"

@@ -126,7 +126,7 @@ namespace GpsNotebook.ViewModel
         private async void OnLogOut()
         {
             _authorizationService.LogOut();
-            await NavigationService.NavigateAsync($"/{ nameof(NavigationPage)}/{ nameof(LogInView)}");
+            await NavigationService.NavigateAsync($"/{ nameof(NavigationPage)}/{nameof(LogInOrRegisterView)}");
         }
 
         private async void OnEditPinInList(PinViewModel pin)
