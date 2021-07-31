@@ -96,7 +96,9 @@
                BackgroundColor="{DynamicResource PageBackgroundColor}">
 
             <ListView ItemsSource="{Binding Pins}"
-                      HasUnevenRows="True">
+                      HasUnevenRows="True"
+                      SeparatorVisibility="None"
+                      BackgroundColor="{DynamicResource PageBackgroundColor}">
                 
                 <ListView.Behaviors>
                     <prism:EventToCommandBehavior Command="{Binding TapOnDropDownCellCommand}"

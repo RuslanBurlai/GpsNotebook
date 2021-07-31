@@ -190,7 +190,7 @@ namespace GpsNotebook.ViewModel
             if (parameters.TryGetValue("SelectedItemInListView", out PinViewModel pinViewModel))
             {
                 var pin = pinViewModel.ToPin();
-                MoveCameraToPin = MapSpan.FromCenterAndRadius(pin.Position, new Distance(10000));
+                MoveCameraToPin = MapSpan.FromCenterAndRadius(pin.Position, new Distance(100));
             }
 
             if (parameters.TryGetValue(nameof(Pins), out ObservableCollection<PinViewModel> pins))
@@ -202,7 +202,7 @@ namespace GpsNotebook.ViewModel
 
             if (parameters.TryGetValue(nameof(SettingsView), out Pin qrResult))
             {
-                MoveCameraToPin = MapSpan.FromCenterAndRadius(qrResult.Position, new Distance(10000));
+                MoveCameraToPin = MapSpan.FromCenterAndRadius(qrResult.Position, new Distance(100));
             }
         }
 
@@ -300,7 +300,7 @@ namespace GpsNotebook.ViewModel
         {
             SearchingText = string.Empty;
             ShowDropDown = false;
-            MoveCameraToPin = MapSpan.FromCenterAndRadius(pin.Position, new Distance(10000));
+            MoveCameraToPin = MapSpan.FromCenterAndRadius(pin.Position, new Distance(100d));
         }
 
         private void OnSharePin()

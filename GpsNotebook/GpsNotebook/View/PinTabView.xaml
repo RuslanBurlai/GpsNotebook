@@ -34,7 +34,8 @@
                       HasUnevenRows="True"
                       ItemsSource="{Binding Pins}"
                       SelectionMode="None"
-                      BackgroundColor="{DynamicResource PageBackgroundColor}">
+                      BackgroundColor="{DynamicResource PageBackgroundColor}"
+                      SeparatorVisibility="None">
 
                 <ListView.Behaviors>
                     <prism:EventToCommandBehavior Command="{Binding TapOnCellCommand}"
