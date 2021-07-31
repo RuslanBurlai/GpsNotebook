@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    x:Class="GpsNotebook.Styles.DarkTheme">
+
+    <Color x:Key="PrimaryColor">#7485FB</Color>
+    <Color x:Key="DisabledColor">#3D4475</Color>
+    <Color x:Key="HoveredFocusedColor">#5F73FA</Color>
+    <Color x:Key="PressedColor">#3953FE</Color>
+    <Color x:Key="VariantColor">#33374E</Color>
+
+    <Color x:Key="PageBackgroundColor">#1E242B</Color>
+    <Color x:Key="NavigationBarColor">#3D4E61</Color>
+    <Color x:Key="NavBarText">#FEFEFD</Color>
+    <Color x:Key="TextColor">#FEFEFD</Color>
+    <Color x:Key="ListLabel">#FEFEFD</Color>
+    <Color x:Key="LabelError">#FA545F</Color>
+    <Color x:Key="EntryBorder">#D7DDe8</Color>
+    <Color x:Key="EntryPlaceholder">#858E9E</Color>
+    <Color x:Key="PrimaryButton">#7485FB</Color>
+    <Color x:Key="TextColor2">#FEFEFD</Color>
+    <Color x:Key="TextColor3">#FEFEFD</Color>
+    
+
+
+
+    <!--Text and Background-->
+    <Color x:Key="White">#FEFEFD</Color>
+    <Color x:Key="LightGray">#D7DDE8</Color>
+    <Color x:Key="Gray">#858E9E</Color>
+    <Color x:Key="DarkGrey">#3D4E61</Color>
+    <Color x:Key="Black">#1E242B</Color>
+
+</ResourceDictionary>

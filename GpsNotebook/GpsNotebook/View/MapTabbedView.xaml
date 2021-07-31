@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:BaseTabbedPage x:Class="GpsNotebook.View.MapTabbedView"
+                      xmlns="http://xamarin.com/schemas/2014/forms"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                      xmlns:behaviors="clr-namespace:GpsNotebook.Behavior"
+                      xmlns:pages="clr-namespace:GpsNotebook.View;assembly=GpsNotebook"
+                      xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+                      android:TabbedPage.ToolbarPlacement="Bottom"
+                      BackgroundColor="{DynamicResource PageBackgroundColor}"
+                      TappedTabBackGround="{DynamicResource VariantColor}"
+                      TappedTabColor="{DynamicResource PrimaryColor}">
+
+    <TabbedPage.Behaviors>
+        <behaviors:TabbedPageNavigationBehavior />
+    </TabbedPage.Behaviors>
+    <TabbedPage.Children>
+
+        <pages:MapTabView IconImageSource="ic_map" />
+
+        <pages:PinTabView IconImageSource="ic_pin" />
+
+    </TabbedPage.Children>
+    
+</pages:BaseTabbedPage>

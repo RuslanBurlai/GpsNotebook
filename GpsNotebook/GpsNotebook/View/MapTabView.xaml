@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<baseContentPage:BaseContentPage x:Class="GpsNotebook.View.MapTabView"
+                                 xmlns="http://xamarin.com/schemas/2014/forms"
+                                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                                 xmlns:baseContentPage="clr-namespace:GpsNotebook.View"
+                                 xmlns:c="clr-namespace:GpsNotebook.ViewModel"
+                                 xmlns:control="clr-namespace:GpsNotebook.Control"
+                                 xmlns:googleMap="clr-namespace:GpsNotebook.Control"
+                                 xmlns:prism="http://prismlibrary.com"
+                                 Title="{Binding Title}"
+                                 BackgroundColor="{DynamicResource PageBackgroundColor}">
+
+    <Grid RowDefinitions="0.02*, 0.06*, 0.07*, 0.40*, 0.12*, 0.33*" 
+          RowSpacing="7">
+
+        <control:CustomSearchBar Grid.Row="1"
+                                 ClearSerchBarImage="{Binding ShowClearImageButtom}"
+                                 IsSearchBarSpan="{Binding SearchBarSpaned}"
+                                 LeftSideImagePath="ic_settings"
+                                 RightSideImagePath="ic_exid"
+                                 TapOnLeftImageCommand="{Binding SettingsCommand}"
+                                 TapOnRightImageCommand="{Binding LogOutCommand}"
+                                 TextQuery="{Binding SearchingText}" />
+
+        <ScrollView Grid.Row="2" 
+                    Orientation="Horizontal"
+                    HorizontalScrollBarVisibility="Never" >
+
+            <StackLayout x:Name="ListCategory"
+                         BindableLayout.ItemsSource="{Binding Categories}"
+                         Orientation="Horizontal"
+                         BackgroundColor="{DynamicResource PageBackgroundColor}">
+                
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Grid RowDefinitions="1*" 
+                              RowSpacing="10">
+                            
+                            <Frame x:Name="frame" 
+                                   Grid.Row="0"
+                                   BackgroundColor="{DynamicResource VariantColor}"
+                                   CornerRadius="25"
+                                   HasShadow="False"
+                                   HorizontalOptions="FillAndExpand"
+                                   VerticalOptions="FillAndExpand"
+                                   BorderColor="Transparent" 
+                                   Padding="5">
+                                
+                                   <Label Text="{Binding Name}"
+                                          TextColor="{DynamicResource TextColor2}"
+                                          VerticalOptions="Center"
+                                          FontFamily="MontserratRegular"/>
+                                
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={x:Reference ListCategory}, Path=BindingContext.SelectSortCategoryCommand}" 
+                                                          CommandParameter="{Binding .}" />
+                                </Frame.GestureRecognizers>
+
+                                <Frame.Triggers>
+                                    <DataTrigger TargetType="Frame"
+                                                 Binding="{Binding IsSelecletCategory, Source={x:Reference ListCategory}}"
+                                                 Value="true">
+                                        <Setter Property="BorderColor"
+                                                Value="Red" />
+                                    </DataTrigger>
+                                </Frame.Triggers>
+
+                            </Frame>
+                            
+                        </Grid>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
+        </ScrollView>
+
+        <googleMap:CustomMapForMapTabViewModel Grid.Row="3"
+                                               Grid.RowSpan="3"
+                                               CameraOnSelectedPin="{Binding MoveCameraToPin}"
+                                               ListOfPins="{Binding Pins}"
+                                               MyLocationEnabled="True"
+                                               SelectedPin="{Binding TapOnPin}"
+                                               MapStyle="{Binding CustomMapStyle}" >
+
+            <googleMap:CustomMapForMapTabViewModel.Behaviors>
+                
+                <prism:EventToCommandBehavior Command="{Binding MapClickCommand}" 
+                                              EventName="MapClicked" />
+                
+            </googleMap:CustomMapForMapTabViewModel.Behaviors>
+
+        </googleMap:CustomMapForMapTabViewModel>
+
+        <Frame Grid.Row="3" 
+               IsVisible="{Binding ShowDropDown}"
+               HasShadow="False"
+               BackgroundColor="{DynamicResource PageBackgroundColor}">
+
+            <ListView ItemsSource="{Binding Pins}"
+                      HasUnevenRows="True"
+                      SeparatorVisibility="None"
+                      BackgroundColor="{DynamicResource PageBackgroundColor}">
+                
+                <ListView.Behaviors>
+                    <prism:EventToCommandBehavior Command="{Binding TapOnDropDownCellCommand}"
+                                                  EventArgsParameterPath="Item"
+                                                  EventName="ItemTapped" />
+                </ListView.Behaviors>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+
+                            <StackLayout Orientation="Horizontal">
+
+                                <Image Source="ic_pin_gray" />
+
+                                <StackLayout Orientation="Vertical"
+                                             Spacing="0">
+
+                                    <Label Text="{Binding Label}"
+                                           Style="{StaticResource label3}"/>
+                                    <Label Text="{Binding Tag}"
+                                           Style="{StaticResource label4}" />
+
+                                </StackLayout>
+                            </StackLayout>
+
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Frame>
+
+        <Frame Grid.Row="5"
+               CornerRadius="7"
+               IsVisible="{Binding ShowInfoAboutPin}"
+               HasShadow="False"
+               BackgroundColor="{DynamicResource PageBackgroundColor}">
+            
+            <Grid ColumnDefinitions="0.02*, 0.89*, 0.07*, 0.02*"
+                  RowDefinitions="0.02*, 0.2*, 0.78*"
+                  VerticalOptions="Center">
+
+                <Label Style="{StaticResource label7}"
+                       Grid.Row="1"
+                       Grid.Column="1"
+                       Text="{Binding TapOnPin.Label}"
+                       LineBreakMode="TailTruncation"/>
+
+                <ImageButton Grid.Row="1"
+                             Grid.Column="2"
+                             BackgroundColor="Transparent"
+                             Command="{Binding SharePinCommand}"
+                             Source="ic_share" />
+
+                <StackLayout Grid.Row="2"
+                             Grid.Column="1"
+                             Grid.ColumnSpan="2"
+                             Spacing="20">
+
+                    <StackLayout Orientation="Horizontal">
+
+                        <Label Style="{StaticResource label8}"
+                               Text="{Binding TapOnPin.Position.Latitude}" />
+
+                        <Label Style="{StaticResource label8}"
+                               Text="{Binding TapOnPin.Position.Longitude}" />
+
+                    </StackLayout>
+
+                    <StackLayout Spacing="18">
+
+                        <BoxView BackgroundColor="{DynamicResource VariantColor}" 
+                                 HeightRequest="1" />
+
+                        <Label Style="{StaticResource label8}" 
+                               Text="{Binding TapOnPin.Tag}" />
+                        
+                    </StackLayout>
+
+                </StackLayout>
+
+            </Grid>
+
+        </Frame>
+
+    </Grid>
+
+</baseContentPage:BaseContentPage>

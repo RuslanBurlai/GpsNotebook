@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<baseContentPage:BaseContentPage x:Class="GpsNotebook.View.AddPinView"
+                                 xmlns="http://xamarin.com/schemas/2014/forms"
+                                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                                 xmlns:baseContentPage="clr-namespace:GpsNotebook.View"
+                                 xmlns:control="clr-namespace:GpsNotebook.Control"
+                                 xmlns:googleMap="clr-namespace:GpsNotebook.Control"
+                                 xmlns:prism="http://prismlibrary.com"
+                                 BackgroundColor="{DynamicResource PageBackgroundColor}">
+
+    <Grid ColumnDefinitions="0.02*, 0.96*, 0.02*"
+          RowDefinitions="0.02*, 0.07*, 0.91*">
+
+        <StackLayout Grid.Row="1"
+                     Grid.Column="1">
+            
+            <control:CustomNavigationBar GoBackCommand="{Binding MapTabbedViewCommand}"
+                                         ImagePath="ic_left_blue"
+                                         NavBarTitle="{Binding Title}"
+                                         RightImageCommand="{Binding SavePinCommand}"
+                                         RightImageSource="ic_save" />
+
+            <BoxView HeightRequest="1"
+                     BackgroundColor="{DynamicResource EntryBorder}"/>
+        </StackLayout>
+        
+        <StackLayout Grid.Row="2"
+                     Grid.Column="1"
+                     Spacing="1">
+
+            <control:CustomEntryWithLabel BorderColor="{DynamicResource EntryBorder}"
+                                          HeaderEntry="Label"
+                                          ImagePath="{Binding ClearButtonImagePath}"
+                                          Placeholder="Enter the label"
+                                          Text="{Binding PinName}" 
+                                          ClearOrHideText="{Binding ClearLabelEntryTextCommand}"/>
+
+            <control:CustomEntryWithLabel BorderColor="{DynamicResource EntryBorder}"
+                                          HeaderEntry="Description"
+                                          ImagePath="{Binding ClearDescriptionImagePath}"
+                                          Placeholder="Write a description"
+                                          Text="{Binding PinDescription}" 
+                                          ClearOrHideText="{Binding ClearDescriptionEntryCommand}"/>
+
+            <Picker Style="{StaticResource picker1}"
+                    Title="Categories"
+                    ItemDisplayBinding="{Binding Name}"
+                    ItemsSource="{Binding Categories}"
+                    SelectedItem="{Binding SelectedCategories, Mode=TwoWay}" />
+            
+            <!--<control:PickerWithBackground />-->
+
+            <StackLayout Orientation="Horizontal" >
+
+                <control:CustomEntryWithLabel BorderColor="{DynamicResource EntryBorder}"
+                                              HeaderEntry="Coordinates"
+                                              Placeholder="Longitude"
+                                              Text="{Binding PinLongitude}" />
+
+                <control:CustomEntryWithLabel BorderColor="{DynamicResource EntryBorder}"
+                                              Placeholder="Latitude"
+                                              Text="{Binding PinLatitude}" />
+            </StackLayout>
+
+            <control:CustomMapForAddPinViewModel GetPinPosition="{Binding GetPositionCommand}"
+                                                 MapStyle="{Binding CustomMapStyle}" />
+
+        </StackLayout>
+
+    </Grid>
+
+</baseContentPage:BaseContentPage>

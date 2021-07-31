@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Grid x:Class="GpsNotebook.Control.CustomEntryWithLabel"
+      xmlns="http://xamarin.com/schemas/2014/forms"
+      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+      x:Name="customEntryWithLabel"
+      ColumnDefinitions="0.03*, 0.87*, 0.1*"
+      RowDefinitions="0.2*, 0.6*, 0.2*">
+
+    <Label Style="{StaticResource label2}"
+           Grid.Row="0"
+           Grid.Column="1"
+           Grid.ColumnSpan="2"
+           Text="{Binding HeaderEntry, Source={x:Reference customEntryWithLabel}}"
+           TextColor="{DynamicResource TextColor}" /> 
+
+    <Frame Grid.Row="1"
+           Grid.Column="0"
+           Grid.ColumnSpan="3"
+           BorderColor="{Binding BorderColor, Source={x:Reference customEntryWithLabel}}"
+           HasShadow="False"
+           BackgroundColor="{DynamicResource PageBackgroundColor}" />
+
+    <Entry Style="{StaticResource entry1}"
+           Grid.Row="1"
+           Grid.Column="1"
+           IsPassword="{Binding IsPassword, Source={x:Reference customEntryWithLabel}}"
+           Placeholder="{Binding Placeholder, Source={x:Reference customEntryWithLabel}}"
+           Text="{Binding Text, Source={x:Reference customEntryWithLabel}}" />
+
+    <Image Grid.Row="1"
+           Grid.Column="2"
+           Source="{Binding ImagePath, Source={x:Reference customEntryWithLabel}}" />
+
+
+    <BoxView Grid.Row="1"
+             Grid.Column="2"
+             HorizontalOptions="Fill"
+             VerticalOptions="Fill">
+
+        <BoxView.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding ClearOrHideText, Source={x:Reference customEntryWithLabel}}" />
+        </BoxView.GestureRecognizers>
+
+    </BoxView>
+
+    <Label Style="{StaticResource label5}"
+           Grid.Row="2"
+           Grid.Column="0"
+           Grid.ColumnSpan="2"
+           Text="{Binding FooterEntry, Source={x:Reference customEntryWithLabel}}" />
+</Grid>
